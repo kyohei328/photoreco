@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { css } from '@emotion/react'
+import  Router from './router/Router'
 
 const Styles = ({
   heightstyle: css ({
@@ -20,6 +21,7 @@ function App(): JSX.Element {
       <Header/>
         <div>
           <h1  css={Styles.heightstyle} className="text-3xl font-bold underline">Hello world!</h1>
+          <Router/>
         </div>
       <Footer />
     </MantineProvider>
