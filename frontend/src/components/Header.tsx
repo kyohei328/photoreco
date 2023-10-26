@@ -1,51 +1,125 @@
-import { useState } from 'react';
-import { Container, Group, Burger } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import classes from "../assets/Header.module.css";
-import { css } from "@emotion/react"
+import {
+  Group,
+  Button,
+  // UnstyledButton,
+  // Text,
+  // ThemeIcon,
+  Box,
+  // Burger,
+  // rem,
+  // useMantineTheme,
+} from '@mantine/core';
+// import { useDisclosure } from '@mantine/hooks';
+// import {
+//   IconNotification,
+//   IconCode,
+//   IconBook,
+//   IconChartPie3,
+//   IconFingerprint,
+//   IconCoin,
+// } from '@tabler/icons-react';
+import classes from '../assets/HeaderMegaMenu.module.css';
+import { css } from '@emotion/react';
+import { LoginIcon } from '../icons/LoginIcon';
 
-const style = {
-  logostyle: css ({
+
+const Styles = {
+  LogoStyle: css ({
     fontSize: '28px',
     fontWeight: 'bold',
+    fontFamily: 'Bodoni',
+    fontStyle: 'oblique 15deg',
+  }),
+  HeaderStyle: css ({
+    backgroundColor: '#F1F3F5',
   })
 }
 
-const links = [
-  { link: '/about', label: '写真一覧' },
-  { link: '/pricing', label: 'コンテスト' },
-];
-
+// const mockdata = [
+//   {
+//     icon: IconCode,
+//     title: 'Open source',
+//     description: 'This Pokémon’s cry is very loud and distracting',
+//   },
+//   {
+//     icon: IconCoin,
+//     title: 'Free for everyone',
+//     description: 'The fluid of Smeargle’s tail secretions changes',
+//   },
+//   {
+//     icon: IconBook,
+//     title: 'Documentation',
+//     description: 'Yanma is capable of seeing 360 degrees without',
+//   },
+//   {
+//     icon: IconFingerprint,
+//     title: 'Security',
+//     description: 'The shell’s rounded shape and the grooves on its.',
+//   },
+//   {
+//     icon: IconChartPie3,
+//     title: 'Analytics',
+//     description: 'This Pokémon uses its flying ability to quickly chase',
+//   },
+//   {
+//     icon: IconNotification,
+//     title: 'Notifications',
+//     description: 'Combusken battles with the intensely hot flames it spews',
+//   },
+// ];
 
 export function Header() {
-  const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  // const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  // const theme = useMantineTheme();
 
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={classes.link}
-      data-active={active === link.link || undefined}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-      }}
-    >
-      {link.label}
-    </a>
-  ));
+  // const links = mockdata.map((item) => (
+  //   <UnstyledButton className={classes.subLink} key={item.title}>
+  //     <Group wrap="nowrap" align="flex-start">
+  //       <ThemeIcon size={34} variant="default" radius="md">
+  //         <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
+  //       </ThemeIcon>
+  //       <div>
+  //         <Text size="sm" fw={500}>
+  //           {item.title}
+  //         </Text>
+  //         <Text size="xs" c="dimmed">
+  //           {item.description}
+  //         </Text>
+  //       </div>
+  //     </Group>
+  //   </UnstyledButton>
+  // ));
 
   return (
-    <header className={classes.header}>
-      <Container size="xl" className={classes.inner}>
-        <a href='/' css={style.logostyle}>Photo Space </a>
-        <Group gap={5} visibleFrom="xs">
-          {items}
-        </Group>
+    <Box pb={120}>
+      <header className={classes.header} css={Styles.HeaderStyle}>
+        <Group justify="space-between" h="100%">
+          <Group>
+            <a css={Styles.LogoStyle} href='/'>
+              Photo Space
+            </a>
+            <a href="#" className={classes.link}>
+              写真一覧
+            </a>
+            <a href="#" className={classes.link}>
+              コンテスト
+            </a>
+          </Group>
 
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-      </Container>
-    </header>
+          <Group visibleFrom="sm" justify="flex-end" >
+            <Button
+              rightSection={<LoginIcon size={18} />}
+              variant="outline"
+              color="rgba(59, 59, 59, 1)"
+            >
+              ログイン
+            </Button>
+            <Button variant="outline">サインアップ</Button>
+          </Group>
+
+          {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}
+        </Group>
+      </header>
+    </Box>
   );
 }
