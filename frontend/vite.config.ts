@@ -9,4 +9,7 @@ export default defineConfig({
   plugins: [react({
     jsxImportSource: '@emotion/react',
   })],
+  define: {
+    global: 'window',
+  },
 })

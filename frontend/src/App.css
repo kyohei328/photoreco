@@ -41,3 +41,9 @@
 .read-the-docs {
   color: #bebebe;
 } */
+
+:root {
+  --amplify-primary-color: #70D14D;
+  --amplify-primary-tint: #70D14D;
+  --amplify-primary-shade: #70D14D;
+}
