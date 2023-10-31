@@ -21,6 +21,7 @@ import {
 import classes from '../assets/HeaderMegaMenu.module.css';
 import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
+import { Link } from 'react-router-dom';
 
 
 const Styles = {
@@ -107,14 +108,16 @@ export function Header() {
           </Group>
 
           <Group visibleFrom="sm" justify="flex-end" >
-            <Button
-              rightSection={<LoginIcon size={18} />}
-              variant="outline"
-              color="rgba(59, 59, 59, 1)"
-            >
-              ログイン
-            </Button>
-            <Button variant="outline">サインアップ</Button>
+            <Link to="/login">
+              <Button
+                rightSection={<LoginIcon size={18} />}
+                variant="outline"
+                color="rgba(59, 59, 59, 1)"
+              >
+                ログイン
+              </Button>
+            </Link>
+            {/* <Button variant="outline">サインアップ</Button> */}
           </Group>
 
           {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}
