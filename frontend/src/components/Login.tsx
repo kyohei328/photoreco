@@ -17,8 +17,10 @@ import {
 } from '@mantine/core';
 import { GoogleButton } from './GoogleButton';
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios'
+// import { useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext'
 
 
 
@@ -37,27 +39,55 @@ const Login = (props: PaperProps) => {
     },
   });
 
+  const { googleSignIn, user } = UserAuth();
+  // const navigate = useNavigate();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log(form.setFieldValue)
-
     const formData = new FormData();
-      formData.append('user[name]', form.values.name);
-    //   formData.append('user[email]', form.values.email);
-    //   formData.append('user[password]', form.values.password);
+    formData.append('user[name]', form.values.name);
+  //   formData.append('user[email]', form.values.email);
+  //   formData.append('user[password]', form.values.password);
     const email = form.values.email;
     const password = form.values.password;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async(result) => {
-        const user = await result.user
-        const token = await user.getIdToken(true)
-        const config =  { 'Authorization': `Bearer ${token}` };
 
-        axios.post("http://localhost:3000/api/v1/users", formData, { headers: config })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (type === 'register' ){
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async(result) => {
+          const user = await result.user
+          const token = await user.getIdToken(true)
+          const config =  { 'Authorization': `Bearer ${token}` };
+
+          axios.post("http://localhost:3000/api/v1/users", formData, { headers: config })
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+    }else{
+      signInWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+            console.log('ログイン成功！');
+            console.log(user);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log('ログイン失敗！');
+            console.log(errorCode);
+            console.log(errorMessage);
+            alert('ログインに失敗しました');
+        });
+    }
   };
 
   return (
@@ -68,7 +98,7 @@ const Login = (props: PaperProps) => {
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
+        <GoogleButton onClick={handleGoogleSignIn} radius="xl">Google</GoogleButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
