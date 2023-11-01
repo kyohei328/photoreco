@@ -16,7 +16,7 @@ const Styles = {
 
 const links = [
   { link: '#', label: 'お問い合わせ' },
-  { link: '#', label: 'プライバシーポリシー' },
+  { link: "/privacy-policy", label: 'プライバシーポリシー' },
   { link: '#', label: '利用規約' },
 ];
 
@@ -26,11 +26,22 @@ export function Footer() {
       c="dimmed"
       key={link.label}
       href={link.link}
-      onClick={(event) => event.preventDefault()}
+      // onClick={(event) => event.preventDefault()}
       size="sm"
     >
       {link.label}
     </Anchor>
+
+    // <Anchor
+    //   c="dimmed"
+    //   key={link.label}
+    //   href={link.link}
+    //   onClick={(event) => event.preventDefault()}
+    //   size="sm"
+    // >
+    //   {link.label}
+    //   <Link></Link>
+    // </Anchor>
   ));
 
   return (

@@ -92,7 +92,8 @@ export function Header() {
   // ));
 
   return (
-    <Box pb={120}>
+    // <Box pb={120}>
+    <Box pb={30}>
       <header className={classes.header} css={Styles.HeaderStyle}>
         <Group justify="space-between" h="100%">
           <Group>
@@ -108,7 +109,7 @@ export function Header() {
           </Group>
 
           <Group visibleFrom="sm" justify="flex-end" >
-            <Link to="/login">
+            <Link to="/">
               <Button
                 rightSection={<LoginIcon size={18} />}
                 variant="outline"
