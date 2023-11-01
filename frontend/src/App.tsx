@@ -3,15 +3,16 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-// import { css } from '@emotion/react'
+import { css } from '@emotion/react'
 import  Router from './router/Router'
 
 
-// const Styles = ({
-//   heightstyle: css ({
-//     height: '69vh',
-//   })
-// })
+const Styles = ({
+  heightstyle: css ({
+    // height: '100vh',
+    height: '100%',
+  })
+})
 
 
 function App(): JSX.Element {
@@ -19,8 +20,7 @@ function App(): JSX.Element {
   return (
     <MantineProvider>
       <Header/>
-        <div>
-          {/* <h1  css={Styles.heightstyle} className="text-3xl font-bold underline">Hello world!</h1> */}
+        <div css={Styles.heightstyle}>
           <Router/>
         </div>
       <Footer />
