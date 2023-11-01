@@ -21,6 +21,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -50,43 +51,80 @@ const Login = (props: PaperProps) => {
     }
   };
 
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    console.log(form.setFieldValue)
-    const formData = new FormData();
-    formData.append('user[name]', form.values.name);
-  //   formData.append('user[email]', form.values.email);
-  //   formData.append('user[password]', form.values.password);
-    const email = form.values.email;
-    const password = form.values.password;
+  // const handleSubmit = (event: FormEvent) => {
+  //   event.preventDefault();
+  //   console.log(form.setFieldValue)
+  //   const formData = new FormData();
+  //   formData.append('user[name]', form.values.name);
+  // //   formData.append('user[email]', form.values.email);
+  // //   formData.append('user[password]', form.values.password);
+  //   const email = form.values.email;
+  //   const password = form.values.password;
+  
+  //   if (type === 'register' ){
+  //     createUserWithEmailAndPassword(auth, email, password)
+  //       .then(async(result) => {
+  //         const user = await result.user
+  //         const token = await user.getIdToken(true)
+  //         const config =  { 'Authorization': `Bearer ${token}` };
 
-    if (type === 'register' ){
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async(result) => {
-          const user = await result.user
-          const token = await user.getIdToken(true)
-          const config =  { 'Authorization': `Bearer ${token}` };
+  //         axios.post("http://localhost:3000/api/v1/users", formData, { headers: config })
+  //         .then(() => {
+  //           console.log('サインアップ成功！');
+  //           navigate('/');
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //       });
+  //   }else{
+  //     signInWithEmailAndPassword(auth, email, password)
+  //       .then((user) => {
+  //         navigate('/');
+  //         console.log(user);
+  //         console.log('ログイン成功！');
+  //       })
+  //       .catch((error) => {
+  //         const errorCode = error.code;
+  //         const errorMessage = error.message;
+  //         console.log('ログイン失敗！');
+  //         console.log(errorCode);
+  //         console.log(errorMessage);
+  //         alert('ログインに失敗しました');
+  //       });
+  //   }
+  // };
 
-          axios.post("http://localhost:3000/api/v1/users", formData, { headers: config })
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-    }else{
-      signInWithEmailAndPassword(auth, email, password)
-        .then((user) => {
-            console.log('ログイン成功！');
-            console.log(user);
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log('ログイン失敗！');
-            console.log(errorCode);
-            console.log(errorMessage);
-            alert('ログインに失敗しました');
-        });
+  const handleSubmit = async (event: FormEvent) => {
+  event.preventDefault();
+  const formData = new FormData();
+  formData.append('user[name]', form.values.name);
+
+  const email = form.values.email;
+  const password = form.values.password;
+
+  try {
+    if (type === 'register') {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const token = await user.user.getIdToken(true);
+
+      const config = { headers: { 'Authorization': `Bearer ${token}` } };
+
+      await axios.post("http://localhost:3000/api/v1/users", formData, config);
+      console.log('サインアップ成功！');
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('ログイン成功！');
+    }
+
+    navigate('/');
+    } catch (error) {
+      console.log('エラー:', error);
+      console.log('エラーコード:', error.code);
+      console.log('エラーメッセージ:', error.message);
+      alert('エラーが発生しました: ' + error.message);
     }
   };
 
