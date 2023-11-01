@@ -4,15 +4,18 @@ import App from './App.tsx'
 import './index.css'
 import 'tailwindcss/tailwind.css'
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext';
+import { AuthContextProvider } from './context/AuthContext';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider>
+    {/* <AuthProvider> */}
+    <AuthContextProvider>
       <BrowserRouter>
           <App />
       </BrowserRouter>
-    </AuthProvider>
+    {/* </AuthProvider> */}
+    </AuthContextProvider>
   </React.StrictMode>,
 )
