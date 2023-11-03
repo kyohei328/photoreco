@@ -1,29 +1,25 @@
-module Api
-  module V1
-    class UsersController < ApplicationController
-      include FirebaseAuthConcern
-      before_action :set_auth, only: %i[create update]
+class Api::V1::UsersController < ApplicationController
+  # include FirebaseAuthConcern
+  before_action :set_auth, only: %i[create update]
 
-      include CreateUserConcern
-      def create
-        # binding.pry
-        create_user(@auth, user_params)
-      end
+  include CreateUserConcern
+  def create
+    # binding.pry
+    create_user(@auth, user_params)
+  end
 
-      # include UpdateUserConcern
-      def update
-        update_user(@auth)
-      end
+  # include UpdateUserConcern
+  def update
+    update_user(@auth)
+  end
 
-      private
+  private
 
-      def set_auth
-        @auth = authenticate_token_by_firebase
-      end
+  # def set_auth
+  #   @auth = authenticate_token_by_firebase
+  # end
 
-      def user_params
-        params.require(:user).permit(:name, :self_introduction)
-      end
-    end
+  def user_params
+    params.require(:user).permit(:name, :self_introduction)
   end
 end

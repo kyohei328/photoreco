@@ -22,6 +22,7 @@ import classes from '../assets/HeaderMegaMenu.module.css';
 import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
 import { Link } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext'
 
 
 const Styles = {
@@ -91,9 +92,11 @@ export function Header() {
   //   </UnstyledButton>
   // ));
 
+  const { logOut, user } = UserAuth();
+
   return (
     // <Box pb={120}>
-    <Box pb={50}>
+    <Box pb={30}>
       <header className={classes.header} css={Styles.HeaderStyle}>
         <Group justify="space-between" h="100%">
           <Group>
@@ -109,7 +112,15 @@ export function Header() {
           </Group>
 
           <Group visibleFrom="sm" justify="flex-end" >
-            <Link to="/">
+          {user ? (
+            <Button
+              variant="outline"
+              onClick={logOut}
+            >
+              ログアウト
+            </Button>
+            ) : (
+            <Link to="/login">
               <Button
                 rightSection={<LoginIcon size={18} />}
                 variant="outline"
@@ -118,7 +129,7 @@ export function Header() {
                 ログイン
               </Button>
             </Link>
-            {/* <Button variant="outline">サインアップ</Button> */}
+            )}
           </Group>
 
           {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}

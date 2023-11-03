@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useToggle, upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
@@ -40,18 +40,27 @@ const Login = (props: PaperProps) => {
     },
   });
 
-  const { googleSignIn, user } = UserAuth();
-  // const navigate = useNavigate();
+  const { googleSignIn, user, logOut } = UserAuth();
+  const navigate = useNavigate();
+
 
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
+      // await googleSignIn();
+      // await waitForPopupClose();
+      // navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      // current_userがtrueの場合、ページ遷移を行う
+      navigate('/');
+    }
+  }, [user]);
 
   // const handleSubmit = (event: FormEvent) => {
   //   event.preventDefault();
@@ -119,7 +128,7 @@ const Login = (props: PaperProps) => {
       console.log('ログイン成功！');
     }
 
-    navigate('/');
+    // navigate('/');
     } catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);
@@ -127,6 +136,8 @@ const Login = (props: PaperProps) => {
       alert('エラーが発生しました: ' + error.message);
     }
   };
+
+
 
   return (
     <Container size={520} my={40}>
