@@ -4,7 +4,8 @@ RUN apt-get update -qq && \
   build-essential \
   libpq-dev \
   nodejs \
-  default-mysql-client
+  default-mysql-client \
+  libimage-exiftool-perl
 RUN mkdir /app
 WORKDIR /app
 ADD Gemfile /app/Gemfile

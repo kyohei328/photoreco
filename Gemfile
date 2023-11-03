@@ -22,4 +22,6 @@ gem 'rack-cors'
 gem 'pry-byebug'
 gem 'pry-rails'
 
-gem 'firebase-auth-rails'
+# 画像情報 取得
+gem 'mini_exiftool'
+gem 'exifr'
