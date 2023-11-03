@@ -17,7 +17,7 @@ const Styles = {
 const links = [
   { link: '#', label: 'お問い合わせ' },
   { link: "/privacy-policy", label: 'プライバシーポリシー' },
-  { link: '#', label: '利用規約' },
+  { link: '/terms-of-use', label: '利用規約' },
 ];
 
 export function Footer() {

@@ -93,7 +93,7 @@ export function Header() {
 
   return (
     // <Box pb={120}>
-    <Box pb={30}>
+    <Box pb={50}>
       <header className={classes.header} css={Styles.HeaderStyle}>
         <Group justify="space-between" h="100%">
           <Group>
