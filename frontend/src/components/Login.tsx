@@ -117,6 +117,7 @@ const Login = (props: PaperProps) => {
   try {
     if (type === 'register') {
       const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(user)
       const token = await user.user.getIdToken(true);
 
       const config = { headers: { 'Authorization': `Bearer ${token}` } };

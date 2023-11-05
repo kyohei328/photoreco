@@ -23,6 +23,7 @@ import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
 import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
+import { IconLogout } from '@tabler/icons-react';
 
 
 const Styles = {
@@ -114,6 +115,7 @@ export function Header() {
           <Group visibleFrom="sm" justify="flex-end" >
           {user ? (
             <Button
+              rightSection={<IconLogout size={18} />}
               variant="outline"
               onClick={logOut}
             >

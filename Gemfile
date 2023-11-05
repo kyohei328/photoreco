@@ -25,3 +25,7 @@ gem 'pry-rails'
 # 画像情報 取得
 gem 'mini_exiftool'
 gem 'exifr'
+
+# 画像アップロード
+gem 'aws-sdk-s3'
+

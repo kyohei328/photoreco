@@ -36,3 +36,5 @@
 /frontend/.env
 
 /AWSCLIV2.pkg
+
+/config/credentials.yml.enc

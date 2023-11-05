@@ -2,7 +2,7 @@ class Api::V1::PhotosController < ApplicationController
   require 'mini_exiftool'
   require 'exifr/jpeg'
 
-  before_action :authenticate, only: %i[create update destroy]
+  skip_before_action :set_auth, only: %i [index]
 
   def index
 
