@@ -1,0 +1,29 @@
+.mantine-FileInput-input{
+  background-color: #F1F3F5;
+}
+
+.mantine-InputPlaceholder-placeholder{
+  color: 	#555555;
+}
+
+.mantine-FileInput-description{
+  /* color: black; */
+  font-weight: normal;
+  font-size: '14px';
+  color: gray;
+  text-indent: 0.75rem;
+}
+
+.mantine-FileInput-input{
+  text-align: center;
+}
+
+.mantine-FileInput-label{
+  color: black;
+  /* font-weight: bolder; */
+}
+
+.mantine-Textarea-input{
+  height: 12em;
+}
+

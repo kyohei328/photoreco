@@ -4,7 +4,7 @@ module Api
       extend ActiveSupport::Concern
 
       def create_user(auth, user_params)
-        # binding.pry
+        binding.pry
         render json: auth, status: :unauthorized and return unless auth[:data]
 
         uid = auth[:data][:uid]
@@ -23,3 +23,4 @@ module Api
     end
   end
 end
+

@@ -1,8 +1,8 @@
 class Api::V1::UsersController < ApplicationController
   # include FirebaseAuthConcern
-  before_action :set_auth, only: %i[create update]
+  # binding.pry
 
-  include CreateUserConcern
+  include Api::V1::CreateUserConcern
   def create
     # binding.pry
     create_user(@auth, user_params)
