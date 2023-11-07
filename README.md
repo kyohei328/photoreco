@@ -67,11 +67,11 @@ PhotoSpaceでは、上記の課題を解決するため、高品質な写真の�
 - Ruby on Rails(APIモード)
 ### インフラ
 - AWS
- - ECR
- - ECS
- - S3
- - Route53
- - RDS
+  - ECR
+  - ECS
+  - S3
+  - Route53
+  - RDS
 ### CI/CD
 - GitHub Actions
   
