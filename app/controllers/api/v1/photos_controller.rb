@@ -2,14 +2,19 @@ class Api::V1::PhotosController < ApplicationController
   require 'mini_exiftool'
   require 'exifr/jpeg'
 
-  skip_before_action :set_auth, only: %i [index]
+
+
+  before_action :authenticate, only: %i[create update destroy]
+
+  skip_before_action :set_auth, only: %i[index latest]
 
   def index
 
   end
 
   def create
-    photo = current_user.pohots.build(photo_params)
+    
+    photo = @current_user.photos.build(photo_params)
     add_Exif_to_photo(photo, params[:photo][:photo_img])
 
     if photo.save
@@ -23,7 +28,7 @@ class Api::V1::PhotosController < ApplicationController
 
   end
 
-  def desrtroy
+  def destroy
 
   end
 
@@ -40,15 +45,15 @@ class Api::V1::PhotosController < ApplicationController
 
   # リファクタリング必要
   def add_Exif_to_photo(photo, uploard_image)
+    
     tempfile = Tempfile.new
     tempfile.binmode
-    tempfile.write(uploaded_image.read)
+    tempfile.write(uploard_image.read)
     tempfile.rewind
-
     exif = MiniExiftool.new(tempfile)
 
     tempfile.rewind
-    exir_data = EXIFR::JPEG.new(tempfile)
+    exif_data = EXIFR::JPEG.new(tempfile)
 
     tempfile.close
     tempfile.unlink
@@ -61,6 +66,7 @@ class Api::V1::PhotosController < ApplicationController
       longitude = nil
     end
 
+    # binding.pry
     photo.assign_attributes(
       gps_latitude: latitude,
       gps_longitude: longitude,
