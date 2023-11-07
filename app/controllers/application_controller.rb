@@ -11,7 +11,6 @@ class ApplicationController < ActionController::API
   #   logger.error "Error in authenticate_user: #{e.message}"
   #   render json: { error: 'Not Authorized' }, status: :unauthorized
   # end
-
   before_action :set_auth
 
   def authenticate
