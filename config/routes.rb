@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[create desrtroy update]
       resources :photos
-      get 'latest', to: 'photos#latest'
+      resources :contests
+      get 'latest', to: 'contests#latest'
     end
   end
 end
