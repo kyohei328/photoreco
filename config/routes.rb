@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :photos
       resources :contests
       get 'latest', to: 'contests#latest'
+      get 'top', to: 'top#index'
     end
   end
 end

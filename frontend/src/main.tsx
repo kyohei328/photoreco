@@ -6,6 +6,7 @@ import 'tailwindcss/tailwind.css'
 import { BrowserRouter } from 'react-router-dom';
 // import { AuthProvider } from './context/AuthContext';
 import { AuthContextProvider } from './context/AuthContext';
+import { ImageContextProvider } from './context/TodayPhotosContext';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -13,9 +14,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   {/* <React.StrictMode> */}
     {/* <AuthProvider> */}
     <AuthContextProvider>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
+      <ImageContextProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+      </ImageContextProvider>
     </AuthContextProvider>
       {/* </AuthProvider> */}
   {/* </React.StrictMode>, */}

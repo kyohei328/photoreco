@@ -10,12 +10,14 @@ gem 'webrick', '~> 1.7'
 # db
 gem 'mysql2'
 
+# Token検証
 gem 'jwt'
 gem 'dotenv-rails'
 
 # json
 gem 'fast_jsonapi'
 
+# 通信設定
 gem 'rack-cors'
 
 # debug
@@ -29,3 +31,5 @@ gem 'exifr'
 # 画像アップロード
 gem 'aws-sdk-s3'
 
+# タスク
+gem 'whenever'
