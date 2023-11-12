@@ -7,7 +7,7 @@ class Api::V1::PhotosController < ApplicationController
   skip_before_action :set_auth, only: %i[index latest]
 
   def index
-
+    
   end
 
   def create
