@@ -23,7 +23,7 @@ import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
 import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
-import { IconLogout } from '@tabler/icons-react';
+import { IconLogout, IconUpload } from '@tabler/icons-react';
 
 
 const Styles = {
@@ -114,13 +114,24 @@ export function Header() {
 
           <Group visibleFrom="sm" justify="flex-end" >
           {user ? (
-            <Button
-              rightSection={<IconLogout size={18} />}
-              variant="outline"
-              onClick={logOut}
-            >
-              ログアウト
-            </Button>
+            <div>
+            <Link to="/photos/new" className='mr-4'>
+              <Button
+                rightSection={<IconUpload size={18} />}
+                variant="outline"
+                color="rgba(59, 59, 59, 1)"
+              >
+              アップロード
+              </Button>
+            </Link>
+              <Button
+                rightSection={<IconLogout size={18} />}
+                variant="outline"
+                onClick={logOut}
+              >
+                ログアウト
+              </Button>
+            </div>
             ) : (
             <Link to="/login">
               <Button
