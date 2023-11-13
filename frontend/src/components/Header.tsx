@@ -24,7 +24,8 @@ import { LoginIcon } from '../icons/LoginIcon';
 import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
 import { IconLogout, IconUpload } from '@tabler/icons-react';
-
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Styles = {
   LogoStyle: css ({
@@ -35,7 +36,11 @@ const Styles = {
   }),
   HeaderStyle: css ({
     backgroundColor: '#F1F3F5',
-  })
+  }),
+  SelectedStyles: css({
+    fontWeight: 'bold',
+    textDecoration: 'underline',
+  }),
 }
 
 // const mockdata = [
@@ -94,20 +99,28 @@ export function Header() {
   // ));
 
   const { logOut, user } = UserAuth();
+  const [selectedContents, setSelectedContents] = useState('');
 
+  const location = useLocation();
+  
+ console.log(selectedContents)
   return (
     // <Box pb={120}>
     <Box pb={30}>
       <header className={classes.header} css={Styles.HeaderStyle}>
         <Group justify="space-between" h="100%">
           <Group>
-            <a css={Styles.LogoStyle} href='/'>
+            <a href='/' css={Styles.LogoStyle}>
               Photo Space
             </a>
-            <a href="/photos" className={classes.link}>
+            {/* <a href="/photos" className={classes.link} css={selectedContents === 'photoSearch' && Styles.SelectedStyles}
+              onClick={() => setSelectedContents('photoSearch')}>
+              写真検索
+            </a> */}
+            <a href="/photos" className={classes.link} css={location.pathname === '/photos' && Styles.SelectedStyles}>
               写真検索
             </a>
-            <a href="#" className={classes.link}>
+            <a href="/contest/top" className={classes.link} css={location.pathname === '/contest/top' && Styles.SelectedStyles}>
               コンテスト
             </a>
           </Group>

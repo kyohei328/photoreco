@@ -8,6 +8,7 @@ import AddPhoto from '../components/AddPhoto'
 import AddContest from '../components/AddContest'
 import AddContestConfirm from '../components/AddContestConfirm'
 import IndexPhotos from '../components/IndexPhotos'
+import ContestTop from '../components/ContestTop'
 
 const Router = () => {
   return (
@@ -17,10 +18,10 @@ const Router = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />}/>
       <Route path="/terms-of-use" element={<TermsOfUse />}/>
       <Route path="/photos/new" element={<AddPhoto />}/>
+      <Route path="/contest/top" element={<ContestTop />}/>
       <Route path="/contest/new" element={<AddContest />}/>
       <Route path="/contest/new/confirm" element={<AddContestConfirm />}/>
       <Route path="/photos" element={<IndexPhotos />}/>
-
     </Routes>
   )
 }
