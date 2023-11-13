@@ -5,7 +5,8 @@ class Api::V1::ContestsController < ApplicationController
   skip_before_action :set_auth, only: %i[index latest]
 
   def index
-
+    @contest = Contest.order(created_at: :desc).limit(10)
+    render json: @contest
   end
 
   def create
