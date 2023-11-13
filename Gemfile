@@ -33,3 +33,8 @@ gem 'aws-sdk-s3'
 
 # タスク
 gem 'whenever'
+
+# 検索
+gem 'ransack'
+
+gem 'kaminari'

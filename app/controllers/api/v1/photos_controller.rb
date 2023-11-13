@@ -7,11 +7,20 @@ class Api::V1::PhotosController < ApplicationController
   skip_before_action :set_auth, only: %i[index latest]
 
   def index
-    
+    # binding.pry
+    # @q = Photo.ransack(params[:q])
+    # @photos = @q.result(distinct: true).includes(:user).order(created_at: :desc)
+
+    # render json:  {photos: @photos.map { |photo| image_url(photo)}}
+
+    page = params[:page] || 1
+    per_page = params[:per_page] || 10
+    @photos = Photo.order(created_at: :desc).page(page).per(per_page)
+
+    render json:  {photos: @photos.map { |photo| image_url(photo)}}
   end
 
   def create
-    
     photo = @current_user.photos.build(photo_params)
     add_Exif_to_photo(photo, params[:photo][:photo_img])
 
@@ -43,7 +52,7 @@ class Api::V1::PhotosController < ApplicationController
 
   # リファクタリング必要
   def add_Exif_to_photo(photo, uploard_image)
-    
+
     tempfile = Tempfile.new
     tempfile.binmode
     tempfile.write(uploard_image.read)
@@ -81,4 +90,13 @@ class Api::V1::PhotosController < ApplicationController
       image_size_height: exif.ImageHeight
     )
   end
+
+  def image_url(photo)
+    if photo.respond_to?(:photo_img) && photo.photo_img.attached?
+      rails_blob_url(photo.photo_img)
+    else
+      nil
+    end
+  end
+
 end

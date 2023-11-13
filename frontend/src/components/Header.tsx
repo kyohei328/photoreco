@@ -104,8 +104,8 @@ export function Header() {
             <a css={Styles.LogoStyle} href='/'>
               Photo Space
             </a>
-            <a href="#" className={classes.link}>
-              写真一覧
+            <a href="/photos" className={classes.link}>
+              写真検索
             </a>
             <a href="#" className={classes.link}>
               コンテスト

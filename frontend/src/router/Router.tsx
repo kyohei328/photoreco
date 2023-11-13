@@ -7,6 +7,7 @@ import TermsOfUse from '../components/TermsOfUse'
 import AddPhoto from '../components/AddPhoto'
 import AddContest from '../components/AddContest'
 import AddContestConfirm from '../components/AddContestConfirm'
+import IndexPhotos from '../components/IndexPhotos'
 
 const Router = () => {
   return (
@@ -18,6 +19,8 @@ const Router = () => {
       <Route path="/photos/new" element={<AddPhoto />}/>
       <Route path="/contest/new" element={<AddContest />}/>
       <Route path="/contest/new/confirm" element={<AddContestConfirm />}/>
+      <Route path="/photos" element={<IndexPhotos />}/>
+
     </Routes>
   )
 }
