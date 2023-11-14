@@ -2,7 +2,6 @@ import './App.css'
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer';
 import { css } from '@emotion/react'
 import  Router from './router/Router'
 
@@ -23,7 +22,6 @@ function App(): JSX.Element {
         <div css={Styles.heightstyle}>
           <Router/>
         </div>
-      <Footer />
     </MantineProvider>
   )
 }

@@ -10,7 +10,8 @@ import '../assets/top.css'
 import { UserAuth } from '../context/AuthContext';
 import { useImage } from '../context/TodayPhotosContext';
 import NewArrivalContest from './NewArrivalContest'
-import moment from 'moment';
+import { Footer } from './Footer';
+
 
 const Top = () => {
 
@@ -116,6 +117,7 @@ const Top = () => {
       <div css={Styles.heightstyle} >
         {user ? <p>Email : {user.email}</p> : <p>No user data</p>}
       </div>
+      <Footer />
     </div>
   )
 }

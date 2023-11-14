@@ -15,7 +15,7 @@ const Styles = {
 }
 
 const links = [
-  { link: '#', label: 'お問い合わせ' },
+  { link: 'https://forms.gle/xSBjAgnyJAceHbt26', label: 'お問い合わせ' },
   { link: "/privacy-policy", label: 'プライバシーポリシー' },
   { link: '/terms-of-use', label: '利用規約' },
 ];
