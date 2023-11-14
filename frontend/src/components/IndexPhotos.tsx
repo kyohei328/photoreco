@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
 import { Input, Grid, Button, Select } from '@mantine/core';
-import '../assets/IndexPhoto.css'
 
 
 
