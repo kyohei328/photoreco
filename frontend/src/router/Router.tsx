@@ -9,6 +9,7 @@ import AddContest from '../components/AddContest'
 import AddContestConfirm from '../components/AddContestConfirm'
 import IndexPhotos from '../components/IndexPhotos'
 import ContestTop from '../components/ContestTop'
+import ShowContest from '../components/ShowContest'
 
 const Router = () => {
   return (
@@ -20,8 +21,10 @@ const Router = () => {
       <Route path="/photos/new" element={<AddPhoto />}/>
       <Route path="/contest/top" element={<ContestTop />}/>
       <Route path="/contest/new" element={<AddContest />}/>
+      <Route path="/contest/:id" element={<ShowContest/>}/>
       <Route path="/contest/new/confirm" element={<AddContestConfirm />}/>
       <Route path="/photos" element={<IndexPhotos />}/>
+      
     </Routes>
   )
 }
