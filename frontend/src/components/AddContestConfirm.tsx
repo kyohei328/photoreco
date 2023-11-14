@@ -75,6 +75,12 @@ const AddContestConfirm = () => {
 
   const start_date = moment(formDataObject.start_date).format('YYYY年MM月D日');
   const end_date = moment(formDataObject.end_date).format('YYYY年MM月D日');
+  const endDate = new Date(formDataObject.end_date);
+  // const result_date = new Date(formDataObject.end_date);
+  const result_date = new Date(endDate);
+  result_date.setDate(endDate.getDate() + 3);
+
+  console.log(result_date)
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -84,6 +90,7 @@ const AddContestConfirm = () => {
     formData.append('contest[end_date]', formDataObject.end_date);
     formData.append('contest[department]', formDataObject.department);
     formData.append('contest[entry_conditions]', formDataObject.entry_conditions);
+    formData.append('contest[result_date]', result_date);
     const formObject = {};
     for (var pair of formData.entries()) {
     formObject[pair[0]] = pair[1];
@@ -113,24 +120,23 @@ const AddContestConfirm = () => {
             <table className='min-w-full'>
               <tbody>
                 <tr css={Styles.TableDataStyle}>
-                  <td>タイトル</td>
+                  <td className='indent-10'>タイトル</td>
                   <td className='indent-20'>{formDataObject.title}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td>開催内容</td>
+                  <td className='indent-10'>開催内容</td>
                   <td className='indent-20'>{formDataObject.description}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td>応募期間</td>
-                  {/* <td className='indent-20'>{`${formDataObject.start_date} 〜 ${formDataObject.end_date}`}</td> */}
+                  <td className='indent-10'>応募期間</td>
                   <td className='indent-20'>{`${start_date} 〜 ${end_date}`}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td>開催部門</td>
+                  <td className='indent-10'>開催部門</td>
                   <td className='indent-20'>{formDataObject.departmentLabel}</td>
                 </tr>
                 <tr>
-                  <td>応募条件</td>
+                  <td className='indent-10'>応募条件</td>
                   <td className='indent-20'>{formDataObject.entry_conditions}</td>
                 </tr>
               </tbody>

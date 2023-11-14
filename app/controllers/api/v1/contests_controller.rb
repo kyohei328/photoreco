@@ -2,7 +2,7 @@ class Api::V1::ContestsController < ApplicationController
 
   before_action :authenticate, only: %i[create update destroy]
 
-  skip_before_action :set_auth, only: %i[index latest]
+  skip_before_action :set_auth, only: %i[index latest show]
 
   def index
     @contest = Contest.order(created_at: :desc).limit(10)
@@ -20,6 +20,11 @@ class Api::V1::ContestsController < ApplicationController
 
   def update
 
+  end
+
+  def show
+    @contest = Contest.find(params[:id]).as_json(include: :user)
+    render json: @contest
   end
 
   def destroy

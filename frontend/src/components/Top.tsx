@@ -10,6 +10,7 @@ import '../assets/top.css'
 import { UserAuth } from '../context/AuthContext';
 import { useImage } from '../context/TodayPhotosContext';
 import NewArrivalContest from './NewArrivalContest'
+import moment from 'moment';
 
 const Top = () => {
 
