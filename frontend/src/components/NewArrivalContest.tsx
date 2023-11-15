@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { css } from '@emotion/react'
-import axios from 'axios';
-import { Image, Item } from 'semantic-ui-react'
+import { Item } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import '../assets/top.css'
 import moment from 'moment';
 
-const NewArrivalContest = (props) => {
+const NewArrivalContest = (props: any) => {
    console.log(props)
 
-  const newContests = props.contest.map(contest => (
+  const newContests = props.contest.map((contest: any) => (
 
     <Item key={contest.id}>
     <Item.Image size='tiny' src="https://photospace-image.s3.ap-northeast-1.amazonaws.com/rbkrutko9gmw25bogswl8x0vtul1"/>

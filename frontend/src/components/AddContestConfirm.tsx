@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -50,15 +50,18 @@ const AddContestConfirm = () => {
     }),
   };
 
-
-  const { user } = UserAuth();
+  // const { user } = UserAuth();
+  const { user } =  UserAuth() as { user: object };
 
   const navigate = useNavigate();
 
   const location = useLocation();
   const { state } = location;
 
-  const [formDataObject, setFormDataObject] = useState({});
+  const initialObject = { title:"", description:"", start_date: new Date(), end_date: new Date(), department:"", entry_conditions:"", result_date: new Date()};
+
+  // const [formDataObject, setFormDataObject] = useState({});
+  const [formDataObject, setFormDataObject] = useState(initialObject);
 
   useEffect(() => {
     setFormDataObject(state.formData)
@@ -75,8 +78,8 @@ const AddContestConfirm = () => {
 
   const start_date = moment(formDataObject.start_date).format('YYYY年MM月D日');
   const end_date = moment(formDataObject.end_date).format('YYYY年MM月D日');
+
   const endDate = new Date(formDataObject.end_date);
-  // const result_date = new Date(formDataObject.end_date);
   const result_date = new Date(endDate);
   result_date.setDate(endDate.getDate() + 3);
 
@@ -86,13 +89,15 @@ const AddContestConfirm = () => {
     const formData = new FormData();
     formData.append('contest[title]', formDataObject.title);
     formData.append('contest[description]', formDataObject.description);
-    formData.append('contest[start_date]', formDataObject.start_date);
-    formData.append('contest[end_date]', formDataObject.end_date);
+    formData.append('contest[start_date]', formDataObject.start_date.toISOString());
+    formData.append('contest[end_date]', formDataObject.end_date.toISOString());
     formData.append('contest[department]', formDataObject.department);
     formData.append('contest[entry_conditions]', formDataObject.entry_conditions);
-    formData.append('contest[result_date]', result_date);
-    const formObject = {};
-    for (var pair of formData.entries()) {
+    formData.append('contest[result_date]', result_date.toISOString());
+    // const formObject = {};
+    const formObject: Record<string, any> = {};
+    // for (var pair of formData.entries()) {
+    for (let pair of formData.entries()) {
     formObject[pair[0]] = pair[1];
     }
     console.log(formObject);
@@ -133,7 +138,8 @@ const AddContestConfirm = () => {
                 </tr>
                 <tr css={Styles.TableDataStyle}>
                   <td className='indent-10'>開催部門</td>
-                  <td className='indent-20'>{formDataObject.departmentLabel}</td>
+                  {/* <td className='indent-20'>{formDataObject.departmentLabel}</td> */}
+                  <td className='indent-20'>{formDataObject.department}</td>
                 </tr>
                 <tr>
                   <td className='indent-10'>応募条件</td>

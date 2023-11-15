@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
 import axios from 'axios';
 
 const ImageContext = createContext();
@@ -76,8 +76,8 @@ export const ImageContextProvider = ({ children }) => {
         console.log(images);
       }catch(error) {
         console.log('エラー:', error);
-        console.log('エラーコード:', error.code);
-        console.log('エラーメッセージ:', error.message);
+        console.log('エラーコード:', (error as any).code);
+        console.log('エラーメッセージ:', (error as any).message);
         // alert('エラーが発生しました: ' + error.message);
       }
   };

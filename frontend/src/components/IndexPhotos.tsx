@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
 import { Input, Grid, Button, Select } from '@mantine/core';
@@ -36,7 +36,7 @@ const IndexPhotos = () => {
     }),
   }
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<any[]>([]);
   const [page, setPage] = useState(1);
 
   // useEffect (() => {

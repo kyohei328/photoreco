@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { UserAuth } from '../context/AuthContext';
-import { Button, Group } from '@mantine/core';
+import { useParams } from 'react-router-dom'
+import { Button } from '@mantine/core';
 import moment from 'moment';
 
 const ShowContest = () => {
