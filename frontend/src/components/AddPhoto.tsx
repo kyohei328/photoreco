@@ -1,9 +1,8 @@
 
-import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { css } from '@emotion/react'
-import { FileInput, TextInput, Textarea, Select, TagsInput, Group, Button } from '@mantine/core';
+import { FileInput, TextInput, Textarea, Group, Button } from '@mantine/core';
 import '../assets/AddPhoto.css'
 import { IconUpload } from '@tabler/icons-react';
 import { Link } from 'react-router-dom'
@@ -13,7 +12,7 @@ import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('作品名は必須です'),
-  photo_img: Yup.string().required('作品名は必須です'),
+  photo_img: Yup.string().required('写真を選択してください'),
 
 });
 
@@ -56,7 +55,7 @@ const AddPhoto = () => {
     }),
   }
 
-  const { user } = UserAuth();
+  const { user } =  UserAuth() as { user: object };
   const navigate = useNavigate();
 
   const form = useForm({
@@ -67,7 +66,7 @@ const AddPhoto = () => {
     },
   });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: any) => {
 
     const formData = new FormData();
       formData.append('photo[title]',  values.title);
@@ -83,9 +82,17 @@ const AddPhoto = () => {
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);
-      console.log('エラーコード:', error.code);
-      console.log('エラーメッセージ:', error.message);
-      alert('エラーが発生しました: ' + error.message);
+      console.log('エラーコード:', (error as any).code);
+      console.log('エラーメッセージ:', (error as any).message);
+      // alert('エラーが発生しました: ' + error.message);
+      if (error.response) {
+        // サーバーからのレスポンスがある場合
+        const errorMessage = error.response.data.errors[0]; // エラーメッセージの取得
+        alert(errorMessage); // アラートでメッセージを表示
+      } else {
+        // サーバーからのレスポンスがない場合
+        alert('エラーが発生しました');
+      }
     }
   };
 
@@ -97,7 +104,7 @@ const AddPhoto = () => {
         <div>
           <FileInput
             label="作品写真"
-            description="※アップロードできる１枚あたりの容量 [ ○○MB以下 ]"
+            description="※アップロードできる１枚あたりの容量 [ 40MB以下 ]"
             withAsterisk
             size="md"
             radius="sm"

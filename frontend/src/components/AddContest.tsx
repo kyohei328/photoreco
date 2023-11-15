@@ -1,9 +1,7 @@
-import React from 'react'
-import { css } from '@emotion/react'
+import { css } from '@emotion/react';
 import { TextInput, Textarea, Select, Group, Button, rem } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { Link, useNavigate } from 'react-router-dom'
-import { UserAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom'
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
 import '@mantine/dates/styles.css';
@@ -64,7 +62,7 @@ const AddContest = () => {
     },
   });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values: any) => {
     // const formData = new FormData();
     // formData.append('contest[title]',  values.title);
     // formData.append('contest[description]',  values.description);

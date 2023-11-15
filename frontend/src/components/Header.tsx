@@ -1,23 +1,4 @@
-import {
-  Group,
-  Button,
-  // UnstyledButton,
-  // Text,
-  // ThemeIcon,
-  Box,
-  // Burger,
-  // rem,
-  // useMantineTheme,
-} from '@mantine/core';
-// import { useDisclosure } from '@mantine/hooks';
-// import {
-//   IconNotification,
-//   IconCode,
-//   IconBook,
-//   IconChartPie3,
-//   IconFingerprint,
-//   IconCoin,
-// } from '@tabler/icons-react';
+import {Group, Button, Box} from '@mantine/core';
 import classes from '../assets/HeaderMegaMenu.module.css';
 import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';

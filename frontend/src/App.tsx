@@ -1,20 +1,22 @@
 import './App.css'
-import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
 import { Header } from './components/Header';
 import { css } from '@emotion/react'
 import  Router from './router/Router'
 
 
-const Styles = ({
-  heightstyle: css ({
-    // height: '100vh',
-    height: '100%',
-  })
-})
 
 
 function App(): JSX.Element {
+
+  const Styles = ({
+    heightstyle: css ({
+      // height: '100vh',
+      height: '100%',
+    })
+  })
+  
 
   return (
     <MantineProvider>

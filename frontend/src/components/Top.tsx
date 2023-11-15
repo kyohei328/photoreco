@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios';
 import '../assets/embla.css'
 import EmblaCarousel from './EmblaCarousel'
 import { EmblaOptionsType } from 'embla-carousel-react'
-import { Image, Item } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import '../assets/top.css'
 import { UserAuth } from '../context/AuthContext';
@@ -56,7 +55,7 @@ const Top = () => {
     }),
   })
 
-  const { user } = UserAuth();
+  const { user } =  UserAuth() as { user: object };
   const { images } = useImage();
   console.log(images)
 
@@ -84,7 +83,7 @@ const Top = () => {
   
   console.log(newArrivalContest)
 
-  const selectDepartment = (department) => {
+  const selectDepartment = (department: any) => {
     setSelectContest(newArrivalContest[department]);
     setSelectedDepartment(department);
   };
@@ -102,12 +101,12 @@ const Top = () => {
         <h1 css={Styles.TitleStyle}>新着コンテスト</h1>
         <div className='flex justify-around mb-5'>
           <p css={[Styles.SelectStyles, selectedDepartment === 'new_entertainment_contests' && Styles.SelectedStyles]}
-             onClick={() => selectDepartment('new_entertainment_contests')}
+            onClick={() => selectDepartment('new_entertainment_contests')}
           >
             エンタメ部門
           </p>
           <p css={[Styles.SelectStyles, selectedDepartment === 'new_serious_contests' && Styles.SelectedStyles]}
-             onClick={() => selectDepartment('new_serious_contests')}
+            onClick={() => selectDepartment('new_serious_contests')}
           >
             キレイ部門
           </p>

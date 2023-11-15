@@ -7,15 +7,17 @@ export default defineConfig({
     open: true, // yarn dev でブラウザが自動で開かれる
     // origin: 'http://localhost:3001',
     port: 3001,
-    // headers: {
-    //   'Cross-Origin-Opener-Policy': 'same-origin; allow-popups',
-    // },
   },
   plugins: [react({
     jsxImportSource: '@emotion/react',
-  })],
+    }),
+  ] ,
   define: {
     global: 'window',
   },
-})
-
+  build: {
+    outDir: 'build',
+    rollupOptions: {
+    },
+  }
+});
