@@ -24,6 +24,7 @@ const Router = () => {
       <Route path="/contest/new/confirm" element={<AddContestConfirm />}/>
       <Route path="/photos" element={<IndexPhotos />}/>
       
+      
     </Routes>
   )
 }

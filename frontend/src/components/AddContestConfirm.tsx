@@ -104,6 +104,7 @@ const AddContestConfirm = () => {
 
     try {
       const token = await user.getIdToken(true);
+      console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
 
       await axios.post("http://localhost:3000/api/v1/contests", formData, config);

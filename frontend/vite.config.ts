@@ -12,9 +12,9 @@ export default defineConfig({
     jsxImportSource: '@emotion/react',
     }),
   ] ,
-  define: {
-    global: 'window',
-  },
+  // define: {
+  //   global: 'window',
+  // },
   build: {
     outDir: 'build',
     rollupOptions: {

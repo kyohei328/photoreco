@@ -14,6 +14,7 @@ class ApplicationController < ActionController::API
   before_action :set_auth
 
   def authenticate
+    # binding.pry
     uid = @auth[:data][:uid]
     @current_user = User.find_by!(uid: uid)
   rescue => e

@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
 
 });
 
-const AddPhoto = () => {
+const AddPhoto = (props: any) => {
   const Styles = {
     LogoStyle: css ({
       fontSize: '18px',
@@ -77,10 +77,20 @@ const AddPhoto = () => {
     try {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
+      const resp = await axios.post("http://localhost:3000/api/v1/photos", formData, config);
+      console.log(resp)
 
-      await axios.post("http://localhost:3000/api/v1/photos", formData, config);
-      navigate('/')
-    } catch (error) {
+      if (props.contest) {
+        const data = {
+          contest_id: props.contest.id,
+          photo_id: resp.data.id,
+        };
+        console.log(data)
+        await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+      }
+
+        navigate('/')
+      }catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', (error as any).code);
       console.log('エラーメッセージ:', (error as any).message);

@@ -75,7 +75,7 @@ const AddContest = () => {
     // }
     // console.log(formDataObject);
 
-    const selectedDepartment = enumOptions.find((option) => option.value === values.department);
+    // const selectedDepartment = enumOptions.find((option) => option.value === values.department);
 
     const formData = {
       title: values.title,
@@ -83,7 +83,7 @@ const AddContest = () => {
       start_date: values.start_date,
       end_date: values.end_date,
       department: values.department,
-      departmentLabel: selectedDepartment ? selectedDepartment.label : '',
+      // departmentLabel: selectedDepartment ? selectedDepartment.label : '',
       entry_conditions: values.entry_conditions,
     };
     console.log(formData)
@@ -132,8 +132,8 @@ const AddContest = () => {
             css={Styles.InputBoxStyle}
             label="開催部門"
             placeholder="部門を選択"
-            // data={['エンタメ部門', 'キレイ部門']}
-            data={enumOptions}
+            data={['エンタメ部門', 'キレイ部門']}
+            // data={enumOptions}
             {...form.getInputProps('department')}
           />
           <TextInput
