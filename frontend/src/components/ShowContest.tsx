@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { useParams } from 'react-router-dom'
-import { Button } from '@mantine/core';
+import { Link, useParams } from 'react-router-dom'
+import { Button, Modal, Group } from '@mantine/core';
 import moment from 'moment';
+import EntryContestModal from './EntryContestModal';
+import AddPhoto from './AddPhoto';
+
 
 const ShowContest = () => {
 
@@ -50,6 +53,7 @@ const ShowContest = () => {
 
   const [contest, setContest] = useState({});
   const [postUser, setPostUser] = useState({});
+  const [noTransitionOpened, setNoTransitionOpened] = useState(false);
 
   const { id } = useParams();
 
@@ -71,6 +75,8 @@ const ShowContest = () => {
 
   const start_date = moment(contest.start_date).format('YYYY年MM月D日');
   const end_date = moment(contest.end_date).format('YYYY年MM月D日');
+
+  
 
   return (
     <div css={Styles.ContainerStyle}>
@@ -108,12 +114,23 @@ const ShowContest = () => {
         </table>
       </div>
       <div className='mt-5 text-center'>
-        <Button
-          variant="outline"
-          color="rgba(59, 59, 59, 1)"
-        >
-          応募する
-        </Button>
+      <Modal
+        opened={noTransitionOpened}
+        onClose={() => setNoTransitionOpened(false)}
+        transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
+        size="80%"
+      >
+        <EntryContestModal user={postUser} contest={contest}/>
+      </Modal>
+        {/* <Link to='/contest/entry'> */}
+          <Button
+            onClick={() => setNoTransitionOpened(true)} variant="default"
+            // variant="outline"
+            color="rgba(59, 59, 59, 1)"
+          >
+            応募する
+          </Button>
+        {/* </Link> */}
       </div>
     </div>
 </div>
