@@ -3,6 +3,7 @@ import axios from 'axios'
 import { css } from '@emotion/react'
 import { Input, Grid, Button, Select, Checkbox } from '@mantine/core';
 import NewArrivalContest from './NewArrivalContest'
+import { Link } from 'react-router-dom';
 
 const ContestTop = () => {
 
@@ -33,7 +34,6 @@ const ContestTop = () => {
       fontWeight: 'bold',
       textAlign: 'center',
       marginBottom: '10px',
-      marginTop: '10rem',
     }),
     TitleStyle: css({
       borderBottom: '1px solid #CCCCCC',
@@ -104,7 +104,17 @@ const ContestTop = () => {
         </Grid>
       </div>
       </section>
-      <section className='my-5'>
+      <section className='my-5 '>
+        <div className='text-right px-6'>
+          <Link to='/contest/new'>
+            <Button
+              variant="outline"
+              color="rgba(59, 59, 59, 1)"
+            >
+            コンテストを開催する
+            </Button>
+          </Link>
+        </div>
         <h3 css={Styles.LogoStyle}>応募中のコンテスト</h3>
         <div css={Styles.TitleStyle}></div>
         <div className='my-5'>
