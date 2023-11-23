@@ -1,4 +1,5 @@
-FROM nginx:1.21.3
+# FROM nginx:1.21.3
+FROM arm64v8/nginx:1.21.3
 RUN apt-get update && \
   apt-get install -y apt-utils \
   locales && \

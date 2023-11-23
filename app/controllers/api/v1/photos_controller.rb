@@ -17,7 +17,7 @@ class Api::V1::PhotosController < ApplicationController
     per_page = params[:per_page] || 10
     @photos = Photo.order(created_at: :desc).page(page).per(per_page)
 
-    render json:  {photos: @photos.map { |photo| image_url(photo)}}
+    render json:  { photos: @photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
   end
 
   def create
@@ -29,6 +29,11 @@ class Api::V1::PhotosController < ApplicationController
     else
       render json: { errors: photo.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def show
+    photo = Photo.find(params[:id])
+    render json: { photo: photo.as_json(include: :user), photo_url: image_url(photo) }
   end
 
   def update
@@ -59,6 +64,8 @@ class Api::V1::PhotosController < ApplicationController
     tempfile.rewind
     exif = MiniExiftool.new(tempfile)
 
+    binding.pry
+
     tempfile.rewind
     exif_data = EXIFR::JPEG.new(tempfile)
 
@@ -77,7 +84,9 @@ class Api::V1::PhotosController < ApplicationController
     photo.assign_attributes(
       gps_latitude: latitude,
       gps_longitude: longitude,
+      camera_make: exif.Make,
       camera: exif.Model,
+      lens_make: exif.LensMake,
       lens: exif.Lens,
       ISO_sensitivity: exif.ISO,
       shutter_speed: exif.ExposureTime,
