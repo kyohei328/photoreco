@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
 import { Input, Grid, Button, Select } from '@mantine/core';
+import { Link } from 'react-router-dom'
 
 
 
@@ -52,12 +53,24 @@ const IndexPhotos = () => {
   // })
   // },[]);
 
-  const indexImages = images.map((image, index) =>(
-    <div key={index} css={Styles.ImageStyle} >
-      <img
-        css={Styles.ImageStyle}
-        src={image}
-      />
+  // const indexImages = images.map((image, index) =>(
+  //   <div key={index} css={Styles.ImageStyle} >
+  //     <Link to={`/photos/${index}`}>
+  //       <img
+  //         css={Styles.ImageStyle}
+  //         src={image}
+  //       />
+  //     </Link>
+  //   </div>
+  // ))
+  const indexImages = images.map((image) =>(
+    <div key={image.id} css={Styles.ImageStyle} >
+      <Link to={`/photos/${image.id}`}>
+        <img
+          css={Styles.ImageStyle}
+          src={image.image_url}
+        />
+      </Link>
     </div>
   ))
 

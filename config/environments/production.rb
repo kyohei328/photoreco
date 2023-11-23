@@ -84,4 +84,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # config.hosts << "unicorn"
+  # config.force_ssl = false
+  # config.consider_all_requests_local = true
 end

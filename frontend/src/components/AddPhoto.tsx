@@ -134,7 +134,8 @@ const AddPhoto = (props: any) => {
           <Textarea
             size="md"
             label="作品説明"
-            name="description"
+            // name="description"
+            {...form.getInputProps('description')}
           />
         </div>
     {/* -----別にタスクで追加-------------- */}

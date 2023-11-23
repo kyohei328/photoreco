@@ -1,10 +1,14 @@
 version: '3.8'
 services:
+  # app:
   app:
+    # platform: linux/arm64
+    # platform: linux/x86_64
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bundle exec unicorn -p 3000 -c /app/config/unicorn.rb
+    # command: bundle exec unicorn -p 3000 -c /app/config/unicorn.rb
+    # command: bundle exec unicorn -p 3000 -c /app/config/unicorn.rb -E production
     # command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - '3000:3000'
@@ -23,7 +27,8 @@ services:
     # build:
     #   context: .
     image: mysql:5.7
-    platform: linux/amd64
+    # platform: linux/amd64
+    platform: linux/x86_64
     ports:
       - '3306:3306'
     volumes:
@@ -31,7 +36,7 @@ services:
     extends:
       file: ./mysql/password.yml
       service: password
-  
+
   nginx:
     build:
       context: .
@@ -42,4 +47,4 @@ services:
       - app
 
 volumes:
-   db_data:
+  db_data:

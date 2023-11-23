@@ -9,6 +9,7 @@ import AddContestConfirm from '../components/AddContestConfirm'
 import IndexPhotos from '../components/IndexPhotos'
 import ContestTop from '../components/ContestTop'
 import ShowContest from '../components/ShowContest'
+import ShowPhoto from '../components/ShowPhoto'
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
       <Route path="/privacy-policy" element={<PrivacyPolicy />}/>
       <Route path="/terms-of-use" element={<TermsOfUse />}/>
       <Route path="/photos/new" element={<AddPhoto />}/>
+      <Route path="/photos/:id" element={<ShowPhoto />}/>
       <Route path="/contest/top" element={<ContestTop />}/>
       <Route path="/contest/new" element={<AddContest />}/>
       <Route path="/contest/:id" element={<ShowContest/>}/>
