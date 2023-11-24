@@ -21,6 +21,10 @@ const ShowPhoto = () => {
       marginLeft: '3rem',
       marginRight: '3rem',
     }),
+    ImageStyle: css ({
+      maxHeight: '50vh',
+      objectFit: 'contain',
+    })
     
   };
 
@@ -41,7 +45,7 @@ const ShowPhoto = () => {
     }).catch(error => {
       console.error('Error fetching images:', error);
     })
-  },[])
+  },[]);
 
   const postDate = moment(photoData.created_at).format('YYYY年MM月D日');
 
@@ -50,6 +54,7 @@ const ShowPhoto = () => {
       <section css={Styles.SectionStyle} className='mx-12'>
         <div className='mb-10'>
           <Image
+            css={Styles.ImageStyle}
             className='px-12 mb-5'
             radius="sm"
             src={photoUrl}
@@ -124,7 +129,10 @@ const ShowPhoto = () => {
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6} className='font-bold'>撮影地</Grid.Col>
-            <Grid.Col span={12} className=''><Map/></Grid.Col>
+            {/* <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col> */}
+            {Object.keys(photoData).length > 0 && (
+              <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col>
+            )}
         </Grid>
       </section>
       <section className='mt-10 mx-5 pb-20'>
