@@ -64,8 +64,6 @@ class Api::V1::PhotosController < ApplicationController
     tempfile.rewind
     exif = MiniExiftool.new(tempfile)
 
-    binding.pry
-
     tempfile.rewind
     exif_data = EXIFR::JPEG.new(tempfile)
 
