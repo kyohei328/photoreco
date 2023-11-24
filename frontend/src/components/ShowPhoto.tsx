@@ -118,13 +118,13 @@ const ShowPhoto = () => {
             <Grid.Col span={6} className='font-bold text-zinc-400'>写真カテゴリー</Grid.Col>
             <Grid.Col span={6} className='indent-4'>{photoData.camera_make}</Grid.Col>
             <Grid.Col span={6} ></Grid.Col>
-            <Grid.Col span={6} className='indent-4'>{photoData.camera}</Grid.Col>
+            <Grid.Col span={6} className='indent-6'>{photoData.camera}</Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6} className='indent-4'>{photoData.lens_make}</Grid.Col>
             <Grid.Col span={6} className='font-bold text-zinc-400'>撮影シーン</Grid.Col>
-            <Grid.Col span={6} className='indent-4'>{photoData.lens}</Grid.Col>
+            <Grid.Col span={6} className='indent-6'>{photoData.lens}</Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>

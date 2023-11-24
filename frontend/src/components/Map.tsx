@@ -6,11 +6,6 @@ const containerStyle = {
   width: "100%",
 };
 
-// const markerPosition = {
-//   lat: 42.793444,
-//   lng: 142.877983,
-// };
-
 const Map = (props) => {
 
   const { photo } = props;
@@ -34,10 +29,6 @@ const Map = (props) => {
   const infoWindowOptions = {
     pixelOffset: size,
   };
-  // const createOffsetSize = () => {
-  //   // return setSize(new window.google.maps.Size(0, -45));
-  //   return setSize(new window.google.maps.Size(0, -45));
-  // };
 
   const createOffsetSize = () => {
     if (window.google && window.google.maps) {
