@@ -6,7 +6,6 @@ import { UserAuth } from '../context/AuthContext';
 import { Button, Group } from '@mantine/core';
 import moment from 'moment';
 
-
 const AddContestConfirm = () => {
 
   const Styles = {

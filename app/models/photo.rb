@@ -4,6 +4,7 @@ class Photo < ApplicationRecord
   has_one_attached :photo_img
 
   has_many :contest_entries
+  has_many :votes
 
   validates :title, presence: true
   validate :validate_attachment_size
