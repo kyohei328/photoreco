@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :photos
       resources :contests
       resources :contest_entries, only: %i[index create destroy]
+      resources :votes
       get 'latest', to: 'contests#latest'
       get 'top', to: 'top#index'
     end

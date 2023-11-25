@@ -5,8 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Button, Modal, Group } from '@mantine/core';
 import moment from 'moment';
 import EntryContestModal from './EntryContestModal';
-import AddPhoto from './AddPhoto';
-
+import VoteContestModal from './VoteContestModal';
 
 const ShowContest = () => {
 
@@ -53,7 +52,9 @@ const ShowContest = () => {
 
   const [contest, setContest] = useState({});
   const [postUser, setPostUser] = useState({});
-  const [noTransitionOpened, setNoTransitionOpened] = useState(false);
+  // const [noTransitionOpened, setNoTransitionOpened] = useState(false);
+  const [entryContestOpened, setEntryContestOpened] = useState(false);
+  const [voteContestOpened, setVoteContestOpened] = useState(false);
 
   const { id } = useParams();
 
@@ -115,22 +116,45 @@ const ShowContest = () => {
       </div>
       <div className='mt-5 text-center'>
       <Modal
-        opened={noTransitionOpened}
-        onClose={() => setNoTransitionOpened(false)}
+        opened={entryContestOpened}
+        onClose={() => setEntryContestOpened(false)}
         transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
         size="80%"
       >
         <EntryContestModal user={postUser} contest={contest}/>
       </Modal>
-        {/* <Link to='/contest/entry'> */}
+      <Modal
+        opened={voteContestOpened}
+        onClose={() => setVoteContestOpened(false)}
+        transitionProps={{ transition: 'fade', duration: 600, timingFunction: 'linear' }}
+        size="80%"
+      >
+        <VoteContestModal contestId={id}/>
+      </Modal>
           <Button
+            className='mx-32'
+            onClick={() => setVoteContestOpened(true)} variant="default"
+            // variant="outline"
+            color="rgba(59, 59, 59, 1)"
+          >
+            投票する
+          </Button>
+          {/* <Button
+            className='mx-32'
             onClick={() => setNoTransitionOpened(true)} variant="default"
             // variant="outline"
             color="rgba(59, 59, 59, 1)"
           >
             応募する
+          </Button> */}
+          <Button
+            className='mx-32'
+            onClick={() => setEntryContestOpened(true)} variant="default"
+            // variant="outline"
+            color="rgba(59, 59, 59, 1)"
+          >
+            応募する
           </Button>
-        {/* </Link> */}
       </div>
     </div>
 </div>
