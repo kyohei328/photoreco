@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :contests
   has_many :contest_entries
   has_many :votes
+  has_many :likes, dependent: :destroy
+  has_many :like_photos, through: :likes, source: :photo
 
   validates :email, presence: true
 
@@ -13,9 +15,19 @@ class User < ApplicationRecord
   end
 
   def create_vote(photo, contest, vote_params)
-    contest_entry = ContestEntry.new(user: self, photo: photo, contest: contest)
-    contest_entry.save
+    vote = Vote.new(user: self, photo: photo, contest: contest, )
+    vote.save
   end
 
+  def like(photo)
+    like_photos << photo
+  end
 
+  def unlike(photo)
+    like_photos.destroy(photo)
+  end
+
+  def like?(photo)
+    like_photos.include?(photo)
+  end
 end

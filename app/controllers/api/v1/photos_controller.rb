@@ -2,7 +2,7 @@ class Api::V1::PhotosController < ApplicationController
   require 'mini_exiftool'
   require 'exifr/jpeg'
 
-  before_action :authenticate, only: %i[create update destroy]
+  before_action :authenticate, only: %i[create update destroy likes]
 
   skip_before_action :set_auth, only: %i[index latest]
 
@@ -42,6 +42,21 @@ class Api::V1::PhotosController < ApplicationController
 
   def destroy
 
+  end
+
+  def likes
+    photo = Photo.find(params[:photo_id])
+    like_stauts = @current_user.like?(photo)
+    like = Like.find_by(photo: photo, user: @current_user)
+    # binding.pry
+
+    if like
+      render json: { like_stauts: like_stauts, like_id: like.id }
+    else
+      render json: { like_stauts: like_stauts, like_id: nil }
+    end
+
+    # render json: { like_stauts: like_stauts, like_id: like.id }
   end
 
   def latest

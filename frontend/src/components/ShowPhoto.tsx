@@ -1,11 +1,13 @@
+import { UserAuth } from '../context/AuthContext';
 import { Image, Button, Grid, Textarea  } from '@mantine/core';
-import { IconTrash, IconStar,  IconShare3  } from '@tabler/icons-react';
+import { IconTrash, IconStar,  IconShare3, IconStarFilled  } from '@tabler/icons-react';
 import { Link, useParams } from 'react-router-dom';
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import Map from './Map'
+
 
 const ShowPhoto = () => {
 
@@ -24,28 +26,100 @@ const ShowPhoto = () => {
     ImageStyle: css ({
       maxHeight: '50vh',
       objectFit: 'contain',
+    }),
+    LikeStyles: css ({
+      cursor: 'pointer',
     })
-    
   };
-
-  const { id } = useParams();
-  console.log(id)
 
   const [photoData, setPhotoData] = useState({});
   const [photoUrl, setPhotoUrl] = useState({});
-  const [user, setUser] = useState({});
-  
+  const [postUser, setPostUser] = useState({});
+  const [liked, setLiked] = useState(false);
+  const [likedId, setLikedId] = useState();
+
+  const { id } = useParams();
+  const { user } = UserAuth() as { user: object };
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const userData = await UserAuth();
+  //       setUser(userData);
+  //       // userが取得された後の処理をここに追加できます
+  //     } catch (error) {
+  //       console.error('ユーザーデータの取得エラー:', error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []); // 空の依存配列は、コンポーネントのマウント時にのみ実行するようにします
+
+  console.log(user)
+
+  // useEffect (() => {
+  //   const fetchLikeStatus = async () => {
+  //     try {
+  //       const token = await user.getIdToken(true);
+  //       console.log(token)
+  //       const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
+  //       const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
+  //       setLiked(resp.data.like_stauts);
+  //       setLikedId(resp.data.like_id)
+  //       console.log(resp.data)
+  //     } catch (error) {
+  //       console.error('Error fetching like status:', error);
+  //     }
+  //   };
+  //   fetchLikeStatus();
+  // },[id]);
+
+    const fetchLikeStatus = async () => {
+      try {
+        const token = await user.getIdToken(true);
+        console.log(token)
+        const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
+        const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
+        setLiked(resp.data.like_stauts);
+        setLikedId(resp.data.like_id)
+        console.log(resp.data)
+      } catch (error) {
+        console.error('Error fetching like status:', error);
+      }
+    }
+
   useEffect (() => {
     axios.get(`http://localhost:3000/api/v1/photos/${id}`)
     .then(resp => {
       setPhotoData(resp.data.photo)
       setPhotoUrl(resp.data.photo_url)
-      setUser(resp.data.photo.user)
+      setPostUser(resp.data.photo.user)
       console.log(resp.data);
     }).catch(error => {
       console.error('Error fetching images:', error);
-    })
-  },[]);
+    });
+    fetchLikeStatus();
+  },[id]);
+
+
+  const handleLikeToggle = async () => {
+    try {
+      if (liked) {
+        const token = await user.getIdToken(true);
+        console.log(token)
+        const config = { headers: { 'Authorization': `Bearer ${token}` } };
+        await axios.delete(`http://localhost:3000/api/v1/likes/${likedId}`, config);
+      } else {
+        const token = await user.getIdToken(true);
+        console.log(token)
+        const config = { headers: { 'Authorization': `Bearer ${token}` } };
+        await axios.post(`http://localhost:3000/api/v1/likes`, {photo_id: id} ,config);
+      }
+      fetchLikeStatus();
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    }
+  };
 
   const postDate = moment(photoData.created_at).format('YYYY年MM月D日');
 
@@ -68,10 +142,13 @@ const ShowPhoto = () => {
             <Grid.Col span={2}></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
             
-            <Grid.Col span={2.5}>{user.name}</Grid.Col>
+            <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
             <Grid.Col span={2.5}>{postDate}</Grid.Col>
-            <Grid.Col span={1} className='mx-auto'> <IconShare3 /> </Grid.Col>
-            <Grid.Col span={1}> <IconStar /> </Grid.Col>
+            <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col>
+            <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
+            {/* <Grid.Col span={1} css={Styles.LikeStyles} > */}
+              { liked ? <IconStarFilled /> : <IconStar /> }
+            </Grid.Col>
             <Grid.Col span={1}> <IconTrash /> </Grid.Col>
             <Grid.Col span={4}  className='pl-20 pb-5 pt-0'>
               <Link to='/'>
