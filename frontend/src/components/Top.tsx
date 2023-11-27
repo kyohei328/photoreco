@@ -46,7 +46,7 @@ const Top = () => {
     SelectStyles: css({
       cursor: 'pointer',
       '&:hover': {
-        color: 'darkblue'
+        fontWeight: 'bold',
       }
     }),
     SelectedStyles: css({
