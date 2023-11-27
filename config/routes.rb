@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :users, only: %i[create desrtroy update]
+      resources :users, only: %i[create destroy update]
       resources :photos do
         collection do
           get :likes
@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :likes, only: %i[create destroy]
       get 'latest', to: 'contests#latest'
       get 'top', to: 'top#index'
+      resource :mypage, only: %i[show update]
     end
   end
 end

@@ -1,12 +1,11 @@
-import {Group, Button, Box} from '@mantine/core';
+import {Group, Button, Box, Avatar, Menu, Text, rem, Portal} from '@mantine/core';
 import classes from '../assets/HeaderMegaMenu.module.css';
 import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
-import { IconLogout, IconUpload } from '@tabler/icons-react';
+import { IconLogout, IconUpload, IconSettings } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 const Styles = {
   LogoStyle: css ({
@@ -21,6 +20,15 @@ const Styles = {
   SelectedStyles: css({
     fontWeight: 'bold',
     textDecoration: 'underline',
+  }),
+  IconStyle: css ({
+    cursor: 'pointer',
+  }),
+  LinkStyle: css ({
+    cursor: 'pointer',
+    '&:hover': {
+      fontWeight: 'bold',
+    }
   }),
 }
 
@@ -81,8 +89,17 @@ export function Header() {
 
   const { logOut, user } = UserAuth();
   const [selectedContents, setSelectedContents] = useState('');
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const location = useLocation();
+
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
   
  console.log(selectedContents)
   return (
@@ -108,7 +125,7 @@ export function Header() {
 
           <Group visibleFrom="sm" justify="flex-end" >
           {user ? (
-            <div>
+            <div className='flex'>
             <Link to="/photos/new" className='mr-4'>
               <Button
                 rightSection={<IconUpload size={18} />}
@@ -118,13 +135,70 @@ export function Header() {
               アップロード
               </Button>
             </Link>
-              <Button
+            {/* <Avatar
+              src="/assets/image/23295054.jpg"  // 画像のURLを指定
+              alt="Image Alt Text"  // 画像の代替テキスト
+              radius="50%"  // 円形にするための半径
+            /> */}
+              {/* <Button
                 rightSection={<IconLogout size={18} />}
                 variant="outline"
                 onClick={logOut}
               >
                 ログアウト
-              </Button>
+              </Button> */}
+            <Menu shadow="md" width={200}  withArrow arrowPosition="center" transitionProps={{ transition: 'fade', duration: 300 }}>
+              <Menu.Target>
+                <Avatar
+                  css={Styles.IconStyle}
+                  src=""  // 画像のURLを指定
+                  alt="Image Alt Text"  // 画像の代替テキスト
+                  radius="50%"  // 円形にするための半径
+                  size="md"
+                  variant="light"
+                  onClick={openMenu}
+                />
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Link to='/mypage' onClick={closeMenu}>
+                  <Menu.Item css={Styles.LinkStyle} leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
+                    マイページ
+                  </Menu.Item>
+                </Link>
+                <Menu.Divider />
+
+                <Menu.Item
+                  css={Styles.LinkStyle}
+                  onClick={() => {
+                    logOut();
+                    closeMenu();
+                  }}
+                  // onClick={logOut}
+                  color="red"
+                  leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
+                >
+                  ログアウト
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+
+            {menuVisible && (
+              <Portal>
+                <div
+                  style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: 'rgba(0, 0, 0, 0.5)', // 半透明の黒色
+                  }}
+                  onClick={closeMenu}
+                />
+              </Portal>
+            )}
+
             </div>
             ) : (
             <Link to="/login">

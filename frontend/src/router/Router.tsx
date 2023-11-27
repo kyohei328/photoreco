@@ -10,6 +10,7 @@ import IndexPhotos from '../components/IndexPhotos'
 import ContestTop from '../components/ContestTop'
 import ShowContest from '../components/ShowContest'
 import ShowPhoto from '../components/ShowPhoto'
+import Mypage from '../components/Mypage'
 
 const Router = () => {
   return (
@@ -25,7 +26,7 @@ const Router = () => {
       <Route path="/contest/:id" element={<ShowContest/>}/>
       <Route path="/contest/new/confirm" element={<AddContestConfirm />}/>
       <Route path="/photos" element={<IndexPhotos />}/>
-      
+      <Route path="/mypage" element={<Mypage />}/>
       
     </Routes>
   )
