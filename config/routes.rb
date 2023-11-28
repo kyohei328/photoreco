@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get 'latest', to: 'contests#latest'
       get 'top', to: 'top#index'
       resource :mypage, only: %i[show update]
+      resource :profile, only: %i[show update]
     end
   end
 end

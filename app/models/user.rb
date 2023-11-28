@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
+  has_one_attached :avatar_img
 
   def entry_contest(photo, contest)
     contest_entry = ContestEntry.new(user: self, photo: photo, contest: contest)
@@ -30,4 +31,11 @@ class User < ApplicationRecord
   def like?(photo)
     like_photos.include?(photo)
   end
+
+  def validate_attachment_size
+    if avatar_img.attached? && avatar_img.blob.byte_size > 10.megabytes
+      errors.add(:base, 'ファイルのサイズは10MB以下にしてください')
+    end
+  end
+
 end
