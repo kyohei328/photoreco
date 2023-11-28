@@ -68,17 +68,16 @@ test:
 #   <<: *default
 #   database: PhotoSpace_production
 #   username: PhotoSpace
-#   password: <%= ENV["PHOTOSPACE_DATABASE_PASSWORD"] %>
-production:
-  <<: *default
-  database: <%= ENV['DB_DATABASE'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
+#   password: <%= ENV["DB_PASSWORD"] %>
 # production:
 #   <<: *default
-#   database: PhotoSpace_production
-#   pool: 5
-#   username: root
-#   password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
-#   host: db
+#   database: <%= ENV['DB_DATABASE'] %>
+#   username: <%= ENV['DB_USER'] %>
+#   password: <%= ENV['DB_PASSWORD'] %>
+#   host: <%= ENV['DB_HOST'] %>
+production:
+  <<: *default
+  database: PhotoSpace_production
+  pool: 5
+  username: root
+  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
