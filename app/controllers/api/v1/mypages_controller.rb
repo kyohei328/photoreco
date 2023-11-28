@@ -18,12 +18,12 @@ class Api::V1::MypagesController < ApplicationController
     data_type = params[:data_type]
 
     case data_type
-    when 'photos'
-      render_photos
+    when 'post_photos'
+      render_post_photos
     when 'contest'
       render_contest
-    when 'liked_photos'
-      render_liked_photos
+    when 'like_photos'
+      render_like_photos
     else
       render json: { error: 'Invalid data type' }, status: :bad_request
     end
@@ -43,11 +43,18 @@ class Api::V1::MypagesController < ApplicationController
     end
   end
 
-  def render_photos
-    photos = @current_user.photos
-    render json: {
-      photos: photos.map { |photo| { id: photo.id, image_url: image_url(photo) } }
-    }
+  def render_post_photos
+
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
+    photos = @current_user.photos.order(created_at: :desc).page(page).per(per_page)
+
+    render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
+
+    # photos = @current_user.photos
+    # render json: {
+    #   photos: photos.map { |photo| { id: photo.id, image_url: image_url(photo) } }
+    # }
   end
   
   def render_contest
@@ -56,11 +63,18 @@ class Api::V1::MypagesController < ApplicationController
     render json: { post_contests: post_contests, entry_contests: entry_contests}
   end
   
-  def render_liked_photos
-    liked_photos = @current_user.likes.includes(:photo).map(&:photo)
-    render json: {
-      liked_photos: liked_photos.map { |photo| { id: photo.id, image_url: image_url(photo) } }
-    }
+  def render_like_photos
+
+    page = params[:page] || 1
+    per_page = params[:per_page] || 20
+    photos = @current_user.likes.includes(:photo).order(created_at: :desc).page(page).per(per_page).map(&:photo)
+
+    render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
+
+    # liked_photos = @current_user.likes.includes(:photo).map(&:photo)
+    # render json: {
+    #   liked_photos: liked_photos.map { |photo| { id: photo.id, image_url: image_url(photo) } }
+    # }
   end
 
 end

@@ -10,7 +10,8 @@ class Api::V1::UsersController < ApplicationController
 
   # include UpdateUserConcern
   def update
-    update_user(@auth)
+    # update_user(@auth)
+
   end
 
   private

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { Input, Grid, Button, Select } from '@mantine/core';
+import { Input, Grid, Button, Select, Image } from '@mantine/core';
 import { Link } from 'react-router-dom'
 
 
@@ -26,8 +26,10 @@ const IndexPhotos = () => {
       // width: '25Vw',
       // minHeight: '150px',
       // minWidth : '300px',
+      maxHeight: '19vh',
       width: '100%',
-      objectFit: 'cover',
+      // objectFit: 'cover',
+      objectFit: 'contain',
       // paddingTop: '100%', /* 縦横比を保つためのトリック */
     }),
     LogoStyle: css ({
@@ -66,8 +68,14 @@ const IndexPhotos = () => {
   const indexImages = images.map((image) =>(
     <div key={image.id} css={Styles.ImageStyle} >
       <Link to={`/photos/${image.id}`}>
-        <img
+        {/* <img
           css={Styles.ImageStyle}
+          src={image.image_url}
+        /> */}
+        <Image
+          css={Styles.ImageStyle}
+          className='px-0 mb-1'
+          radius="sm"
           src={image.image_url}
         />
       </Link>

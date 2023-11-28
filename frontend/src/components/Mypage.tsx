@@ -1,10 +1,12 @@
-import { Avatar, Button, Group } from '@mantine/core';
+import { Avatar, Button, Group, FileInput } from '@mantine/core';
 import { css } from '@emotion/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import MypageContest from './MypageContest';
 import MypageLikePhoto from './MypageLikePhoto';
 import MypagePostPhoto from './MypagePostPhoto';
 import MypageProfile from './MypageProfile';
+import { UserAuth } from '../context/AuthContext';
+import axios from 'axios'
 
 
 
@@ -51,6 +53,65 @@ const selectedComponent = () => {
   }
 };
 
+const inputRef = useRef(null);
+const { user } = UserAuth();
+const [loading, setLoading] = useState(true);
+const [avatarUrl, setAvatarUrl] = useState();
+const [userProfile, setUserProfile] = useState({});
+
+useEffect(() => {
+  const userStatus = async () => {
+    try {
+      const token = await user.getIdToken(true);
+      console.log(token)
+      const config = { headers: { 'Authorization': `Bearer ${token}` } };
+      const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+      setAvatarUrl(resp.data.avatar_url)
+      setUserProfile(resp.data.user)
+      setLoading(false);
+      console.log(resp.data)
+    } catch (error) {
+      setLoading(false);
+      console.error('Error fetching like status:', error);
+    }
+  }
+  userStatus();
+},[]);
+
+
+const handleClick = () => {
+  // プログラム的にinput要素をクリック
+  inputRef.current.click();
+};
+
+const handleFileChange = async (event) => {
+  // ファイルが選択されたときの処理
+  const selectedFile = event.target.files[0];
+
+  try {
+    // ファイルをRailsサーバーにアップロード
+    const formData = new FormData();
+    formData.append('user[avatar_img]', selectedFile);
+    
+    const token = await user.getIdToken(true);
+    const config = { headers: { 'Authorization': `Bearer ${token}` } };
+    const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
+    setAvatarUrl(resp.data.avatar_url)
+    setLoading(false);
+    // アップロードが成功したら、適切な処理を行う
+    console.log('File uploaded successfully:', resp.data);
+  } catch (error) {
+    setLoading(false);
+    console.error('Error uploading file:', error);
+  }
+  console.log('Selected File:', selectedFile);
+};
+
+
+if (loading) {
+  return <div></div>
+}
+
   return (
     <div>
       <section>
@@ -63,11 +124,20 @@ const selectedComponent = () => {
             }}
             css={Styles.AvatarStyle}
             className='mx-auto'
-            src=""  // 画像のURLを指定
+            src={avatarUrl}  // 画像のURLを指定
             alt="Image Alt Text"  // 画像の代替テキスト
             radius="50%"  // 円形にするための半径
             size={120}
             variant="light"
+            style={{ cursor: 'pointer' }}
+            onClick={handleClick}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            ref={inputRef}
           />
           {/* <Button
             // rightSection={<LoginIcon size={18} />}
@@ -77,7 +147,7 @@ const selectedComponent = () => {
           >
             ログイン
           </Button> */}
-          <h3 className='mt-5'>ユーザー名</h3>
+          <h3 className='mt-5'>{userProfile.name}</h3>
         </div>
       </section>
       <section className='mt-20'>
