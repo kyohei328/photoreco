@@ -207,8 +207,13 @@ const ShowPhoto = () => {
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6} className='font-bold'>撮影地</Grid.Col>
             {/* <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col> */}
-            {Object.keys(photoData).length > 0 && (
+            {/* {Object.keys(photoData).length > 0 && (
               <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col>
+            )} */}
+            {Object.keys(photoData).length > 0 && photoData.gps_latitude && photoData.gps_longitude && (
+              <Grid.Col span={12} className=''>
+                <Map photo={photoData} />
+              </Grid.Col>
             )}
         </Grid>
       </section>
