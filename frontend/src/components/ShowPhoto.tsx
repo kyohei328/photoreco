@@ -1,7 +1,7 @@
 import { UserAuth } from '../context/AuthContext';
 import { Image, Button, Grid, Textarea  } from '@mantine/core';
 import { IconTrash, IconStar,  IconShare3, IconStarFilled  } from '@tabler/icons-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -29,6 +29,9 @@ const ShowPhoto = () => {
     }),
     LikeStyles: css ({
       cursor: 'pointer',
+    }),
+    TrashStyle: css ({
+      cursor: 'pointer',
     })
   };
 
@@ -37,9 +40,11 @@ const ShowPhoto = () => {
   const [postUser, setPostUser] = useState({});
   const [liked, setLiked] = useState(false);
   const [likedId, setLikedId] = useState();
+  const [currentUid, setCurrentUid] = useState();
 
   const { id } = useParams();
   const { user } = UserAuth() as { user: object };
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const fetchUserData = async () => {
@@ -94,7 +99,9 @@ const ShowPhoto = () => {
       setPhotoData(resp.data.photo)
       setPhotoUrl(resp.data.photo_url)
       setPostUser(resp.data.photo.user)
+      setCurrentUid(user.uid)
       console.log(resp.data);
+      console.log(user.uid)
     }).catch(error => {
       console.error('Error fetching images:', error);
     });
@@ -121,6 +128,18 @@ const ShowPhoto = () => {
     }
   };
 
+  const deletePhoto = async (id) => {
+    try {
+      const token = await user.getIdToken(true);
+      console.log(token)
+      const config = { headers: { 'Authorization': `Bearer ${token}` } };
+      await axios.delete(`http://localhost:3000/api/v1/photos/${id}`, config);
+      navigate('/photos')
+    } catch (error) {
+    console.error('Error toggling like:', error);
+    }
+  };
+
   const postDate = moment(photoData.created_at).format('YYYY年MM月D日');
 
   return (
@@ -141,7 +160,7 @@ const ShowPhoto = () => {
             <Grid.Col span={2.5}>投稿日</Grid.Col>
             <Grid.Col span={2}></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
-            
+
             <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
             <Grid.Col span={2.5}>{postDate}</Grid.Col>
             <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col>
@@ -149,7 +168,13 @@ const ShowPhoto = () => {
             {/* <Grid.Col span={1} css={Styles.LikeStyles} > */}
               { liked ? <IconStarFilled /> : <IconStar /> }
             </Grid.Col>
-            <Grid.Col span={1}> <IconTrash /> </Grid.Col>
+
+            <Grid.Col span={1}>
+            { currentUid === postUser.uid &&
+              <IconTrash css={Styles.TrashStyle} onClick={() => deletePhoto(photoData.id)}/>
+            }
+            </Grid.Col>
+
             <Grid.Col span={4}  className='pl-20 pb-5 pt-0'>
               <Link to='/'>
                 <Button
