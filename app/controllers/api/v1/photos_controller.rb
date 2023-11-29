@@ -41,7 +41,9 @@ class Api::V1::PhotosController < ApplicationController
   end
 
   def destroy
-
+    photo = Photo.find(params[:id])
+    photo.photo_img.purge if photo.photo_img.attached?
+    photo.destroy
   end
 
   def likes
