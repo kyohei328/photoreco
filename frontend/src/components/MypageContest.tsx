@@ -2,9 +2,10 @@ import { Group } from '@mantine/core';
 import { css } from '@emotion/react'
 import { useState, useEffect } from 'react'
 import moment from 'moment';
-import { Item } from 'semantic-ui-react'
+import { Icon, Item } from 'semantic-ui-react'
 import axios from 'axios'
 import { UserAuth } from '../context/AuthContext';
+import { IconTrash } from '@tabler/icons-react';
 
 const MypageContest = (props) => {
 
@@ -62,6 +63,8 @@ const MypageContest = (props) => {
 
   console.log(selectContest)
 
+
+
   const contestsItem = selectContest.map((contest, index) => (
     <Item key={index}>
       <Item.Image size='tiny' src="https://photospace-image.s3.ap-northeast-1.amazonaws.com/rbkrutko9gmw25bogswl8x0vtul1"/>
@@ -73,9 +76,30 @@ const MypageContest = (props) => {
         </Item.Description>
         <Item.Extra>応募期間</Item.Extra>
         <p className='indent-2'>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
+        {selectedItem === 'post_contests' &&
+          <div><IconTrash className='ml-auto' css={Styles.LinkStyle} onClick={() => contestDelete(contest.id)}/></div>
+        }
+        {/* {selectedItem === 'post_contests' &&
+          <div><IconTrash className='ml-auto' css={Styles.LinkStyle} /></div>
+        } */}
       </Item.Content>
     </Item>
   ));
+
+  const contestDelete = async(id) => {
+    try {
+
+      const token = await user.getIdToken(true);
+      console.log(token)
+      const config = { headers: { 'Authorization': `Bearer ${token}` }};
+      const resp = await axios.delete(`http://localhost:3000/api/v1/contests/${id}`, config);
+      setSelectContest(resp.data.post_contests)
+      console.log(resp.data.post_contests)
+    } catch (error) {
+      console.error('Error fetching like status:', error);
+    }
+  }
+
 
   return (
     <div>

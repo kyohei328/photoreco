@@ -28,7 +28,10 @@ class Api::V1::ContestsController < ApplicationController
   end
 
   def destroy
-
+    contest = Contest.find(params[:id])
+    contest.destroy!
+    post_contests = @current_user.contests
+    render json: { post_contests: post_contests }
   end
 
   def latest
@@ -41,4 +44,5 @@ class Api::V1::ContestsController < ApplicationController
   def contest_params
     params.require(:contest).permit(:title, :description, :start_date, :end_date, :result_date, :entry_conditions, :department)
   end
+
 end
