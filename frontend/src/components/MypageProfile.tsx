@@ -80,7 +80,6 @@ const MypageProfile = () => {
   };
 
 
-
   if (loading) {
     return <div></div>
   }

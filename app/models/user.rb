@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :votes
   has_many :likes, dependent: :destroy
   has_many :like_photos, through: :likes, source: :photo
+  has_many :contest_results, dependent: :destroy
 
   validates :email, presence: true
 

@@ -4,6 +4,8 @@ import '@mantine/core/styles.css';
 import { Header } from './components/Header';
 import { css } from '@emotion/react'
 import  Router from './router/Router'
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
 
 
@@ -20,10 +22,12 @@ function App(): JSX.Element {
 
   return (
     <MantineProvider>
-      <Header/>
+      <I18nextProvider i18n={i18n}>
+        <Header/>
         <div css={Styles.heightstyle}>
           <Router/>
         </div>
+      </I18nextProvider>
     </MantineProvider>
   )
 }

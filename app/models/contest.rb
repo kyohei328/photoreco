@@ -2,8 +2,9 @@ class Contest < ApplicationRecord
   belongs_to :user
 
   has_many :contest_entries
-  has_many :votes
+  has_many :votes, through: :photos
   has_many :photos, through: :contest_entries
+  has_many :contest_results, dependent: :destroy
 
   validates :title, presence: true
   validates :entry_conditions, presence: true

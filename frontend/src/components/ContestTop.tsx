@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import { Input, Grid, Button, Select, Checkbox } from '@mantine/core';
 import NewArrivalContest from './NewArrivalContest'
 import { Link } from 'react-router-dom';
+import ContestResultList from './ContestResultList'
 
 const ContestTop = () => {
 
@@ -42,13 +43,16 @@ const ContestTop = () => {
     })
   }
 
-  const [newArrivalContest, setNewArrivalContes] = useState([]);
   const [applyContest, setApplyContest] = useState([]);
+  const [contestResults, setContestResults] = useState([]);
+
+
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/v1/contests')
       .then(resp => {
-        setApplyContest(resp.data);
+        setApplyContest(resp.data.contests);
+        setContestResults(resp.data.contests_result);
         console.log(resp.data)
       }).catch(error => {
       console.log('エラー:', error);
@@ -57,6 +61,20 @@ const ContestTop = () => {
       // alert('エラーが発生しました: ' + error.message);
     })
   },[]);
+
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:3000/api/v1/contest_results')
+  //     .then(resp => {
+  //       setContestResults(resp.data);
+  //       console.log(resp.data)
+  //     }).catch(error => {
+  //     console.log('エラー:', error);
+  //     console.log('エラーコード:', error.code);
+  //     console.log('エラーメッセージ:', error.message);
+  //     // alert('エラーが発生しました: ' + error.message);
+  //   })
+  // },[]);
 
   return (
     <div className='h-full'>
@@ -121,16 +139,16 @@ const ContestTop = () => {
           <NewArrivalContest contest={applyContest}/>
         </div>
       </section>
-      <section className='my-5'>
+      <section className='my-20'>
         <h3 css={Styles.LogoStyle}>コンテスト結果発表</h3>
         <div css={Styles.TitleStyle}></div>
-        <div>
-
+        <div className='my-5 mx-5'>
+          <ContestResultList contestResults={contestResults}/>
         </div>
       </section>
       {/* <section className='h-screen overflow-hidden my-5'> */}
-      <section className='h-screen  my-5'>
-        <div css={Styles.ImageFrameStyle}>
+      <section className='py-10'>
+        <div>
 
         </div>
       </section>

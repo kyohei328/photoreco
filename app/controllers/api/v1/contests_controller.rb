@@ -1,12 +1,14 @@
 class Api::V1::ContestsController < ApplicationController
 
   before_action :authenticate, only: %i[create update destroy]
+  before_action :contest_result_update, only: %i[index]
 
   skip_before_action :set_auth, only: %i[index latest show]
 
   def index
     @contest = Contest.order(created_at: :desc).limit(10)
-    render json: @contest
+    contests_result = Contest.where('result_date < ?', Date.today).order(created_at: :desc).limit(10)
+    render json: { contests: @contest, contests_result: contests_result.as_json(include: :user) }
   end
 
   def create
@@ -39,10 +41,18 @@ class Api::V1::ContestsController < ApplicationController
     render json: contest
   end
 
+  def result
+
+  end
+
   private
 
   def contest_params
     params.require(:contest).permit(:title, :description, :start_date, :end_date, :result_date, :entry_conditions, :department)
+  end
+
+  def contest_result_update
+    ContestResult.calculate_results
   end
 
 end

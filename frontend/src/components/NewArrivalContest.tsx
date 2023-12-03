@@ -1,7 +1,8 @@
 import { Item } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import '../assets/top.css'
+// import '../assets/top.css'
 import moment from 'moment';
+
 
 const NewArrivalContest = (props: any) => {
    console.log(props)
