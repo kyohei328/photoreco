@@ -6,9 +6,17 @@ class Api::V1::ContestsController < ApplicationController
   skip_before_action :set_auth, only: %i[index latest show]
 
   def index
-    @contest = Contest.order(created_at: :desc).limit(10)
-    contests_result = Contest.where('result_date < ?', Date.today).order(created_at: :desc).limit(10)
-    render json: { contests: @contest, contests_result: contests_result.as_json(include: :user) }
+    # binding.pry
+    if params[:q]
+      @q = Contest.ransack(params[:q])
+      @contest = @q.result(distinct: true).order(created_at: :desc)
+      contests_result = @contest if params[:q][:result_date_lteq].present?
+    else
+      @contest = Contest.order(created_at: :desc).limit(10)
+      contests_result = Contest.where('result_date < ?', Date.today).order(created_at: :desc).limit(10)
+    end
+    
+    render json: { contests: @contest, contest_count: @contest.count, contests_result: contests_result.as_json(include: :user) }
   end
 
   def create
@@ -54,5 +62,7 @@ class Api::V1::ContestsController < ApplicationController
   def contest_result_update
     ContestResult.calculate_results
   end
+
+  
 
 end
