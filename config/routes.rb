@@ -7,7 +7,9 @@ Rails.application.routes.draw do
           get :likes
         end
       end
-      resources :contests
+      resources :contests do
+        resource :contest_results, only: %i[show]
+      end
       resources :contest_entries, only: %i[index create destroy]
       resources :votes
       resources :likes, only: %i[create destroy]

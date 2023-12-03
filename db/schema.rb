@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_113740) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,6 +48,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_113740) do
     t.index ["contest_id"], name: "index_contest_entries_on_contest_id"
     t.index ["photo_id"], name: "index_contest_entries_on_photo_id"
     t.index ["user_id"], name: "index_contest_entries_on_user_id"
+  end
+
+  create_table "contest_results", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "contest_id"
+    t.bigint "photo_id"
+    t.integer "award", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contest_id"], name: "index_contest_results_on_contest_id"
+    t.index ["photo_id"], name: "index_contest_results_on_photo_id"
+    t.index ["user_id"], name: "index_contest_results_on_user_id"
   end
 
   create_table "contests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -135,6 +147,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_113740) do
   add_foreign_key "contest_entries", "contests"
   add_foreign_key "contest_entries", "photos"
   add_foreign_key "contest_entries", "users"
+  add_foreign_key "contest_results", "contests"
+  add_foreign_key "contest_results", "photos"
+  add_foreign_key "contest_results", "users"
   add_foreign_key "contests", "users"
   add_foreign_key "likes", "photos"
   add_foreign_key "likes", "users"

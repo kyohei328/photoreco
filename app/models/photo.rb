@@ -4,9 +4,10 @@ class Photo < ApplicationRecord
   has_one_attached :photo_img
 
   has_many :contest_entries
-  has_many :votes
+  has_many :votes, through: :photo
   has_many :likes, dependent: :destroy
   has_many :like_photos, through: :likes, source: :photo
+  has_many :contest_results, dependent: :destroy
 
   validates :title, presence: true
   validate :validate_attachment_size

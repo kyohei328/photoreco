@@ -5,12 +5,11 @@ import '../assets/embla.css'
 import EmblaCarousel from './EmblaCarousel'
 import { EmblaOptionsType } from 'embla-carousel-react'
 import 'semantic-ui-css/semantic.min.css'
-import '../assets/top.css'
 import { UserAuth } from '../context/AuthContext';
 import { useImage } from '../context/TodayPhotosContext';
 import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
-
+import '../assets/top.css'
 
 const Top = () => {
 
