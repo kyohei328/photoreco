@@ -69,7 +69,7 @@ const MypageProfile = () => {
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
         const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
         console.log(resp.data)
-        setUserProfile(resp.data)
+        setUserProfile(resp.data.user)
         formReset()
       }catch (error) {
         console.log('エラー:', error);

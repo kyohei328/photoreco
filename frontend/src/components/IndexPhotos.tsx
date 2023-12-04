@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { Input, Grid, Button, Select, Image } from '@mantine/core';
+import { Input, Grid, Button, Select, Image, Text } from '@mantine/core';
 import { Link } from 'react-router-dom'
-
+import { FaAngleRight } from "react-icons/fa";
+import { useForm } from '@mantine/form';
+import { Divider } from 'semantic-ui-react';
 
 
 const IndexPhotos = () => {
@@ -41,37 +43,19 @@ const IndexPhotos = () => {
 
   const [images, setImages] = useState<any[]>([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useState({});
 
-  // useEffect (() => {
-  //   axios.get('http://localhost:3000/api/v1/photos')
-  //   .then(resp => {
-  //     setImages(resp.data.photos);
-  //     console.log(resp.data)
-  //   }).catch(error => {
-  //   console.log('エラー:', error);
-  //   console.log('エラーコード:', error.code);
-  //   console.log('エラーメッセージ:', error.message);
-  //   // alert('エラーが発生しました: ' + error.message);
-  // })
-  // },[]);
+  const form = useForm({
+    initialValues: {
+      freeWord: '',
+      postUserName: '',
+    },
+  });
 
-  // const indexImages = images.map((image, index) =>(
-  //   <div key={index} css={Styles.ImageStyle} >
-  //     <Link to={`/photos/${index}`}>
-  //       <img
-  //         css={Styles.ImageStyle}
-  //         src={image}
-  //       />
-  //     </Link>
-  //   </div>
-  // ))
-  const indexImages = images.map((image) =>(
-    <div key={image.id} css={Styles.ImageStyle} >
+  const indexImages = images.map((image, index) =>(
+    <div key={index} css={Styles.ImageStyle} >
       <Link to={`/photos/${image.id}`}>
-        {/* <img
-          css={Styles.ImageStyle}
-          src={image.image_url}
-        /> */}
         <Image
           css={Styles.ImageStyle}
           className='px-0 mb-1'
@@ -91,15 +75,77 @@ const IndexPhotos = () => {
     }
   };
   
+    // useEffect(() => {
+    //   axios.get(`http://localhost:3000/api/v1/photos?page=${page}`)
+    //   .then(resp => {
+    //     setImages((prevImages) => [...prevImages, ...resp.data.photos]);
+    //     setLoading(false)
+    //     console.log(resp.data.photos);
+    //   }).catch(error => {
+    //     setLoading(false)
+    //     console.error('Error fetching images:', error);
+    //   })
+    // },[page]);
+
+    // const handleSubmit = async (values: any) => {
+    //   try {
+    //     const params = {
+    //       q: {
+    //         // title_or_description_or_camera_cont: values.freeWord,
+    //         camera_cont: values.freeWord,
+    //       },
+    //       page: page
+    //     };
+
+    //     const resp = await axios.get('http://localhost:3000/api/v1/photos', { params })
+    //     setImages(resp.data.photos);
+    //     setLoading(false)
+    //     console.log(resp.data.photos);
+    //   }catch(error) {
+    //     setLoading(false)
+    //     console.error('Error fetching images:', error);
+    //   }
+    // }
+
     useEffect(() => {
-      axios.get(`http://localhost:3000/api/v1/photos?page=${page}`)
-      .then(resp => {
-        setImages((prevImages) => [...prevImages, ...resp.data.photos]);
-        console.log(resp.data.photos);
-      }).catch(error => {
-        console.error('Error fetching images:', error);
-      })
-    },[page]);
+      // axiosでデータを取得する部分は関数化して、利用する
+      const fetchData = async () => {
+        try {
+          const resp = await axios.get(`http://localhost:3000/api/v1/photos?page=${page}`, {
+            params: { ...searchParams } // ページ数も追加
+          });
+          setImages((prevImages) => [...prevImages, ...resp.data.photos]);
+          setLoading(false);
+          console.log(resp.data.photos);
+        } catch (error) {
+          setLoading(false);
+          console.error('Error fetching images:', error);
+        }
+      };
+    
+      fetchData(); // 初回レンダリング時にもデータを取得
+    
+      // pageが変更されたときにもデータを取得
+    }, [page, searchParams]);
+    
+    const handleSubmit = async (values: any) => {
+      // フォームがサブミットされたときにもページをリセットして新たにデータを取得する
+      setPage(1);
+      setLoading(true);
+      setImages([]);
+      // fetchData 関数を利用してデータを取得
+
+      const params = {
+        q: {
+          // camera_cont: values.freeWord,
+          title_or_description_or_camera_cont: values.freeWord,
+          user_name_cont: values.postUserName,
+        },
+      };
+
+      setSearchParams(params)
+      // fetchData();
+    };
 
   console.log(page)
 
@@ -113,73 +159,86 @@ const IndexPhotos = () => {
     };
   }, []); // 空の依存配列で初回のみ実行
 
+  // if (loading) {
+  //   return <div></div>
+  // }
+
   return (
     <div className='h-full'>
       <section className=''>
         <div className='bg-slate-100 w-10/12 mx-auto pb-px pt-5'>
         <h3 css={Styles.LogoStyle}>検索フォーム</h3>
-        <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
-          <Grid.Col span={12}>
-            <Input.Wrapper label="フリーワード" description="" error="">
-              <Input />
-            </Input.Wrapper>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Input.Wrapper label="シーン" description="" error="">
-              <Input  disabled placeholder="本リリースにて実装"/>
-            </Input.Wrapper>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Select
-              label="カテゴリー"
-              data={['風景', '植物', '動物', '人物']}
-              disabled
-              placeholder="本リリースにて実装"
-            />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Input.Wrapper label="撮影者" description="" error="">
-              <Input />
-            </Input.Wrapper>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Input.Wrapper label="撮影地" description="" error="">
-              <Input />
-            </Input.Wrapper>
-          </Grid.Col>
-          <Grid.Col span={5}></Grid.Col>
-          <Grid.Col span={5}></Grid.Col>
-          <Grid.Col span={0.5} >
-            <Button
-              className='mr-0'
-              type="submit"
-              variant="outline"
-              color="rgba(59, 59, 59, 1)"
-            >
-            検索
-            </Button>
-          </Grid.Col>
-        </Grid>
+        <form onSubmit={(e) => { setLoading(true); form.onSubmit(handleSubmit)(e); }}>
+          <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
+            <Grid.Col span={12}>
+              <Input.Wrapper label="フリーワード" description="" error="">
+                <Input
+                  {...form.getInputProps('freeWord')}
+                />
+              </Input.Wrapper>
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Input.Wrapper label="シーン" description="" error="">
+                <Input  disabled placeholder="本リリースにて実装"/>
+              </Input.Wrapper>
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Select
+                label="カテゴリー"
+                data={['風景', '植物', '動物', '人物']}
+                disabled
+                placeholder="本リリースにて実装"
+              />
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Input.Wrapper label="撮影者" description="" error="">
+                <Input
+                  {...form.getInputProps('postUserName')}
+                />
+              </Input.Wrapper>
+            </Grid.Col>
+            <Grid.Col span={6} className='flex-wrap pt-2'>
+                <Text size="sm" className='mb-2'>撮影地</Text>
+                <Link to='' className='flex items-center justify-end'>
+                  <Text size="md" c="dimmed">地図を開く</Text>
+                  <FaAngleRight style={{ color: '#868e96' }}/>
+                </Link>
+            </Grid.Col>
+            <Grid.Col span={5}></Grid.Col>
+            <Grid.Col span={5}></Grid.Col>
+            <Grid.Col span={0.5} >
+              <Button
+                className='mr-0'
+                type="submit"
+                variant="outline"
+                color="rgba(59, 59, 59, 1)"
+              >
+              検索
+              </Button>
+            </Grid.Col>
+          </Grid>
+        </form>
       </div>
-      <div className='my-5'>
-        <p className='text-center'>検索結果：〇〇件</p>
-      </div>
-      <div className='flex justify-center '>
-        <p>並び替え</p>
-        ：
-        <p className='font-bold'>投稿日↓</p>
-        ｜
-        <p>お気に入り数</p>
-        ｜
-        <p>コメント数</p>
-      </div>
-      </section>
-      {/* <section className='h-screen overflow-hidden my-5'> */}
-      <section className='h-screen  my-5'>
-        <div css={Styles.ImageFrameStyle}>
-          {indexImages}
-        </div>
-      </section>
+          <div className='my-5'>
+            <p className='text-center'>検索結果：〇〇件</p>
+          </div>
+          <div className='flex justify-center '>
+            <p>並び替え</p>
+            ：
+            <p className='font-bold'>投稿日↓</p>
+            ｜
+            <p>お気に入り数</p>
+            ｜
+            <p>コメント数</p>
+          </div>
+          </section>
+          {loading ? (<></>):(
+          <section className='h-screen  my-5'>
+            <div css={Styles.ImageFrameStyle}>
+              {indexImages}
+            </div>
+          </section>
+          )}
     </div>
   )
 }
