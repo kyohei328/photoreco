@@ -8,14 +8,12 @@ class Api::V1::PhotosController < ApplicationController
 
   def index
     # binding.pry
-    # @q = Photo.ransack(params[:q])
-    # @photos = @q.result(distinct: true).includes(:user).order(created_at: :desc)
-
-    # render json:  {photos: @photos.map { |photo| image_url(photo)}}
-
     page = params[:page] || 1
-    per_page = params[:per_page] || 10
-    @photos = Photo.order(created_at: :desc).page(page).per(per_page)
+    per_page = params[:per_page] || 5
+    # @photos = Photo.order(created_at: :desc).page(page).per(per_page)
+
+    @q = Photo.ransack(params[:q])
+    @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user)
 
     render json:  { photos: @photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
   end

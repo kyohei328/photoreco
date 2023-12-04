@@ -5,7 +5,7 @@ import { Input, Grid, Button, Select, Checkbox } from '@mantine/core';
 import NewArrivalContest from './NewArrivalContest'
 import { Link } from 'react-router-dom';
 import ContestResultList from './ContestResultList'
-import { useForm, yupResolver } from '@mantine/form';
+import { useForm } from '@mantine/form';
 
 const ContestTop = () => {
 
