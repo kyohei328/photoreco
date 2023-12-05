@@ -24,6 +24,8 @@ class Api::V1::PhotosController < ApplicationController
           lat: photo.gps_latitude,
           lng: photo.gps_longitude,
           user_name: photo.user&.name,
+          created_at: photo.created_at,
+          likes_count: photo.likes.count,
         }
       },
       photo_count: @photos.count

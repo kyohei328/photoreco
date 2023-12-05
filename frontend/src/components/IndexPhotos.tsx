@@ -48,12 +48,16 @@ const IndexPhotos = () => {
   }
 
   const [images, setImages] = useState<any[]>([]);
+  // const [imagesPostDateAsc, setImagesPostDateAsc] = useState<any[]>([]);
+  // const [imagesLikesAsc, setImagesLikesAsc] = useState<any[]>([]);
+  // const [imagesLikesDesc, setImagesLikesDesc] = useState<any[]>([]);
+
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useState({});
   const [photoCount, setPhotoCount] = useState();
   const [photoSearch, setPhotoSearch] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('post');
+  const [selectedSort, setSelectedSort] = useState('postDesc');
 
   const form = useForm({
     initialValues: {
@@ -105,6 +109,39 @@ const IndexPhotos = () => {
     
       // pageが変更されたときにもデータを取得
     }, [page, searchParams]);
+
+
+    const sortPhotos = (images, key, order) => {
+      return [...images].sort((a, b) => {
+        if (order === 'asc') {
+          return a[key] > b[key] ? 1 : -1;
+        } else {
+          return a[key] < b[key] ? 1 : -1;
+        }
+      });
+    };
+
+    const handleSortByPostDateAsc = () => {
+      const sortedPhotos = sortPhotos(images, 'created_at', 'asc');
+      setImages(sortedPhotos);
+    };
+
+    const handleSortByPostDateDesc = () => {
+      const sortedPhotos = sortPhotos(images, 'created_at', 'desc');
+      setImages(sortedPhotos);
+    };
+    
+    // お気に入りの昇順にソート
+    const handleSortByLikesAsc = () => {
+      const sortedPhotos = sortPhotos(images, 'likes_count', 'asc');
+      setImages(sortedPhotos);
+    };
+    
+    // お気に入りの降順にソート
+    const handleSortByLikesDesc = () => {
+      const sortedPhotos = sortPhotos(images, 'likes_count', 'desc');
+      setImages(sortedPhotos);
+    };
     
     const handleSubmit = async (values: any) => {
       // フォームがサブミットされたときにもページをリセットして新たにデータを取得する
@@ -140,6 +177,66 @@ const IndexPhotos = () => {
   // if (loading) {
   //   return <div></div>
   // }
+
+
+  const sortLink = (() => {
+    switch (selectedSort) {
+      case 'postDesc':
+        return (
+          <>
+            <p css={[Styles.SelectedStyle, Styles.LinkStyle]} onClick={() => {setSelectedSort('postAsc');handleSortByPostDateAsc()}}>
+              投稿日↓
+            </p>
+            ｜
+            <p css={Styles.LinkStyle} onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}>
+              お気に入り数
+            </p>
+          </>
+        );
+      case 'postAsc':
+        return (
+          <>
+            <p css={[Styles.SelectedStyle, Styles.LinkStyle]} onClick={() => {setSelectedSort('postDesc'); handleSortByPostDateDesc()}}>
+              投稿日↑
+            </p>
+            ｜
+            <p css={Styles.LinkStyle} onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}>
+              お気に入り数
+            </p>
+          </>
+        );
+      case 'likeDesc':
+        return (
+          <>
+            {/* お気に入り数に関連する表示 */}
+            <p css={Styles.LinkStyle} onClick={() => setSelectedSort('postDesc')}>
+              投稿日
+            </p>
+            ｜
+            <p css={[Styles.SelectedStyle, Styles.LinkStyle]} onClick={() => {setSelectedSort('likeAsc'); handleSortByLikesAsc()}}>
+              お気に入り数↓
+            </p>
+          </>
+        );
+      case 'likeAsc':
+        return (
+          <>
+            {/* お気に入り数に関連する表示 */}
+            <p css={Styles.LinkStyle} onClick={() => setSelectedSort('postDesc')}>
+              投稿日
+            </p>
+            ｜
+            <p css={[Styles.SelectedStyle, Styles.LinkStyle]} onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}>
+              お気に入り数↑
+            </p>
+          </>
+        );
+      // 他のケースに関する表示を追加することもできます
+      default:
+        return null;
+    }
+  })();
+
 
   return (
     <div className='h-full'>
@@ -205,12 +302,13 @@ const IndexPhotos = () => {
           <div className='flex justify-center '>
             <p>並び替え</p>
             ：
-            <p css={[Styles.LinkStyle, selectedSort === 'post' && Styles.SelectedStyle]}
+            {/* <p css={[Styles.LinkStyle, selectedSort === 'post' && Styles.SelectedStyle]}
             onClick={() => setSelectedSort('post')}
           >投稿日↓</p>
             ｜
             <p css={[Styles.LinkStyle, selectedSort === 'like' && Styles.SelectedStyle]}
-            onClick={() => setSelectedSort('like')}>お気に入り数</p>
+            onClick={() => setSelectedSort('like')}>お気に入り数</p> */}
+            {sortLink}
           </div>
           </section>
           {loading ? (<></>):(

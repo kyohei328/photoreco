@@ -2,7 +2,8 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
   include Api::V1::FirebaseAuthConcern
 
-  # before_action :set_cross_origin_opener_policy
+  before_action :set_auth
+  # before_action :authenticate
 
   # def authenticate(set_auth)
   #   uid = @auth[:data][:uid]
@@ -11,7 +12,7 @@ class ApplicationController < ActionController::API
   #   logger.error "Error in authenticate_user: #{e.message}"
   #   render json: { error: 'Not Authorized' }, status: :unauthorized
   # end
-  before_action :set_auth
+  
 
   def authenticate
     # binding.pry
