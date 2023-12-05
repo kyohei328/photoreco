@@ -5,14 +5,10 @@ import { Input, Grid, Button, Select, Image, Text } from '@mantine/core';
 import { Link } from 'react-router-dom'
 import { FaAngleRight } from "react-icons/fa";
 import { useForm } from '@mantine/form';
-import { Divider } from 'semantic-ui-react';
-
 
 const IndexPhotos = () => {
 
   const Styles = {
-    ImageSectionStyle: css ({
-    }),
     ImageFrameStyle: css({
       // width: '100%',
       // padding: '0 44px',
@@ -39,12 +35,25 @@ const IndexPhotos = () => {
       fontWeight: 'bold',
       textAlign: 'center',
     }),
+    LinkStyle: css ({
+      cursor: 'pointer',
+      '&:hover': {
+        fontWeight: 'bold',
+      }
+    }),
+    SelectedStyle: css({
+      fontWeight: 'bold',
+      textDecoration: 'underline',
+    })
   }
 
   const [images, setImages] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useState({});
+  const [photoCount, setPhotoCount] = useState();
+  const [photoSearch, setPhotoSearch] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('post');
 
   const form = useForm({
     initialValues: {
@@ -74,38 +83,6 @@ const IndexPhotos = () => {
       setPage(page + 1);
     }
   };
-  
-    // useEffect(() => {
-    //   axios.get(`http://localhost:3000/api/v1/photos?page=${page}`)
-    //   .then(resp => {
-    //     setImages((prevImages) => [...prevImages, ...resp.data.photos]);
-    //     setLoading(false)
-    //     console.log(resp.data.photos);
-    //   }).catch(error => {
-    //     setLoading(false)
-    //     console.error('Error fetching images:', error);
-    //   })
-    // },[page]);
-
-    // const handleSubmit = async (values: any) => {
-    //   try {
-    //     const params = {
-    //       q: {
-    //         // title_or_description_or_camera_cont: values.freeWord,
-    //         camera_cont: values.freeWord,
-    //       },
-    //       page: page
-    //     };
-
-    //     const resp = await axios.get('http://localhost:3000/api/v1/photos', { params })
-    //     setImages(resp.data.photos);
-    //     setLoading(false)
-    //     console.log(resp.data.photos);
-    //   }catch(error) {
-    //     setLoading(false)
-    //     console.error('Error fetching images:', error);
-    //   }
-    // }
 
     useEffect(() => {
       // axiosでデータを取得する部分は関数化して、利用する
@@ -115,8 +92,9 @@ const IndexPhotos = () => {
             params: { ...searchParams } // ページ数も追加
           });
           setImages((prevImages) => [...prevImages, ...resp.data.photos]);
+          setPhotoCount(resp.data.photo_count)
           setLoading(false);
-          console.log(resp.data.photos);
+          console.log(resp.data);
         } catch (error) {
           setLoading(false);
           console.error('Error fetching images:', error);
@@ -133,11 +111,11 @@ const IndexPhotos = () => {
       setPage(1);
       setLoading(true);
       setImages([]);
+      setPhotoSearch(true);
       // fetchData 関数を利用してデータを取得
 
       const params = {
         q: {
-          // camera_cont: values.freeWord,
           title_or_description_or_camera_cont: values.freeWord,
           user_name_cont: values.postUserName,
         },
@@ -199,7 +177,7 @@ const IndexPhotos = () => {
             </Grid.Col>
             <Grid.Col span={6} className='flex-wrap pt-2'>
                 <Text size="sm" className='mb-2'>撮影地</Text>
-                <Link to='' className='flex items-center justify-end'>
+                <Link to='/photos/map' className='flex items-center justify-end'>
                   <Text size="md" c="dimmed">地図を開く</Text>
                   <FaAngleRight style={{ color: '#868e96' }}/>
                 </Link>
@@ -219,17 +197,20 @@ const IndexPhotos = () => {
           </Grid>
         </form>
       </div>
-          <div className='my-5'>
-            <p className='text-center'>検索結果：〇〇件</p>
+          <div className='mt-10 mb-5'>
+            { photoSearch && 
+              <p className='text-center'>検索結果： {photoCount} 件</p>
+            }
           </div>
           <div className='flex justify-center '>
             <p>並び替え</p>
             ：
-            <p className='font-bold'>投稿日↓</p>
+            <p css={[Styles.LinkStyle, selectedSort === 'post' && Styles.SelectedStyle]}
+            onClick={() => setSelectedSort('post')}
+          >投稿日↓</p>
             ｜
-            <p>お気に入り数</p>
-            ｜
-            <p>コメント数</p>
+            <p css={[Styles.LinkStyle, selectedSort === 'like' && Styles.SelectedStyle]}
+            onClick={() => setSelectedSort('like')}>お気に入り数</p>
           </div>
           </section>
           {loading ? (<></>):(
