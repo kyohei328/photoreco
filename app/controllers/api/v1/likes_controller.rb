@@ -1,6 +1,6 @@
 class Api::V1::LikesController < ApplicationController
-  before_action :authenticate
-
+  before_action :authenticate, only: %i[create destroy]
+  
   def create
     # binding.pry
     @photo = Photo.find(params[:photo_id])
