@@ -15,7 +15,19 @@ class Api::V1::PhotosController < ApplicationController
     @q = Photo.ransack(params[:q])
     @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user)
 
-    render json:  { photos: @photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
+    render json:  {
+      photos: @photos.map { |photo|
+        {
+          id: photo.id,
+          title: photo.title,
+          image_url: image_url(photo),
+          lat: photo.gps_latitude,
+          lng: photo.gps_longitude,
+          user_name: photo.user&.name,
+        }
+      },
+      photo_count: @photos.count
+    }
   end
 
   def create

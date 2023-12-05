@@ -12,6 +12,7 @@ import ShowContest from '../components/ShowContest'
 import ShowPhoto from '../components/ShowPhoto'
 import Mypage from '../components/Mypage'
 import ContestResult from '../components/ContestResult'
+import SearchMap from '../components/SearchMap'
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
       <Route path="/terms-of-use" element={<TermsOfUse />}/>
       <Route path="/photos/new" element={<AddPhoto />}/>
       <Route path="/photos/:id" element={<ShowPhoto />}/>
+      <Route path="/photos/map" element={<SearchMap />}/>
       <Route path="/contest/top" element={<ContestTop />}/>
       <Route path="/contest/new" element={<AddContest />}/>
       <Route path="/contest/:id" element={<ShowContest/>}/>
