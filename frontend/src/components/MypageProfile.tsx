@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import { TextInput, Grid, Button, Textarea } from '@mantine/core';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const MypageProfile = () => {
 
@@ -79,6 +80,25 @@ const MypageProfile = () => {
     }
   };
 
+  const auth = getAuth();
+
+  const submitPasswordResetEmail = async () => {
+    const actionCodeSettings = {
+      // パスワード再設定後のリダイレクト URL
+      url: 'http://localhost:3001/login',
+      handleCodeInApp: false,
+    }
+    sendPasswordResetEmail(auth, userProfile.email, actionCodeSettings)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  }
 
   if (loading) {
     return <div></div>
@@ -128,6 +148,7 @@ const MypageProfile = () => {
               <Button
                 variant="outline"
                 color="rgba(59, 59, 59, 1)"
+                onClick={submitPasswordResetEmail}
               >
               変更
               </Button>
