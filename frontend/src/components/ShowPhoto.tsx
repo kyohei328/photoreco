@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import Map from './Map'
-
+import { TwitterIntentTweet } from "./Tweet.tsx";
 
 const ShowPhoto = () => {
 
@@ -142,6 +142,14 @@ const ShowPhoto = () => {
 
   const postDate = moment(photoData.created_at).format('YYYY年MM月D日');
 
+  const Tweet = {
+    text: "写真を投稿しました。",
+    // url: `http://localhost:3001/photos/${id}`,
+    url: `http://localhost:3001`,
+    hashtags: ["photo"],
+    in_reply_to: "123456789",
+  }
+
   return (
     <div>
       <section css={Styles.SectionStyle} className='mx-12'>
@@ -163,7 +171,8 @@ const ShowPhoto = () => {
 
             <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
             <Grid.Col span={2.5}>{postDate}</Grid.Col>
-            <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col>
+            {/* <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col> */}
+            <Grid.Col span={1} className='mx-auto'><TwitterIntentTweet {...Tweet}/></Grid.Col>
             <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
             {/* <Grid.Col span={1} css={Styles.LikeStyles} > */}
               { liked ? <IconStarFilled /> : <IconStar /> }
