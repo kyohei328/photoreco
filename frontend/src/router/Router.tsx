@@ -13,6 +13,7 @@ import ShowPhoto from '../components/ShowPhoto'
 import Mypage from '../components/Mypage'
 import ContestResult from '../components/ContestResult'
 import SearchMap from '../components/SearchMap'
+import OGP from '../components/OGP'
 
 const Router = () => {
   return (
@@ -31,7 +32,6 @@ const Router = () => {
       <Route path="/contest/:id/result" element={<ContestResult />}/>
       <Route path="/photos" element={<IndexPhotos />}/>
       <Route path="/mypage" element={<Mypage />}/>
-      
     </Routes>
   )
 }

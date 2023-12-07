@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
+import { useState } from 'react';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('作品名は必須です'),
@@ -53,10 +54,15 @@ const AddPhoto = (props: any) => {
     ButtonStyles: css({
       margin: '30px 100px',
     }),
+    ImageFrameStyle: css ({
+      height: '32rem',
+      width: '100%',
+    })
   }
 
   const { user } =  UserAuth() as { user: object };
   const navigate = useNavigate();
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const form = useForm({
     validate: yupResolver(validationSchema),
@@ -105,12 +111,38 @@ const AddPhoto = (props: any) => {
       }
     }
   };
+  const handleFileChange = (e) => {
+    // const file = event.target.files[0];
+    const file = e
+    console.log(e);
+    if (file) {
+      // ファイルが選択されたらプレビューを表示
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile({
+          file,
+          preview: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  console.log(selectedFile)
 
   return (
     <div css={Styles.ContainerStyle}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <h1 css={Styles.LogoStyle}>写真をアップロードする</h1>
         <p css={Styles.NoticeStyle}>※ 著作権等の知的財産権や肖像権の侵害にご注意ください</p>
+        {selectedFile && (
+          <div>
+            <p className='mb-2'>プレビュー</p>
+            <div css={Styles.ImageFrameStyle}>
+              <img src={selectedFile.preview} alt="File Preview" className='object-contain rounded-md' />
+            </div>
+          </div>
+        )}
         <div>
           <FileInput
             label="作品写真"
@@ -121,6 +153,7 @@ const AddPhoto = (props: any) => {
             {...form.getInputProps('photo_img')}
             placeholder="写真を選択する"
             accept="image/*,.png,.jpg,.jpeg,.gif"
+            // onChange={handleFileChange}
           />
         </div>
         <div css={Styles.InputBoxStyle}>
