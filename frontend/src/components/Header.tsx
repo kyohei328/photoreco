@@ -5,7 +5,8 @@ import { LoginIcon } from '../icons/LoginIcon';
 import { Link, useLocation } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
 import { IconLogout, IconUpload, IconSettings } from '@tabler/icons-react';
-import { useState } from 'react';
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 
 const Styles = {
   LogoStyle: css ({
@@ -32,40 +33,7 @@ const Styles = {
   }),
 }
 
-// const mockdata = [
-//   {
-//     icon: IconCode,
-//     title: 'Open source',
-//     description: 'This Pokémon’s cry is very loud and distracting',
-//   },
-//   {
-//     icon: IconCoin,
-//     title: 'Free for everyone',
-//     description: 'The fluid of Smeargle’s tail secretions changes',
-//   },
-//   {
-//     icon: IconBook,
-//     title: 'Documentation',
-//     description: 'Yanma is capable of seeing 360 degrees without',
-//   },
-//   {
-//     icon: IconFingerprint,
-//     title: 'Security',
-//     description: 'The shell’s rounded shape and the grooves on its.',
-//   },
-//   {
-//     icon: IconChartPie3,
-//     title: 'Analytics',
-//     description: 'This Pokémon uses its flying ability to quickly chase',
-//   },
-//   {
-//     icon: IconNotification,
-//     title: 'Notifications',
-//     description: 'Combusken battles with the intensely hot flames it spews',
-//   },
-// ];
-
-export function Header() {
+export function Header(props) {
   // const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   // const theme = useMantineTheme();
 
@@ -88,8 +56,9 @@ export function Header() {
   // ));
 
   const { logOut, user } = UserAuth();
-  const [selectedContents, setSelectedContents] = useState('');
   const [menuVisible, setMenuVisible] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
 
@@ -100,8 +69,32 @@ export function Header() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
-  
- console.log(selectedContents)
+
+  console.log(props)
+
+  useEffect(() => {
+    const userStatus = async () => {
+      try {
+        // const { user } = await UserAuth();
+        const token = await user.getIdToken();
+        console.log(token)
+        const config = { headers: { 'Authorization': `Bearer ${token}` } };
+        const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+        setUserProfile(resp.data)
+        setLoading(false);
+        console.log(resp.data)
+      } catch (error) {
+        console.error('Error fetching like status:', error);
+        setLoading(false);
+      }
+    }
+    userStatus();
+  },[user]);
+
+  if (loading) {
+    return <div></div>
+  }
+
   return (
     // <Box pb={120}>
     <Box pb={30}>
@@ -111,10 +104,6 @@ export function Header() {
             <a href='/' css={Styles.LogoStyle}>
               Photo Space
             </a>
-            {/* <a href="/photos" className={classes.link} css={selectedContents === 'photoSearch' && Styles.SelectedStyles}
-              onClick={() => setSelectedContents('photoSearch')}>
-              写真検索
-            </a> */}
             <a href="/photos" className={classes.link} css={location.pathname === '/photos' && Styles.SelectedStyles}>
               写真検索
             </a>
@@ -151,7 +140,7 @@ export function Header() {
               <Menu.Target>
                 <Avatar
                   css={Styles.IconStyle}
-                  src=""  // 画像のURLを指定
+                  src={userProfile.avatar_url}  // 画像のURLを指定
                   alt="Image Alt Text"  // 画像の代替テキスト
                   radius="50%"  // 円形にするための半径
                   size="md"
@@ -211,6 +200,7 @@ export function Header() {
               </Button>
             </Link>
             )}
+            
           </Group>
 
           {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}
@@ -218,4 +208,5 @@ export function Header() {
       </header>
     </Box>
   );
+  
 }

@@ -4,7 +4,9 @@ import { css } from '@emotion/react'
 import { TextInput, Grid, Button, Textarea } from '@mantine/core';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail, sendEmailVerification, updateEmail,EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
+
+
 
 const MypageProfile = () => {
 
@@ -20,6 +22,7 @@ const MypageProfile = () => {
   const { user } = UserAuth();
   const [userProfile, setUserProfile] = useState({});
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState('');
 
   // const form = useForm({
   //   initialValues: {
@@ -39,6 +42,7 @@ const MypageProfile = () => {
     form.reset()
   }
 
+  const auth = getAuth();
 
   useEffect(() => {
     const userStatus = async () => {
@@ -59,7 +63,7 @@ const MypageProfile = () => {
   },[]);
 
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any)=> {
 
     const formData = new FormData();
       formData.append('user[name]',  values.name);
@@ -80,7 +84,7 @@ const MypageProfile = () => {
     }
   };
 
-  const auth = getAuth();
+  
 
   const submitPasswordResetEmail = async () => {
     const actionCodeSettings = {
@@ -99,6 +103,22 @@ const MypageProfile = () => {
       // ..
     });
   }
+
+
+  const submitEmailChange = () => {
+    // verifyBeforeUpdateEmail(user, email)
+    verifyBeforeUpdateEmail(user, "zwei328@gmail.com")
+    .then(() => {
+      // Email updated!
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      // ...
+    });
+  }
+
+  console.log(email)
+
 
   if (loading) {
     return <div></div>
@@ -130,11 +150,17 @@ const MypageProfile = () => {
 
         <Grid gutter="sm" css={Styles.TableStyle}>
           <Grid.Col span={6}>メールアドレス</Grid.Col>
-          <Grid.Col span={3}>{userProfile.email}</Grid.Col>
+          <Grid.Col span={3}>
+            <TextInput
+              placeholder={userProfile.email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Grid.Col>
           <Grid.Col span={3} className='text-right'>
             <Button
               variant="outline"
               color="rgba(59, 59, 59, 1)"
+              onClick={submitEmailChange}
             >
               変更
             </Button>
