@@ -83,7 +83,8 @@ const AddPhoto = (props: any) => {
     try {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      const resp = await axios.post("http://localhost:3000/api/v1/photos", formData, config);
+      // const resp = await axios.post("http://localhost:3000/api/v1/photos", formData, config);
+      const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/photos`, formData, config)
       console.log(resp)
 
       if (props.contest) {
@@ -92,7 +93,8 @@ const AddPhoto = (props: any) => {
           photo_id: resp.data.id,
         };
         console.log(data)
-        await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+        // await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
       }
 
         navigate('/')

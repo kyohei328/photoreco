@@ -6,5 +6,5 @@ RUN apt-get update && \
   echo "ja_JP.UTF-8 UTF-8" > /etc/locale.gen && \
   locale-gen ja_JP.UTF-8
 ENV LC_ALL ja_JP.UTF-8
-ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
-ADD ./nginx/default.conf /etc/nginx/conf.d/default.conf
+ADD ./prd/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD ./prd/nginx/default.conf /etc/nginx/conf.d/default.conf

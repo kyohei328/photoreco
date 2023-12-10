@@ -88,11 +88,13 @@ const IndexPhotos = () => {
     }
   };
 
+  console.log(import.meta.env.VITE_BASE_URL);
+
     useEffect(() => {
       // axiosでデータを取得する部分は関数化して、利用する
       const fetchData = async () => {
         try {
-          const resp = await axios.get(`http://localhost:3000/api/v1/photos?page=${page}`, {
+          const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/photos?page=${page}`, {
             params: { ...searchParams } // ページ数も追加
           });
           setImages((prevImages) => [...prevImages, ...resp.data.photos]);
