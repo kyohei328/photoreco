@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,13 +33,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "contest_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "contest_entries", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "contest_id"
     t.bigint "photo_id"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["user_id"], name: "index_contest_entries_on_user_id"
   end
 
-  create_table "contest_results", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "contest_results", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "contest_id"
     t.bigint "photo_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["user_id"], name: "index_contest_results_on_user_id"
   end
 
-  create_table "contests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "contests", charset: "utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.date "start_date"
@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["user_id"], name: "index_contests_on_user_id"
   end
 
-  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "likes", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "photo_id"
     t.datetime "created_at", null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "photos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "photos", charset: "utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.float "gps_latitude"
@@ -110,15 +110,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
-  create_table "today_photos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "today_photos", charset: "utf8", force: :cascade do |t|
     t.bigint "photo_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["photo_id"], name: "index_today_photos_on_photo_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "password_digest"
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
     t.text "self_introduction"
@@ -129,7 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_30_151824) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
-  create_table "votes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "votes", charset: "utf8", force: :cascade do |t|
     t.integer "rate", null: false
     t.text "comment"
     t.bigint "user_id"

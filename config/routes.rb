@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get 'top', to: 'top#index'
       resource :mypage, only: %i[show update]
       resource :profile, only: %i[show update]
+      get '/health_check', to: proc { [200, {}, ['']] }
     end
   end
 end

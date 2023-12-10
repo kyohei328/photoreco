@@ -8,7 +8,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # origins "http://127.0.0.1:5173"
-    origins "http://localhost:3001"
+    origins "http://localhost:3001", "https://photospace-app.com"
 
     resource "*",
       headers: :any,

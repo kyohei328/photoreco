@@ -9,7 +9,7 @@ class Api::V1::PhotosController < ApplicationController
   def index
     # binding.pry
     page = params[:page] || 1
-    per_page = params[:per_page] || 5
+    per_page = params[:per_page] || 12
     # @photos = Photo.order(created_at: :desc).page(page).per(per_page)
 
     @q = Photo.ransack(params[:q])
