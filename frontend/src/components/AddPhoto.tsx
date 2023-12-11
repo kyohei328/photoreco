@@ -62,7 +62,7 @@ const AddPhoto = (props: any) => {
 
   const { user } =  UserAuth() as { user: object };
   const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const form = useForm({
     validate: yupResolver(validationSchema),
@@ -82,6 +82,7 @@ const AddPhoto = (props: any) => {
   
     try {
       const token = await user.getIdToken(true);
+      console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
       // const resp = await axios.post("http://localhost:3000/api/v1/photos", formData, config);
       const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/photos`, formData, config)
@@ -96,7 +97,6 @@ const AddPhoto = (props: any) => {
         // await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
         await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
       }
-
         navigate('/')
       }catch (error) {
       console.log('エラー:', error);
@@ -113,38 +113,38 @@ const AddPhoto = (props: any) => {
       }
     }
   };
-  const handleFileChange = (e) => {
-    // const file = event.target.files[0];
-    const file = e
-    console.log(e);
-    if (file) {
-      // ファイルが選択されたらプレビューを表示
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedFile({
-          file,
-          preview: reader.result,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   // const file = event.target.files[0];
+  //   const file = e
+  //   console.log(e);
+  //   if (file) {
+  //     // ファイルが選択されたらプレビューを表示
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setSelectedFile({
+  //         file,
+  //         preview: reader.result,
+  //       });
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  console.log(selectedFile)
+  // console.log(selectedFile)
 
   return (
     <div css={Styles.ContainerStyle}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <h1 css={Styles.LogoStyle}>写真をアップロードする</h1>
         <p css={Styles.NoticeStyle}>※ 著作権等の知的財産権や肖像権の侵害にご注意ください</p>
-        {selectedFile && (
+        {/* {selectedFile && (
           <div>
             <p className='mb-2'>プレビュー</p>
             <div css={Styles.ImageFrameStyle}>
               <img src={selectedFile.preview} alt="File Preview" className='object-contain rounded-md' />
             </div>
           </div>
-        )}
+        )} */}
         <div>
           <FileInput
             label="作品写真"
