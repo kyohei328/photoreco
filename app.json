@@ -1,0 +1,11 @@
+{
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://www.mirrorservice.org/sites/distfiles.macports.org/perl5/Image-ExifTool-11.35.tar.gz"
+    }
+  ],
+  "other_key": "other_value"
+}
