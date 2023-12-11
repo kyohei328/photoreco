@@ -69,7 +69,8 @@ const EntryContestModal = (props: any) => {
     const token = await user.getIdToken(true);
     console.log(token)
     const config = { headers: { 'Authorization': `Bearer ${token}` } };
-    const resp = await axios.get('http://localhost:3000/api/v1/contest_entries', config)
+    // const resp = await axios.get('http://localhost:3000/api/v1/contest_entries', config)
+    const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/contest_entries`, config)
       setImages((prevImages) => [...prevImages, ...resp.data.photos]);
       console.log(resp.data);
     } catch(error) {
@@ -98,7 +99,8 @@ const EntryContestModal = (props: any) => {
         contest_id: props.contest.id,
         photo_id: selectedId,
       };
-      await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+      // await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);

@@ -79,8 +79,13 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+# production:
+#   <<: *default
+#   database: PhotoSpace_production
+#   username: PhotoSpace
+#   password: <%= ENV["PHOTOSPACE_DATABASE_PASSWORD"] %>
 production:
   <<: *default
-  database: PhotoSpace_production
-  username: PhotoSpace
-  password: <%= ENV["PHOTOSPACE_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5

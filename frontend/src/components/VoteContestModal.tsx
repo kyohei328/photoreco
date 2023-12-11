@@ -64,7 +64,8 @@ const VoteContestModal = (props) => {
     const token = await user.getIdToken(true);
     console.log(token)
     const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {id: props.contestId} };
-    const resp = await axios.get('http://localhost:3000/api/v1/votes', config)
+    // const resp = await axios.get('http://localhost:3000/api/v1/votes', config)
+    const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/votes`, config)
       setImages((prevImages) => [...prevImages, ...resp.data.photos]);
       console.log(resp.data.photos);
     } catch(error) {
@@ -103,7 +104,8 @@ const VoteContestModal = (props) => {
         contest_id: props.contest.id,
         photo_id: selectedId,
       };
-      await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+      // await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);

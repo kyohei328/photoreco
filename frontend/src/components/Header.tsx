@@ -79,7 +79,8 @@ export function Header(props) {
         const token = await user.getIdToken();
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+        // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
         setUserProfile(resp.data)
         setLoading(false);
         console.log(resp.data)

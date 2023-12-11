@@ -29,6 +29,7 @@ class ApplicationController < ActionController::API
 
   def set_auth
     # binding.pry
+    sleep(0.1)
     @auth = authenticate_token_by_firebase
   end
 

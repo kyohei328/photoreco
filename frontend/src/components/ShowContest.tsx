@@ -61,7 +61,8 @@ const ShowContest = () => {
   console.log(id)
 
   useEffect(() => {
-   axios.get(`http://localhost:3000/api/v1/contests/${id}`)
+  //  axios.get(`http://localhost:3000/api/v1/contests/${id}`)
+   axios.get(`${import.meta.env.VITE_BASE_URL}/contests/${id}`)
    .then(resp => {
       setContest(resp.data)
       setPostUser(resp.data.user)

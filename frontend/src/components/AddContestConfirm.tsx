@@ -105,8 +105,8 @@ const AddContestConfirm = () => {
       const token = await user.getIdToken(true);
       console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-
-      await axios.post("http://localhost:3000/api/v1/contests", formData, config);
+      // await axios.post("http://localhost:3000/api/v1/contests", formData, config);
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/contests`, formData, config);
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);
@@ -115,6 +115,8 @@ const AddContestConfirm = () => {
       alert('エラーが発生しました: ' + error.message);
     }
   };
+
+  console.log(`${import.meta.env.VITE_BASE_URL}/contests`)
 
   return (
     <div css={Styles.ContainerStyle}>

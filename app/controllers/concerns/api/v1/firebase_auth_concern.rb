@@ -14,6 +14,7 @@ module Api
       ISSUER_BASE_URL = 'https://securetoken.google.com/'.freeze
       CLIENT_CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
 
+
       def authenticate_token_by_firebase
         authenticate_with_http_token do |token, _|
           return { data: verify_id_token(token) }

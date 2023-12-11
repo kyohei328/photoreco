@@ -61,7 +61,8 @@ const ContestTop = () => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/v1/contests')
+    // axios.get('http://localhost:3000/api/v1/contests')
+    axios.get(`${import.meta.env.VITE_BASE_URL}/contests`)
       .then(resp => {
         setApplyContest(resp.data.contests);
         setContestResults(resp.data.contests_result);
@@ -97,7 +98,8 @@ const ContestTop = () => {
         }else{
           setResultCheck(false)
         }
-        const resp = await axios.get("http://localhost:3000/api/v1/contests", { params });
+        // const resp = await axios.get("http://localhost:3000/api/v1/contests", { params });
+        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/contests`, { params });
         setApplyContest(resp.data.contests);
         setContestCount(resp.data.contest_count);
         setContestResults(resp.data.contests_result);
