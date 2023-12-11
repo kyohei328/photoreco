@@ -7,7 +7,7 @@ gem 'msgpack', '1.7.2'
 gem 'webrick', '~> 1.7'
 
 # db
-gem 'mysql2'
+# gem 'mysql2'
 
 gem 'unicorn'
 
@@ -39,3 +39,12 @@ gem 'whenever'
 gem 'ransack'
 
 gem 'kaminari'
+
+group :development, :test do
+  gem 'mysql2'
+end
+
+
+group :production do
+  gem 'pg'
+end
