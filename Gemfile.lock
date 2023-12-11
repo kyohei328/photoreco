@@ -147,6 +147,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.5-x86_64-linux)
       racc (~> 1.4)
+    pg (1.5.4)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -225,6 +226,7 @@ DEPENDENCIES
   mini_exiftool
   msgpack (= 1.7.2)
   mysql2
+  pg
   pry-byebug
   pry-rails
   rack-cors
