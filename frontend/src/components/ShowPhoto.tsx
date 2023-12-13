@@ -150,7 +150,7 @@ const ShowPhoto = () => {
   const Tweet = {
     text: "写真を投稿しました。",
     // url: `http://localhost:3001/photos/${id}`,
-    url: `http://localhost:3001`,
+    url: `https://photospace-app.com/photos/${id}`,
     hashtags: ["photo"],
     in_reply_to: "123456789",
   }

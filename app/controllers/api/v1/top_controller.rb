@@ -7,7 +7,6 @@ class Api::V1::TopController < ApplicationController
     # binding.pry
     unless TodayPhoto.any?
       @photos = Photo.random_three
-
       @photos.each do |photo|
         TodayPhoto.create(photo: photo)
       end
@@ -27,7 +26,4 @@ class Api::V1::TopController < ApplicationController
       new_serious_contests: new_serious_contests
     }
   end
-
-  private
-
 end
