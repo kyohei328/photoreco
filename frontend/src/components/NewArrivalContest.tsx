@@ -7,10 +7,12 @@ import moment from 'moment';
 const NewArrivalContest = (props: any) => {
    console.log(props)
 
+   const imagePath ='/public/contestIcon.jpg';
+
   const newContests = props.contest ? (
     props.contest.map((contest: any) => (
       <Item key={contest.id}>
-      <Item.Image size='tiny' src="https://photospace-image.s3.ap-northeast-1.amazonaws.com/rbkrutko9gmw25bogswl8x0vtul1"/>
+      <Item.Image size='tiny' src={imagePath}/>
       <Item.Content>
         <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest}>{contest.title}</Item.Header>
         <Item.Meta>開催内容</Item.Meta>
