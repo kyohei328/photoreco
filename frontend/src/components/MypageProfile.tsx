@@ -67,8 +67,8 @@ const MypageProfile = () => {
   const handleSubmit = async (values: any)=> {
 
     const formData = new FormData();
-      formData.append('user[name]',  values.name);
-      formData.append('user[self_introduction]',  values.self_introduction);
+      formData.append('user[name]', values.name || userProfile.name);
+      formData.append('user[self_introduction]', values.self_introduction || userProfile.self_introduction);
 
     try {
         const token = await user.getIdToken(true);
@@ -144,7 +144,7 @@ const MypageProfile = () => {
           <Grid.Col span={6}>自己紹介</Grid.Col>
           <Grid.Col span={6}>
             <Textarea
-              placeholder={userProfile.nself_introduction ? userProfile.self_introduction : '自己紹介文'}
+              placeholder={userProfile.self_introduction ? userProfile.self_introduction : '自己紹介文'}
               {...form.getInputProps('self_introduction')}
             />
           </Grid.Col>
