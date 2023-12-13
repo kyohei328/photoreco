@@ -46,7 +46,8 @@ const MypageContest = (props) => {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {data_type: 'contest'} };
-        const resp = await axios.get('http://localhost:3000/api/v1/mypage', config);
+        // const resp = await axios.get('http://localhost:3000/api/v1/mypage', config);
+        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/mypage`, config);
         setContests({
           post_contests: resp.data.post_contests,
           entry_contests: resp.data.entry_contests,
@@ -92,7 +93,8 @@ const MypageContest = (props) => {
       const token = await user.getIdToken(true);
       console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` }};
-      const resp = await axios.delete(`http://localhost:3000/api/v1/contests/${id}`, config);
+      // const resp = await axios.delete(`http://localhost:3000/api/v1/contests/${id}`, config);
+      const resp = await axios.delete(`${import.meta.env.VITE_BASE_URL}/contests/${id}`, config);
       setSelectContest(resp.data.post_contests)
       console.log(resp.data.post_contests)
     } catch (error) {

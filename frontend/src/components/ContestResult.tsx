@@ -76,7 +76,8 @@ const ContestResult = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000//api/v1/contests/${id}/contest_results`)
+    // axios.get(`http://localhost:3000//api/v1/contests/${id}/contest_results`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/contests/${id}/contest_results`)
       .then(resp => {
         setContestResults(resp.data.results);
         setContest(resp.data.contest);

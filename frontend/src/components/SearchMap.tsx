@@ -62,7 +62,8 @@ const SearchMap = () => {
   };
 
   useEffect (() => {
-    axios.get('http://localhost:3000/api/v1/photos')
+    // axios.get('http://localhost:3000/api/v1/photos')
+    axios.get(`${import.meta.env.VITE_BASE_URL}/photos`)
     .then(resp => {
       setImages(resp.data.photos);
       console.log(resp.data)

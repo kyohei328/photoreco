@@ -50,7 +50,8 @@ const MypageProfile = () => {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+        // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
         setUserProfile(resp.data.user)
         setLoading(false);
         console.log(resp.data)
@@ -72,7 +73,8 @@ const MypageProfile = () => {
     try {
         const token = await user.getIdToken(true);
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
+        // const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
+        const resp = await axios.patch(`${import.meta.env.VITE_BASE_URL}/profile`, formData, config);
         console.log(resp.data)
         setUserProfile(resp.data.user)
         formReset()
@@ -89,7 +91,8 @@ const MypageProfile = () => {
   const submitPasswordResetEmail = async () => {
     const actionCodeSettings = {
       // パスワード再設定後のリダイレクト URL
-      url: 'http://localhost:3001/login',
+      // url: 'http://localhost:3001/login',
+      url: 'https://photospace-backend-7008f4941f36.herokuapp.com/login',
       handleCodeInApp: false,
     }
     sendPasswordResetEmail(auth, userProfile.email, actionCodeSettings)

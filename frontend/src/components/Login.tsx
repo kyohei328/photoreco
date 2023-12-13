@@ -121,14 +121,14 @@ const Login = (props: PaperProps) => {
 
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
 
-      await axios.post("http://localhost:3000/api/v1/users", formData, config);
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, formData, config);
       console.log('サインアップ成功！');
     } else {
       await signInWithEmailAndPassword(auth, email, password);
       console.log('ログイン成功！');
     }
 
-    // navigate('/');
+    navigate('/');
     } catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);

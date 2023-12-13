@@ -40,7 +40,8 @@ const RatingModal = (props) => {
     try {
         const token = await user.getIdToken(true);
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        const resp = await axios.post("http://localhost:3000/api/v1/votes", formData, config);
+        // const resp = await axios.post("http://localhost:3000/api/v1/votes", formData, config);
+        const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/votes`, formData, config);
         console.log(resp)
         navigate('/')
       }catch (error) {

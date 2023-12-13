@@ -84,7 +84,8 @@ const ShowPhoto = () => {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
-        const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
+        // const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
+        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/photos/likes`, config);
         setLiked(resp.data.like_stauts);
         setLikedId(resp.data.like_id)
         console.log(resp.data)
@@ -94,7 +95,8 @@ const ShowPhoto = () => {
     }
 
   useEffect (() => {
-    axios.get(`http://localhost:3000/api/v1/photos/${id}`)
+    // axios.get(`http://localhost:3000/api/v1/photos/${id}`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/photos/${id}`)
     .then(resp => {
       setPhotoData(resp.data.photo)
       setPhotoUrl(resp.data.photo_url)
@@ -115,12 +117,14 @@ const ShowPhoto = () => {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        await axios.delete(`http://localhost:3000/api/v1/likes/${likedId}`, config);
+        // await axios.delete(`http://localhost:3000/api/v1/likes/${likedId}`, config);
+        await axios.delete(`${import.meta.env.VITE_BASE_URL}/likes/${likedId}`, config);
       } else {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        await axios.post(`http://localhost:3000/api/v1/likes`, {photo_id: id} ,config);
+        // await axios.post(`http://localhost:3000/api/v1/likes`, {photo_id: id} ,config);
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/likes`, {photo_id: id} ,config);
       }
       fetchLikeStatus();
     } catch (error) {
@@ -133,7 +137,8 @@ const ShowPhoto = () => {
       const token = await user.getIdToken(true);
       console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      await axios.delete(`http://localhost:3000/api/v1/photos/${id}`, config);
+      // await axios.delete(`http://localhost:3000/api/v1/photos/${id}`, config);
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/photos/${id}`, config);
       navigate('/photos')
     } catch (error) {
     console.error('Error toggling like:', error);

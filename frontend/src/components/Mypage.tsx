@@ -65,7 +65,8 @@ useEffect(() => {
       const token = await user.getIdToken(true);
       console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+      // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
+      const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
       setAvatarUrl(resp.data.avatar_url)
       setUserProfile(resp.data.user)
       setLoading(false);
@@ -95,7 +96,8 @@ const handleFileChange = async (event) => {
     
     const token = await user.getIdToken(true);
     const config = { headers: { 'Authorization': `Bearer ${token}` } };
-    const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
+    // const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
+    const resp = await axios.patch(`${import.meta.env.VITE_BASE_URL}/profile`, formData, config);
     setAvatarUrl(resp.data.avatar_url)
     setLoading(false);
     // アップロードが成功したら、適切な処理を行う

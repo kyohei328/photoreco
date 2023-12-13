@@ -79,7 +79,8 @@ const MypageLikePhoto = () => {
         try {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {data_type: 'like_photos'} };
-      const resp = await axios.get(`http://localhost:3000/api/v1/mypage?page=${page}`, config)
+      // const resp = await axios.get(`http://localhost:3000/api/v1/mypage?page=${page}`, config)
+      const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/mypage?page=${page}`, config)
         setImages((prevImages) => [...prevImages, ...resp.data.photos]);
         console.log(resp.data);
       }catch (error) {
