@@ -12,7 +12,8 @@ class Photo < ApplicationRecord
   validates :title, presence: true
   validate :validate_attachment_size
 
-  scope :random_three, -> { order(Arel.sql('RAND()')).limit(3) }
+  # scope :random_three, -> { order(Arel.sql('RAND()')).limit(3) }  # MySQL
+  scope :random_three, -> { order(Arel.sql('RANDOM()')).limit(3) }
 
   def validate_attachment_size
     if photo_img.attached? && photo_img.blob.byte_size > 20.megabytes
