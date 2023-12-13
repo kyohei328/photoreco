@@ -122,9 +122,9 @@ const Top = () => {
         </div>
         <NewArrivalContest contest={selectContest}/>
       </section>
-      <div css={Styles.heightstyle} >
+      {/* <div css={Styles.heightstyle} >
         {user ? <p>Email : {user.email}</p> : <p>No user data</p>}
-      </div>
+      </div> */}
       <Footer />
     </div>
   )
