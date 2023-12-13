@@ -62,50 +62,6 @@ const Login = (props: PaperProps) => {
     }
   }, [user]);
 
-  // const handleSubmit = (event: FormEvent) => {
-  //   event.preventDefault();
-  //   console.log(form.setFieldValue)
-  //   const formData = new FormData();
-  //   formData.append('user[name]', form.values.name);
-  // //   formData.append('user[email]', form.values.email);
-  // //   formData.append('user[password]', form.values.password);
-  //   const email = form.values.email;
-  //   const password = form.values.password;
-  
-  //   if (type === 'register' ){
-  //     createUserWithEmailAndPassword(auth, email, password)
-  //       .then(async(result) => {
-  //         const user = await result.user
-  //         const token = await user.getIdToken(true)
-  //         const config =  { 'Authorization': `Bearer ${token}` };
-
-  //         axios.post("http://localhost:3000/api/v1/users", formData, { headers: config })
-  //         .then(() => {
-  //           console.log('サインアップ成功！');
-  //           navigate('/');
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //       });
-  //   }else{
-  //     signInWithEmailAndPassword(auth, email, password)
-  //       .then((user) => {
-  //         navigate('/');
-  //         console.log(user);
-  //         console.log('ログイン成功！');
-  //       })
-  //       .catch((error) => {
-  //         const errorCode = error.code;
-  //         const errorMessage = error.message;
-  //         console.log('ログイン失敗！');
-  //         console.log(errorCode);
-  //         console.log(errorMessage);
-  //         alert('ログインに失敗しました');
-  //       });
-  //   }
-  // };
-
   const handleSubmit = async (event: FormEvent) => {
   event.preventDefault();
   const formData = new FormData();
@@ -141,14 +97,15 @@ const Login = (props: PaperProps) => {
     <Container size={520} my={40}>
     <Paper radius="md" p="xl" withBorder {...props} >
       <Text size="lg" fw={500}>
-        {type}
+        {/* {type} */}
+        {type === 'register' ? '新規登録' : 'ログイン'}
       </Text>
 
       <Group grow mb="md" mt="md">
         <GoogleButton onClick={handleGoogleSignIn} radius="xl">Google</GoogleButton>
       </Group>
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+      <Divider label="または" labelPosition="center" my="lg" />
 
       {/* <form onSubmit={form.onSubmit(() => {})}> */}
       <form onSubmit={handleSubmit}>
@@ -184,22 +141,24 @@ const Login = (props: PaperProps) => {
           />
 
           {type === 'register' && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-            />
+            // <Checkbox
+            //   label="利用規約に同意する"
+            //   checked={form.values.terms}
+            //   onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
+            // />
+            <Text size="xs">サインアップすることで、利用規約とプライバシーポリシーに同意したことになります。</Text>
           )}
         </Stack>
 
         <Group justify="space-between" mt="xl">
           <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
             {type === 'register'
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
+              ? 'すでにアカウントをお持ちですか？ ログイン'
+              : "アカウントをお持ちでないですか？ 登録する"}
           </Anchor>
           <Button variant="outline" color="gray" type="submit" radius="xl">
-            {upperFirst(type)}
+            {/* {upperFirst(type)} */}
+            {type === 'register' ? '新規登録' : 'ログイン'}
           </Button>
         </Group>
       </form>
@@ -209,53 +168,4 @@ const Login = (props: PaperProps) => {
 }
 
 export default Login
-
-
-// import { auth } from '../firebase';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-
-// const SignUp = () => {
-//   const handleSubmit = (event: FormEvent) => {
-//     event.preventDefault();
-//     const email = (event.target as HTMLFormElement).elements.namedItem('email') as HTMLInputElement;
-//     const password = (event.target as HTMLFormElement).elements.namedItem('password') as HTMLInputElement;
-//     createUserWithEmailAndPassword(auth, email.value, password.value)
-//       .then(async(result) => {
-//         const user = await result.user
-//         const token = await user.getIdToken(true)
-//         // const config = { headers: { authorization: `Bearer ${token}` } };
-//         // const headers = { 'Authorization': `Bearer ${token}` };
-//         const config =  { 'Authorization': `Bearer ${token}` };
-
-//         // axios.post("http://localhost:3000/api/v1/users", { headers })
-//         // axios.post("http://localhost:3000/api/v1/users", {}, { headers: headers })
-//         axios.post("http://localhost:3000/api/v1/users", {}, { headers: config })
-//       })
-//       .catch((error) => {
-//         console.log(error)
-//       })
-//     };
-
-//   return (
-//     <div>
-//       <h1>ユーザ登録</h1>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label htmlFor="email">メールアドレス</label>
-//           <input id="email" name="email" type="email" placeholder="email" />
-//         </div>
-//         <div>
-//           <label htmlFor="password">パスワード</label>
-//           <input id="password" name="password" type="password" />
-//         </div>
-//         <div>
-//           <button>登録</button>
-//         </div>
-//         <p></p>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default SignUp;
 
