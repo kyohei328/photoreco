@@ -46,38 +46,7 @@ const ShowPhoto = () => {
   const { user } = UserAuth() as { user: object };
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const userData = await UserAuth();
-  //       setUser(userData);
-  //       // userが取得された後の処理をここに追加できます
-  //     } catch (error) {
-  //       console.error('ユーザーデータの取得エラー:', error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []); // 空の依存配列は、コンポーネントのマウント時にのみ実行するようにします
-
   console.log(user)
-
-  // useEffect (() => {
-  //   const fetchLikeStatus = async () => {
-  //     try {
-  //       const token = await user.getIdToken(true);
-  //       console.log(token)
-  //       const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
-  //       const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
-  //       setLiked(resp.data.like_stauts);
-  //       setLikedId(resp.data.like_id)
-  //       console.log(resp.data)
-  //     } catch (error) {
-  //       console.error('Error fetching like status:', error);
-  //     }
-  //   };
-  //   fetchLikeStatus();
-  // },[id]);
 
     const fetchLikeStatus = async () => {
       try {
@@ -178,10 +147,12 @@ const ShowPhoto = () => {
             <Grid.Col span={2.5}>{postDate}</Grid.Col>
             {/* <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col> */}
             <Grid.Col span={1} className='mx-auto'><TwitterIntentTweet {...Tweet}/></Grid.Col>
-            <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
-            {/* <Grid.Col span={1} css={Styles.LikeStyles} > */}
-              { liked ? <IconStarFilled /> : <IconStar /> }
-            </Grid.Col>
+
+            { !(currentUid === postUser.uid) &&
+              <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
+                { liked ? <IconStarFilled /> : <IconStar /> }
+              </Grid.Col>
+            }
 
             <Grid.Col span={1}>
             { currentUid === postUser.uid &&
