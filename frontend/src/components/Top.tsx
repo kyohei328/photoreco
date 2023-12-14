@@ -10,7 +10,6 @@ import { useImage } from '../context/TodayPhotosContext';
 import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
-import { Helmet } from 'react-helmet-async';
 
 const Top = () => {
 
@@ -92,14 +91,6 @@ const Top = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>PhotoSample</title>
-        <meta name="description" content="sample_app" />
-        <meta property="og:title" content="ウェブサイトのタイトル" />
-        <meta property="og:description" content="ウェブサイトの説明文" />
-        <meta property="og:image" content="/frontend/public/favicon.ico" />
-        {/* 他のOGPメタデータ */}
-      </Helmet>
       <section css={Styles.SectionStyles}>
         <div>
           <h1 css={Styles.TitleStyle}>ToDay's PickUp Photos</h1>
