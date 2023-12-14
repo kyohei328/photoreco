@@ -6,6 +6,7 @@ import NewArrivalContest from './NewArrivalContest'
 import { Link } from 'react-router-dom';
 import ContestResultList from './ContestResultList'
 import { useForm } from '@mantine/form';
+import { UserAuth } from '../context/AuthContext';
 
 const ContestTop = () => {
 
@@ -50,6 +51,7 @@ const ContestTop = () => {
   const [contestCount, setContestCount] = useState();
   const [resultCheck, setResultCheck] = useState(false);
   
+  const { user } = UserAuth();
 
   const form = useForm({
     initialValues: {
@@ -167,6 +169,7 @@ const ContestTop = () => {
       </section>
      
         <div className='text-right px-6'>
+        { user &&
           <Link to='/contest/new'>
             <Button
               variant="outline"
@@ -175,6 +178,7 @@ const ContestTop = () => {
             コンテストを開催する
             </Button>
           </Link>
+          }
         </div>
         {contestSearch &&  (
           <h3 className='text-center my-4'>検索結果 {contestCount} 件</h3>
