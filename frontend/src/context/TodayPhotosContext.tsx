@@ -69,7 +69,7 @@ export const ImageContextProvider = ({ children }) => {
 
   const getPhotos = async () => {
     try {
-      const resp = await axios.get('http://localhost:3000/api/v1/top', {
+      const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/top`, {
         headers: {'LastRequestDate': currentDate.toISOString(),},
         });
         setImages(resp.data.today_photos);
