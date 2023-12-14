@@ -133,25 +133,21 @@ const IndexPhotos = () => {
       setImages(sortedPhotos);
     };
     
-    // お気に入りの昇順にソート
     const handleSortByLikesAsc = () => {
       const sortedPhotos = sortPhotos(images, 'likes_count', 'asc');
       setImages(sortedPhotos);
     };
     
-    // お気に入りの降順にソート
     const handleSortByLikesDesc = () => {
       const sortedPhotos = sortPhotos(images, 'likes_count', 'desc');
       setImages(sortedPhotos);
     };
     
     const handleSubmit = async (values: any) => {
-      // フォームがサブミットされたときにもページをリセットして新たにデータを取得する
       setPage(1);
       setLoading(true);
       setImages([]);
       setPhotoSearch(true);
-      // fetchData 関数を利用してデータを取得
 
       const params = {
         q: {
