@@ -22,7 +22,6 @@ const SearchMap = () => {
 
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [size, setSize] = useState(undefined);
-  const [address, setAddress] = useState("");
   const [images, setImages] = useState<any[]>([]);
   const [infoWindowIndex, setInfoWindowIndex] = useState(null);
 
@@ -63,7 +62,7 @@ const SearchMap = () => {
 
   useEffect (() => {
     // axios.get('http://localhost:3000/api/v1/photos')
-    axios.get(`${import.meta.env.VITE_BASE_URL}/photos`)
+    axios.get(`${import.meta.env.VITE_BASE_URL}/search_map`)
     .then(resp => {
       setImages(resp.data.photos);
       console.log(resp.data)
