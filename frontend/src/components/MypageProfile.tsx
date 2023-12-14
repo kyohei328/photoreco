@@ -109,7 +109,6 @@ const MypageProfile = () => {
 
   const submitEmailChange = () => {
     verifyBeforeUpdateEmail(user, email)
-    // verifyBeforeUpdateEmail(user, "zwei328@gmail.com")
     .then(() => {
       // Email updated!
       // ...

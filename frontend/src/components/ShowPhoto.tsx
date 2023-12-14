@@ -8,6 +8,7 @@ import axios from 'axios';
 import moment from 'moment';
 import Map from './Map'
 import { TwitterIntentTweet } from "./Tweet.tsx";
+import { Helmet } from 'react-helmet-async';
 
 const ShowPhoto = () => {
 
@@ -126,6 +127,19 @@ const ShowPhoto = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>PhotoSpace</title>
+        <meta name="description" content="sample_app"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="PhotoSpace"/>
+        <meta property="og:description" content="ウェブサイトの説明文"/>
+        <meta property="og:image" content="https://photospace-app.com/ogp.jpg"/>
+        <meta property="og:url" content={Tweet.url} />
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="PhotoSpace"/>
+        <meta name="twitter:description" content="ウェブサイトの説明文"/>
+        <meta name="twitter:image" content="https://photospace-app.com/ogp.jpg"/>
+      </Helmet>
       <section css={Styles.SectionStyle} className='mx-12'>
         <div className='mb-10'>
           <Image
