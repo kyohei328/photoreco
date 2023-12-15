@@ -53,6 +53,9 @@ const Top = () => {
       fontWeight: 'bold',
       textDecoration: 'underline',
     }),
+    ContestSectionStyle: css ({
+      minHeight: '21rem',
+    })
   })
 
   const { user } =  UserAuth() as { user: object };
@@ -100,7 +103,7 @@ const Top = () => {
       </section>
       <section>
         <h1 css={Styles.TitleStyle}>新着コンテスト</h1>
-        <div className='flex justify-around mb-5'>
+        <div  className='flex justify-around mb-5'>
           <p css={[Styles.SelectStyles, selectedDepartment === 'new_entertainment_contests' && Styles.SelectedStyles]}
             onClick={() => selectDepartment('new_entertainment_contests')}
           >
@@ -112,7 +115,9 @@ const Top = () => {
             キレイ部門
           </p>
         </div>
-        <NewArrivalContest contest={selectContest}/>
+        <div css={Styles.ContestSectionStyle}>
+          <NewArrivalContest contest={selectContest}/>
+        </div>
       </section>
       {/* <div css={Styles.heightstyle} >
         {user ? <p>Email : {user.email}</p> : <p>No user data</p>}
