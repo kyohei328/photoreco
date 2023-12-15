@@ -118,7 +118,7 @@ const MypageProfile = () => {
     });
   }
 
-  console.log(email)
+  console.log(user.email)
 
 
   if (loading) {
@@ -153,7 +153,8 @@ const MypageProfile = () => {
           <Grid.Col span={6}>メールアドレス</Grid.Col>
           <Grid.Col span={3}>
             <TextInput
-              placeholder={userProfile.email}
+              // placeholder={userProfile.email}
+              placeholder={user.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Grid.Col>
@@ -163,7 +164,7 @@ const MypageProfile = () => {
               color="rgba(59, 59, 59, 1)"
               onClick={submitEmailChange}
             >
-              変更
+              変更用メールを送信
             </Button>
           </Grid.Col>
         </Grid>
@@ -177,7 +178,7 @@ const MypageProfile = () => {
                 color="rgba(59, 59, 59, 1)"
                 onClick={submitPasswordResetEmail}
               >
-              変更
+              変更用メールを送信
               </Button>
           </Grid.Col>
         </Grid>
