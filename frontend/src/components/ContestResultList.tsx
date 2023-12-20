@@ -35,7 +35,8 @@ const ContestResultList = (props) => {
   const { contestResults } = props;
   console.log(contestResults)
   const [selectedId, setSelectedId] = useState(null);
-  
+  const imagePath ='/contestIcon.jpg';
+
   const newContestsResults = (contestResults || []).map((contestResult, index) => (
     <Link to={`/contest/${contestResult.id}/result`} css={Styles.LinkStyle} key={index}>
       <Card  styles={{
@@ -59,7 +60,7 @@ const ContestResultList = (props) => {
       >
         <Card.Section>
           <Image
-            src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+            src={imagePath}
             height={160}
             alt="Norway"
           />

@@ -33,6 +33,7 @@ const MypageContest = (props) => {
   const [selectedItem, setSelectedItem] = useState('post_contests');
   const [selectContest, setSelectContest] = useState([]);
   const [contests, setContests] = useState({ post_contests: [], entry_contests: [] });
+  const imagePath ='/contestIcon.jpg';
 
 
   const selectItem = (item: 'post_contests' | 'entry_contests') => {
@@ -68,7 +69,7 @@ const MypageContest = (props) => {
 
   const contestsItem = selectContest.map((contest, index) => (
     <Item key={index}>
-      <Item.Image size='tiny' src="https://photospace-image.s3.ap-northeast-1.amazonaws.com/rbkrutko9gmw25bogswl8x0vtul1"/>
+      <Item.Image size='tiny' src={imagePath}/>
       <Item.Content>
         <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest}>{contest.title}</Item.Header>
         <Item.Meta>開催内容</Item.Meta>
