@@ -7,8 +7,6 @@ class User < ApplicationRecord
   has_many :like_photos, through: :likes, source: :photo
   has_many :contest_results, dependent: :destroy
 
-  validates :email, presence: true
-
   has_one_attached :avatar_img
 
   def entry_contest(photo, contest)

@@ -7,7 +7,7 @@ import moment from 'moment';
 const NewArrivalContest = (props: any) => {
    console.log(props)
 
-   const imagePath ='/contestIcon.jpg';
+  const imagePath ='/contestIcon.jpg';
 
   const newContests = props.contest ? (
     props.contest.map((contest: any) => (

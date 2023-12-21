@@ -167,7 +167,6 @@ const ContestTop = () => {
         </form>
       </div>
       </section>
-     
         <div className='text-right px-6'>
         { user &&
           <Link to='/contest/new'>
@@ -184,7 +183,7 @@ const ContestTop = () => {
           <h3 className='text-center my-4'>検索結果 {contestCount} 件</h3>
         ) || <div></div>}
         { !resultCheck &&  (
-           <section className='my-5 '>
+          <section className='my-5 '>
             <h3 css={Styles.LogoStyle}>応募中のコンテスト</h3>
             <div css={Styles.TitleStyle}></div>
             <div className='my-5'>
@@ -205,7 +204,7 @@ const ContestTop = () => {
         <section className='pb-1'>
         </section>
       </div>
-      } 
+      }
     </div>
   )
 }

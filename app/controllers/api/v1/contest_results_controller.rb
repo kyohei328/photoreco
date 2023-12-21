@@ -23,12 +23,13 @@ class Api::V1::ContestResultsController < ApplicationController
     vote_hash = {}
     awards.each do |award|
       photo_id = ContestResult.by_award_photo(params[:contest_id], award )
-      vote = Vote.where(photo_id: photo_id).order('RAND()').limit(1).first
+      # vote = Vote.where(photo_id: photo_id).order('RAND()').limit(1).first
+      vote = Vote.where(photo_id: photo_id).order('RANDOM()').limit(1).first
       vote_hash[award]= {
         id: vote.id,
         rate: vote.rate,
         comment: vote.comment,
-      }
+      } if vote
     end
   
     results_data = @contest_results.map do |result|

@@ -34,26 +34,6 @@ const Styles = {
 }
 
 export function Header(props) {
-  // const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  // const theme = useMantineTheme();
-
-  // const links = mockdata.map((item) => (
-  //   <UnstyledButton className={classes.subLink} key={item.title}>
-  //     <Group wrap="nowrap" align="flex-start">
-  //       <ThemeIcon size={34} variant="default" radius="md">
-  //         <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
-  //       </ThemeIcon>
-  //       <div>
-  //         <Text size="sm" fw={500}>
-  //           {item.title}
-  //         </Text>
-  //         <Text size="xs" c="dimmed">
-  //           {item.description}
-  //         </Text>
-  //       </div>
-  //     </Group>
-  //   </UnstyledButton>
-  // ));
 
   const { logOut, user } = UserAuth();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -70,27 +50,49 @@ export function Header(props) {
     setMenuVisible(false);
   };
 
-  console.log(props)
+  console.log(user)
+
 
   useEffect(() => {
     const userStatus = async () => {
       try {
-        // const { user } = await UserAuth();
-        const token = await user.getIdToken();
-        console.log(token)
-        const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
-        const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
-        setUserProfile(resp.data)
-        setLoading(false);
-        console.log(resp.data)
+        if (user) {
+          const token = await user.getIdToken();
+          console.log(token)
+          const config = { headers: { 'Authorization': `Bearer ${token}` } };
+          const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
+          setUserProfile(resp.data);
+          setLoading(false);
+          console.log(resp.data)
+        } else {
+          console.log(user)
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching like status:', error);
         setLoading(false);
       }
     }
     userStatus();
-  },[user]);
+  }, [user]);
+  // useEffect(() => {
+  //   const userStatus = async () => {
+  //     try {
+  //         const token = await user.getIdToken();
+  //         console.log(token)
+  //         const config = { headers: { 'Authorization': `Bearer ${token}` } };
+  //         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
+  //         setUserProfile(resp.data);
+  //         setLoading(false);
+  //         console.log(user)
+  //         setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching like status:', error);
+  //       setLoading(false);
+  //     }
+  //   }
+  //   userStatus();
+  // }, [user]);
 
   if (loading) {
     return <div></div>
@@ -149,7 +151,6 @@ export function Header(props) {
                   onClick={openMenu}
                 />
               </Menu.Target>
-
               <Menu.Dropdown>
                 <Link to='/mypage' onClick={closeMenu}>
                   <Menu.Item css={Styles.LinkStyle} leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
@@ -164,7 +165,6 @@ export function Header(props) {
                     logOut();
                     closeMenu();
                   }}
-                  // onClick={logOut}
                   color="red"
                   leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
                 >
@@ -203,7 +203,6 @@ export function Header(props) {
             )}
             
           </Group>
-
           {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}
         </Group>
       </header>
