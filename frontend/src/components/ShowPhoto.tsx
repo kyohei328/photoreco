@@ -47,10 +47,9 @@ const ShowPhoto = () => {
   const { user } = UserAuth() as { user: object };
   const navigate = useNavigate();
 
-  console.log(user)
-
     const fetchLikeStatus = async () => {
       try {
+        if (user) {
         const token = await user.getIdToken(true);
         console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
@@ -59,6 +58,7 @@ const ShowPhoto = () => {
         setLiked(resp.data.like_stauts);
         setLikedId(resp.data.like_id)
         console.log(resp.data)
+        }
       } catch (error) {
         console.error('Error fetching like status:', error);
       }
@@ -71,9 +71,10 @@ const ShowPhoto = () => {
       setPhotoData(resp.data.photo)
       setPhotoUrl(resp.data.photo_url)
       setPostUser(resp.data.photo.user)
-      setCurrentUid(user.uid)
+      { user &&
+        setCurrentUid(user.uid)
+      }
       console.log(resp.data);
-      console.log(user.uid)
     }).catch(error => {
       console.error('Error fetching images:', error);
     });
