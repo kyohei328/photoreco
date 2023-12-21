@@ -24,13 +24,6 @@ const MypageProfile = () => {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
 
-  // const form = useForm({
-  //   initialValues: {
-  //     name: userProfile.name,
-  //     self_introduction: userProfile.self_introduction,
-  //   },
-  // });
-
   const form = useForm({
     initialValues: {
       name: '',
@@ -41,8 +34,6 @@ const MypageProfile = () => {
   const formReset = () =>{
     form.reset()
   }
-
-  const auth = getAuth();
 
   useEffect(() => {
     const userStatus = async () => {

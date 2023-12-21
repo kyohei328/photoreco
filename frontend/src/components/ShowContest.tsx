@@ -6,6 +6,7 @@ import { Button, Modal, Group } from '@mantine/core';
 import moment from 'moment';
 import EntryContestModal from './EntryContestModal';
 import VoteContestModal from './VoteContestModal';
+import { UserAuth } from '../context/AuthContext';
 
 const ShowContest = () => {
 
@@ -57,6 +58,7 @@ const ShowContest = () => {
   const [voteContestOpened, setVoteContestOpened] = useState(false);
 
   const { id } = useParams();
+  const { user } = UserAuth() as { user: object };
 
   console.log(id)
 
@@ -132,6 +134,8 @@ const ShowContest = () => {
       >
         <VoteContestModal contestId={id}/>
       </Modal>
+      { user && 
+        <>
           <Button
             className='mx-32'
             onClick={() => setVoteContestOpened(true)} variant="default"
@@ -140,14 +144,6 @@ const ShowContest = () => {
           >
             投票する
           </Button>
-          {/* <Button
-            className='mx-32'
-            onClick={() => setNoTransitionOpened(true)} variant="default"
-            // variant="outline"
-            color="rgba(59, 59, 59, 1)"
-          >
-            応募する
-          </Button> */}
           <Button
             className='mx-32'
             onClick={() => setEntryContestOpened(true)} variant="default"
@@ -156,6 +152,8 @@ const ShowContest = () => {
           >
             応募する
           </Button>
+        </>
+      }
       </div>
     </div>
 </div>
