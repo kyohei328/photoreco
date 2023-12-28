@@ -16,13 +16,13 @@ import {
   Container,
 } from '@mantine/core';
 import { GoogleButton } from './GoogleButton';
-import { auth } from '../firebase';
+import { auth, provider  } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-
+import {signInWithPopup} from 'firebase/auth';
 
 
 const Login = (props: PaperProps) => {
@@ -46,21 +46,25 @@ const Login = (props: PaperProps) => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
-      // await googleSignIn();
-      // await waitForPopupClose();
-      // navigate('/');
+      const user = await signInWithPopup(auth, provider);
+      console.log(user.user.displayName)
+      const formData = new FormData();
+      formData.append('user[name]', user.user.displayName);
+      const token = await user.user.getIdToken(true);
+      const config = { headers: { 'Authorization': `Bearer ${token}` } };
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, formData, config);
+      console.log('サインアップ成功！');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      // current_userがtrueの場合、ページ遷移を行う
-      navigate('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate('/');
+  //   }
+  // }, [user]);
 
   const handleSubmit = async (event: FormEvent) => {
   event.preventDefault();
