@@ -27,7 +27,6 @@ const Top = () => {
       fontWeight: 'bold',
       textAlign: 'center',
       minHeight: '40px',
-      marginBottom: '3rem',
     }),
     ContestFrameStyles: css({
       display: 'flex',
