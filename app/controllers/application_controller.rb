@@ -29,12 +29,7 @@ class ApplicationController < ActionController::API
 
   def set_auth
     # binding.pry
-    sleep(0.1)
     @auth = authenticate_token_by_firebase
   end
-
-  # def set_cross_origin_opener_policy
-  #   response.set_header('Cross-Origin-Opener-Policy', 'same-origin; allow-popups')
-  # end
 
 end

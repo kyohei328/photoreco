@@ -5,30 +5,40 @@ import { Input, Grid, Button, Select, Image, Text } from '@mantine/core';
 import { Link } from 'react-router-dom'
 import { FaAngleRight } from "react-icons/fa";
 import { useForm } from '@mantine/form';
+import classes from '../assets/parts.module.css'
+// import '../assets/layout.css'
+import { MuuriComponent } from "muuri-react";
 
 const IndexPhotos = () => {
 
   const Styles = {
+    ImageSectionStyle: css({
+      position: 'relative',
+    }),
     ImageFrameStyle: css({
-      // width: '100%',
-      // padding: '0 44px',
-      // display: 'flex',
-      // flexWrap: 'wrap',
-      padding: '0 44px',
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', /* 列数の自動調整 */
-      gridGap: '10px', /* グリッドアイテム間の隙間を調整 */
+      display: 'block',
+      position: 'absolute',
+      width: '19.7%',
+      zIndex: 1,
+    }),
+    ImageContentStyle: css({
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      padding: '10px 0 0 10px',
+    }),
+    ImageBoxStyle: css({
+      overflow: 'hidden',
     }),
     ImageStyle: css({
-      // height: '15Vw',
-      // width: '25Vw',
-      // minHeight: '150px',
-      // minWidth : '300px',
-      maxHeight: '19vh',
-      width: '100%',
-      // objectFit: 'cover',
-      objectFit: 'contain',
-      // paddingTop: '100%', /* 縦横比を保つためのトリック */
+      width:'100%',
+      height: 'auto',
+      verticalAlign: 'bottom',
+      transform: 'scale(1)',
+      transition: '.5s ease-in-out',
+      '&:hover':{
+        transform: 'scale(1.1)'
+      },
     }),
     LogoStyle: css ({
       fontSize: '18px',
@@ -44,14 +54,10 @@ const IndexPhotos = () => {
     SelectedStyle: css({
       fontWeight: 'bold',
       textDecoration: 'underline',
-    })
+    }),
   }
 
   const [images, setImages] = useState<any[]>([]);
-  // const [imagesPostDateAsc, setImagesPostDateAsc] = useState<any[]>([]);
-  // const [imagesLikesAsc, setImagesLikesAsc] = useState<any[]>([]);
-  // const [imagesLikesDesc, setImagesLikesDesc] = useState<any[]>([]);
-
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useState({});
@@ -66,29 +72,39 @@ const IndexPhotos = () => {
     },
   });
 
+  const options = {
+    layout: {
+      fillGaps: true, // グリッドの穴埋めを行うかどうか
+      horizontal: false, // アイテムを水平に配置するかどうか
+    },
+  };
+
   const indexImages = images.map((image, index) =>(
-    <div key={index} css={Styles.ImageStyle} >
-      <Link to={`/photos/${image.id}`}>
-        <Image
-          css={Styles.ImageStyle}
-          className='px-0 mb-1'
-          radius="sm"
-          src={image.image_url}
-        />
-      </Link>
+    <div key={index} className={classes.item}>
+      <div css={Styles.ImageContentStyle}>
+        <Link to={`/photos/${image.id}`}>
+          <div css={Styles.ImageBoxStyle}>
+            <Image
+              css={Styles.ImageStyle}
+              className='px-0 mb-1'
+              radius="sm"
+              src={image.image_url}
+            />
+          </div>
+        </Link>
+      </div>
     </div>
   ))
 
   const handleScroll = () => {
+    console.log('scroll')
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       // 画面下部に達したらページ数をプラス
       setPage(page + 1);
     }
-  };
-
-  console.log(import.meta.env.VITE_BASE_URL);
+  }
 
     useEffect(() => {
       // axiosでデータを取得する部分は関数化して、利用する
@@ -157,7 +173,6 @@ const IndexPhotos = () => {
       };
 
       setSearchParams(params)
-      // fetchData();
     };
 
   console.log(page)
@@ -171,10 +186,6 @@ const IndexPhotos = () => {
 
     };
   }, []); // 空の依存配列で初回のみ実行
-
-  // if (loading) {
-  //   return <div></div>
-  // }
 
 
   const sortLink = (() => {
@@ -235,6 +246,10 @@ const IndexPhotos = () => {
     }
   })();
 
+
+  if (loading) {
+    return <div></div>
+  }
 
   return (
     <div className='h-full'>
@@ -300,22 +315,19 @@ const IndexPhotos = () => {
           <div className='flex justify-center '>
             <p>並び替え</p>
             ：
-            {/* <p css={[Styles.LinkStyle, selectedSort === 'post' && Styles.SelectedStyle]}
-            onClick={() => setSelectedSort('post')}
-          >投稿日↓</p>
-            ｜
-            <p css={[Styles.LinkStyle, selectedSort === 'like' && Styles.SelectedStyle]}
-            onClick={() => setSelectedSort('like')}>お気に入り数</p> */}
             {sortLink}
           </div>
           </section>
-          {loading ? (<></>):(
-          <section className='h-screen  my-5'>
-            <div css={Styles.ImageFrameStyle}>
+          {/* <section className='h-screen my-5 grid delayScroll' ref={sectionRef}>
+            <MuuriComponent>
               {indexImages}
-            </div>
+            </MuuriComponent>
+          </section> */}
+          <section className='h-3/6 my-5 grid' css={Styles.ImageSectionStyle}>
+            <MuuriComponent {...options}>
+              {indexImages}
+            </MuuriComponent>
           </section>
-          )}
     </div>
   )
 }

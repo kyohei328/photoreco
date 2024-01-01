@@ -2060,6 +2060,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.9.2":
+  version "7.23.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.6.tgz#c05e610dc228855dc92ef1b53d07389ed8ab521d"
+  integrity sha512-zHd0eUrf5GZoOWVCXp6koAKQTfZV07eit6bGPmJgnZdnSAvvZee6zniW2XMF7Cmc4ISOOnPy3QaSiIJGJkVEDQ==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.22.15":
   version "7.22.15"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.22.15.tgz#09576efc3830f0430f4548ef971dde1350ef2f38"
@@ -5282,7 +5289,7 @@ jiti@^1.19.1:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.21.0.tgz#7c97f8fe045724e136a397f7340475244156105d"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
 
-jquery@x.*:
+jquery@^3.7.1, jquery@x.*:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
   integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
@@ -5553,6 +5560,19 @@ ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+
+muuri-react@^3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/muuri-react/-/muuri-react-3.1.7.tgz#c68b98ac033310d6c6a4b0807f6c016fb2bad4d3"
+  integrity sha512-wlYFFXa6JkniSKAQqSM0O/yu5CtnYdXPISlQgnPcMSdseUCWt1sq5wuDGDeICGnA8x4BY5B+6xo5rdaFE/0ELw==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    prop-types "^15.7.2"
+
+muuri@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/muuri/-/muuri-0.9.5.tgz#ce5ccf28a596f67a4d9370cac6d3e661db43a380"
+  integrity sha512-nJL9/Pd5IaIXGAVunBs/LLQ+v6tPkvlqCYrlauWESgkVFr+F+CRf8HnayRh4AqiQ1S/PIEN39fhJSe4L5rLlxg==
 
 mz@^2.7.0:
   version "2.7.0"
@@ -6826,6 +6846,11 @@ warning@^4.0.2:
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
+
+web-animations-js@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/web-animations-js/-/web-animations-js-2.3.2.tgz#a51963a359c543f97b47c7d4bc2d811f9fc9e153"
+  integrity sha512-TOMFWtQdxzjWp8qx4DAraTWTsdhxVSiWa6NkPFSaPtZ1diKUxTn4yTix73A1euG1WbSOMMPcY51cnjTIHrGtDA==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
