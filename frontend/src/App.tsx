@@ -1,4 +1,5 @@
 import './App.css'
+
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { Header } from './components/Header';
@@ -17,7 +18,6 @@ function App(): JSX.Element {
       height: '100%',
     })
   })
-
 
   return (
     <HelmetProvider>

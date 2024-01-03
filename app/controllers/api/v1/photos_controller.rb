@@ -9,11 +9,12 @@ class Api::V1::PhotosController < ApplicationController
   def index
     # binding.pry
     page = params[:page] || 1
-    per_page = params[:per_page] || 15
+    per_page = params[:per_page] || 10
     # @photos = Photo.order(created_at: :desc).page(page).per(per_page)
 
     @q = Photo.ransack(params[:q])
-    @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user)
+    @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user, :likes)
+    photos = @q.result(distinct: :true).order(created_at: :desc).includes(:user, :likes)
 
     render json:  {
       photos: @photos.map { |photo|
@@ -28,7 +29,7 @@ class Api::V1::PhotosController < ApplicationController
           likes_count: photo.likes.count,
         }
       },
-      photo_count: @photos.count
+      photo_count: photos.count
     }
   end
 
