@@ -3,12 +3,6 @@ import classes from '../assets/FooterSimple.module.css';
 import { css } from '@emotion/react';
 
 const Styles = {
-  LogoStyle: css ({
-    fontSize: '20px',
-    fontWeight: 'bold',
-    fontFamily: 'Bodoni',
-    fontStyle: 'oblique 15deg',
-  }),
   FooterStyle: css ({
     backgroundColor: '#F1F3F5',
   })
@@ -23,33 +17,23 @@ const links = [
 export function Footer() {
   const items = links.map((link) => (
     <Anchor<'a'>
-      c="dimmed"
       key={link.label}
       href={link.link}
-      // onClick={(event) => event.preventDefault()}
       size="sm"
+      className='py-1.5 px-4 text-gray-500 hover:text-black relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-black after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100'
     >
       {link.label}
     </Anchor>
-
-    // <Anchor
-    //   c="dimmed"
-    //   key={link.label}
-    //   href={link.link}
-    //   onClick={(event) => event.preventDefault()}
-    //   size="sm"
-    // >
-    //   {link.label}
-    //   <Link></Link>
-    // </Anchor>
   ));
 
   return (
     <div css={Styles.FooterStyle} className={classes.footer}>
       <Container className={classes.inner}>
-        <a css={Styles.LogoStyle} href='/'>
-          Photo Space
-        </a>
+        <div className='h-10 hover:opacity-75 transition-all duration-300'>
+          <a href='/'>
+            <img src="../../public/Top.png" alt="" className='object-cover h-full'/>
+          </a>
+        </div>
         <Group className={classes.links}>{items}</Group>
       </Container>
     </div>
