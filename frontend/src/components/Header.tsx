@@ -1,4 +1,4 @@
-import {Group, Button, Box, Avatar, Menu, Text, rem, Portal} from '@mantine/core';
+import {Group, Button, Box, Avatar, Menu, rem, Portal} from '@mantine/core';
 import classes from '../assets/HeaderMegaMenu.module.css';
 import { css } from '@emotion/react';
 import { LoginIcon } from '../icons/LoginIcon';
@@ -9,15 +9,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 const Styles = {
-  LogoStyle: css ({
-    fontSize: '28px',
-    fontWeight: 'bold',
-    fontFamily: 'Bodoni',
-    fontStyle: 'oblique 15deg',
-  }),
-  HeaderStyle: css ({
-    backgroundColor: '#F1F3F5',
-  }),
   SelectedStyles: css({
     fontWeight: 'bold',
     textDecoration: 'underline',
@@ -75,24 +66,6 @@ export function Header(props) {
     }
     userStatus();
   }, [user]);
-  // useEffect(() => {
-  //   const userStatus = async () => {
-  //     try {
-  //         const token = await user.getIdToken();
-  //         console.log(token)
-  //         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-  //         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
-  //         setUserProfile(resp.data);
-  //         setLoading(false);
-  //         console.log(user)
-  //         setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching like status:', error);
-  //       setLoading(false);
-  //     }
-  //   }
-  //   userStatus();
-  // }, [user]);
 
   if (loading) {
     return <div></div>
@@ -101,18 +74,25 @@ export function Header(props) {
   return (
     // <Box pb={120}>
     <Box pb={30}>
-      <header className={classes.header} css={Styles.HeaderStyle}>
-        <Group justify="space-between" h="100%">
+      <header className={`${classes.header} bg-gray-100`}>
+        <Group justify="space-between" h="100%" grow>
+          <div className='h-5/6 hover:opacity-75 transition-all duration-300'>
+            <a href='/'>
+              <img src="../../public/Top.png" alt="" className='object-cover h-full'/>
+            </a>
+          </div>
           <Group>
-            <a href='/' css={Styles.LogoStyle}>
-              Photo Space
-            </a>
-            <a href="/photos" className={classes.link} css={location.pathname === '/photos' && Styles.SelectedStyles}>
-              写真検索
-            </a>
-            <a href="/contest/top" className={classes.link} css={location.pathname === '/contest/top' && Styles.SelectedStyles}>
-              コンテスト
-            </a>
+            <div className='mx-auto'>
+              <a href="/" className={`py-1.5 px-4 mx-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${location.pathname === '/' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>
+                HOME
+              </a>
+              <a href="/photos" className={`py-1.5 px-4 mx-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${location.pathname === '/photos' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>
+                写真検索
+              </a>
+              <a href="/contest/top" className={`py-1.5 px-4 mx-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${location.pathname === '/contest/top' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>
+                コンテスト
+              </a>
+            </div>
           </Group>
 
           <Group visibleFrom="sm" justify="flex-end" >
@@ -123,22 +103,14 @@ export function Header(props) {
                 rightSection={<IconUpload size={18} />}
                 variant="outline"
                 color="rgba(59, 59, 59, 1)"
+                className='
+                bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
+                shadow-md shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
               >
               アップロード
               </Button>
             </Link>
-            {/* <Avatar
-              src="/assets/image/23295054.jpg"  // 画像のURLを指定
-              alt="Image Alt Text"  // 画像の代替テキスト
-              radius="50%"  // 円形にするための半径
-            /> */}
-              {/* <Button
-                rightSection={<IconLogout size={18} />}
-                variant="outline"
-                onClick={logOut}
-              >
-                ログアウト
-              </Button> */}
+
             <Menu shadow="md" width={200}  withArrow arrowPosition="center" transitionProps={{ transition: 'fade', duration: 300 }}>
               <Menu.Target>
                 <Avatar
@@ -148,6 +120,8 @@ export function Header(props) {
                   radius="50%"  // 円形にするための半径
                   size="md"
                   variant="light"
+                  color="blue"
+                  className='hover:opacity-75 transition-all duration-300'
                   onClick={openMenu}
                 />
               </Menu.Target>
@@ -196,6 +170,9 @@ export function Header(props) {
                 rightSection={<LoginIcon size={18} />}
                 variant="outline"
                 color="rgba(59, 59, 59, 1)"
+                className='
+                bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
+                shadow-md shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
               >
                 ログイン
               </Button>
@@ -203,7 +180,6 @@ export function Header(props) {
             )}
             
           </Group>
-          {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" /> */}
         </Group>
       </header>
     </Box>
