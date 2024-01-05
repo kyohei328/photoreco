@@ -78,7 +78,7 @@ export function Header(props) {
         <Group justify="space-between" h="100%" grow>
           <div className='h-5/6 hover:opacity-75 transition-all duration-300'>
             <a href='/'>
-              <img src="../../public/Top.png" alt="" className='object-cover h-full'/>
+              <img src="/Top.png" alt="" className='object-cover h-full'/>
             </a>
           </div>
           <Group>

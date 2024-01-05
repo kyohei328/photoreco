@@ -31,7 +31,7 @@ export function Footer() {
       <Container className={classes.inner}>
         <div className='h-10 hover:opacity-75 transition-all duration-300'>
           <a href='/'>
-            <img src="../../public/Top.png" alt="" className='object-cover h-full'/>
+            <img src="/Top.png" alt="" className='object-cover h-full'/>
           </a>
         </div>
         <Group className={classes.links}>{items}</Group>

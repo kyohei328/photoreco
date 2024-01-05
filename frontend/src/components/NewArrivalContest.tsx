@@ -14,13 +14,13 @@ const NewArrivalContest = (props: any) => {
       <Item key={contest.id}>
       <Item.Image size='tiny' src={imagePath}/>
       <Item.Content>
-        <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest}>{contest.title}</Item.Header>
+        <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest} className='py-2'>{contest.title}</Item.Header>
         <Item.Meta>開催内容</Item.Meta>
         <Item.Description>
-          <p>{contest.description}</p>
+          <p className='indent-2'>{contest.description}</p>
         </Item.Description>
         <Item.Extra>応募期間</Item.Extra>
-        <p>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
+        <p className='indent-2 pt-2'>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
       </Item.Content>
       </Item>
     ))
