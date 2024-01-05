@@ -1,7 +1,14 @@
 
 @font-face {
   font-family: 'MPLUS1p';
-  src: url('../public/MPLUS1p-Medium.ttf') format('truetype');
+  src: url('/MPLUS1p-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Libre';
+  src: url('/LibreBaskerville-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -10,13 +17,6 @@ body {
   font-family: 'MPLUS1p', sans-serif;
 }
 
-/* @font-face {
-  font-family: 'NotoSansJP';
-  src: url('../public/NotoSansJP-VariableFont_wght.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
+.fontLibre{
+  font-family: 'Libre', sans-serif;
 }
-
-body {
-  font-family: 'NotoSansJP', sans-serif;
-} */

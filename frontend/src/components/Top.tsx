@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { css } from '@emotion/react'
 import axios from 'axios';
 import '../assets/embla.css'
@@ -10,6 +10,21 @@ import { useImage } from '../context/TodayPhotosContext';
 import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
+import { useInView } from 'react-intersection-observer';
+
+
+const FadingElement = ({ children }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: false, // 一度だけアニメーションを実行する
+    rootMargin: '-150px',
+  });
+
+  return (
+    <div ref={ref} className={`fadeUpTrigger ${inView ? 'fadeUp' : ''}`}>
+      {children}
+    </div>
+  );
+};
 
 const Top = () => {
 
@@ -40,7 +55,7 @@ const Top = () => {
       border: 'solid 1px black'
     }),
     SectionStyles: css({
-      marginBottom: '3rem',
+      marginBottom: '6rem',
     }),
     SelectStyles: css({
       cursor: 'pointer',
@@ -59,7 +74,7 @@ const Top = () => {
 
   const { user } =  UserAuth() as { user: object };
   const { images } = useImage();
-  console.log(images)
+  const fadeUpRef = useRef(null);
 
   const OPTIONS: EmblaOptionsType = { loop: true }
   const SLIDE_COUNT = 3
@@ -93,34 +108,37 @@ const Top = () => {
 
   return (
     <div>
-      <section css={Styles.SectionStyles}>
-        <div>
-          <h1 css={Styles.TitleStyle}>ToDay's PickUp Photos</h1>
-          {/* <EmblaCarousel slides={SLIDES} options={OPTIONS} images={CarouselImages} /> */}
-          <EmblaCarousel slides={SLIDES} options={OPTIONS} images={images} />
-        </div>
-      </section>
-      <section>
-        <h1 css={Styles.TitleStyle}>新着コンテスト</h1>
-        <div  className='flex justify-around mb-5'>
-          <p css={[Styles.SelectStyles, selectedDepartment === 'new_entertainment_contests' && Styles.SelectedStyles]}
+      <div className="scrolldown"><span>Scroll</span></div>
+        <section css={Styles.SectionStyles}>
+          <div>
+            <h1 css={Styles.TitleStyle} className='fontLibre'>ToDay's PickUp Photos</h1>
+            <EmblaCarousel slides={SLIDES} options={OPTIONS} images={images} />
+          </div>
+        </section>
+      <section className='bg-gray-50 py-12'>
+      <FadingElement>
+        <h1 css={Styles.TitleStyle} className='fontLibre'>New Arrival Contests</h1>
+      </FadingElement>
+      <FadingElement>
+        <div className='flex justify-around mb-12 mt-12'>
+          <p className={`py-2.5 px-4 cursor-pointer hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedDepartment === 'new_entertainment_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700 cursor-default' : ''}`}
             onClick={() => selectDepartment('new_entertainment_contests')}
           >
             エンタメ部門
           </p>
-          <p css={[Styles.SelectStyles, selectedDepartment === 'new_serious_contests' && Styles.SelectedStyles]}
+          <p className={`py-2.5 px-4 cursor-pointer hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedDepartment === 'new_serious_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700 cursor-default' : ''}`}
             onClick={() => selectDepartment('new_serious_contests')}
           >
             キレイ部門
           </p>
         </div>
-        <div css={Styles.ContestSectionStyle}>
-          <NewArrivalContest contest={selectContest}/>
-        </div>
+        </FadingElement>
+        <FadingElement>
+          <div css={Styles.ContestSectionStyle}>
+            <NewArrivalContest contest={selectContest}/>
+          </div>
+        </FadingElement>
       </section>
-      {/* <div css={Styles.heightstyle} >
-        {user ? <p>Email : {user.email}</p> : <p>No user data</p>}
-      </div> */}
       <Footer />
     </div>
   )
