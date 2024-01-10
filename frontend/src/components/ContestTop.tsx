@@ -7,30 +7,20 @@ import { Link } from 'react-router-dom';
 import ContestResultList from './ContestResultList'
 import { useForm } from '@mantine/form';
 import { UserAuth } from '../context/AuthContext';
+import { BiSearchAlt } from "react-icons/bi";
 
 const ContestTop = () => {
 
   const Styles = {
-    ImageSectionStyle: css ({
-    }),
     ImageFrameStyle: css({
-      // width: '100%',
-      // padding: '0 44px',
-      // display: 'flex',
-      // flexWrap: 'wrap',
       padding: '0 44px',
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', /* 列数の自動調整 */
       gridGap: '10px', /* グリッドアイテム間の隙間を調整 */
     }),
     ImageStyle: css({
-      // height: '15Vw',
-      // width: '25Vw',
-      // minHeight: '150px',
-      // minWidth : '300px',
       width: '100%',
       objectFit: 'cover',
-      // paddingTop: '100%', /* 縦横比を保つためのトリック */
     }),
     LogoStyle: css ({
       fontSize: '18px',
@@ -42,6 +32,9 @@ const ContestTop = () => {
       borderBottom: '1px solid #CCCCCC',
       marginLeft: '44px',
       marginRight: '44px',
+    }),
+    SectionStyle: css ({
+      minHeight: '60vh',
     })
   }
 
@@ -117,10 +110,9 @@ const ContestTop = () => {
   
 
   return (
-    <div className='h-full'>
-      <section className='my-10'>
-        <div className='bg-slate-100 w-10/12 mx-auto pb-px pt-5'>
-        <h3 css={Styles.LogoStyle}>検索フォーム</h3>
+    <div className='h-full min-h-screen'>
+      <section className='mb-10'>
+        <div className=' w-10/12 mx-auto pb-px pt-5'>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
             <Grid.Col span={12}>
@@ -137,7 +129,7 @@ const ContestTop = () => {
             </Grid.Col>
             <Grid.Col span={2} className='pt-9'>
               <Checkbox
-              className=''
+              className='ml-6'
                 label="応募受付中"
                 color="gray"
                 {...form.getInputProps('apply')}
@@ -145,6 +137,7 @@ const ContestTop = () => {
             </Grid.Col>
             <Grid.Col span={2} className='pt-9'>
               <Checkbox
+                className='ml-4'
                 label="コンテスト結果"
                 color="gray"
                 {...form.getInputProps('result')}
@@ -153,15 +146,10 @@ const ContestTop = () => {
             <Grid.Col span={2}></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
-            <Grid.Col span={0.5} >
-              <Button
-                className='mr-0'
-                type="submit"
-                variant="outline"
-                color="rgba(59, 59, 59, 1)"
-              >
-              検索
-              </Button>
+            <Grid.Col span={1} >
+            <button type="submit" className='
+              bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
+              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-3'/>探す</button>
             </Grid.Col>
           </Grid>
         </form>
@@ -170,12 +158,11 @@ const ContestTop = () => {
         <div className='text-right px-6'>
         { user &&
           <Link to='/contest/new'>
-            <Button
-              variant="outline"
-              color="rgba(59, 59, 59, 1)"
-            >
+            <button type="submit" className='
+              bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
+              ml-4 mr-8 mb-4 py-1 px-4 shadow-sm shadow-gray-400 transition-all duration-100 active:translate-y-1 active:shadow-none '>
             コンテストを開催する
-            </Button>
+            </button>
           </Link>
           }
         </div>
@@ -183,27 +170,25 @@ const ContestTop = () => {
           <h3 className='text-center my-4'>検索結果 {contestCount} 件</h3>
         ) || <div></div>}
         { !resultCheck &&  (
-          <section className='my-5 '>
-            <h3 css={Styles.LogoStyle}>応募中のコンテスト</h3>
-            <div css={Styles.TitleStyle}></div>
-            <div className='my-5'>
+          <section css={Styles.SectionStyle} className='my-5 py-5 bg-gray-50'>
+            <h3 css={Styles.LogoStyle} className='fadeUp'>応募受付中のコンテスト</h3>
+            <div css={Styles.TitleStyle} className='fadeUp'></div>
+            <div className='my-5 fadeUp'>
               <NewArrivalContest contest={applyContest}/>
+              {/* <p className='mx-auto'>応募受付中のコンテストはありません
+              </p> */}
             </div>
           </section>
         )}
 
       {(!contestSearch || resultCheck) &&
-      <div>
-        <section className='my-20'>
-          <h3 css={Styles.LogoStyle}>コンテスト結果発表</h3>
-          <div css={Styles.TitleStyle}></div>
+        <section css={Styles.SectionStyle}>
+          <h3 css={Styles.LogoStyle} className='fadeUp'>コンテスト結果発表</h3>
+          <div css={Styles.TitleStyle} className='fadeUp'></div>
           <div className='my-5 mx-5'>
             <ContestResultList contestResults={contestResults}/>
           </div>
         </section>
-        <section className='pb-1'>
-        </section>
-      </div>
       }
     </div>
   )
