@@ -15,7 +15,7 @@ function App(): JSX.Element {
   const Styles = ({
     heightstyle: css ({
       // height: '100vh',
-      height: '100%',
+      // height: '100%',
     })
   })
 
@@ -24,9 +24,7 @@ function App(): JSX.Element {
       <MantineProvider>
         <I18nextProvider i18n={i18n}>
           <Header/>
-          <div css={Styles.heightstyle}>
-            <Router/>
-          </div>
+          <Router/>
         </I18nextProvider>
       </MantineProvider>
     </HelmetProvider>

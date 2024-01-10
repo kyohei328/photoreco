@@ -249,7 +249,7 @@ const IndexPhotos = () => {
             <Grid.Col span={1}>
               <button type="submit" className='
               bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-              ml-4 mb-4 py-1 px-4 shadow-md shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-2'/>探す</button>
+              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-3'/>探す</button>
             </Grid.Col>
           </Grid>
         </form>

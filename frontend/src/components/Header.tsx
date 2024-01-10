@@ -105,7 +105,7 @@ export function Header(props) {
                 color="rgba(59, 59, 59, 1)"
                 className='
                 bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-                shadow-md shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
+                shadow-sm shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
               >
               アップロード
               </Button>
@@ -172,7 +172,7 @@ export function Header(props) {
                 color="rgba(59, 59, 59, 1)"
                 className='
                 bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-                shadow-md shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
+                shadow-sm shadow-gray-400 flex transition-all duration-100 active:translate-y-1 active:shadow-none'
               >
                 ログイン
               </Button>
