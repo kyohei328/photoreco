@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { Link, useParams } from 'react-router-dom'
-import { Button, Modal, Group } from '@mantine/core';
+import { useParams } from 'react-router-dom'
+import { Button, Modal } from '@mantine/core';
 import moment from 'moment';
 import EntryContestModal from './EntryContestModal';
 import VoteContestModal from './VoteContestModal';
@@ -53,34 +53,28 @@ const ShowContest = () => {
 
   const [contest, setContest] = useState({});
   const [postUser, setPostUser] = useState({});
-  // const [noTransitionOpened, setNoTransitionOpened] = useState(false);
   const [entryContestOpened, setEntryContestOpened] = useState(false);
   const [voteContestOpened, setVoteContestOpened] = useState(false);
 
   const { id } = useParams();
   const { user } = UserAuth() as { user: object };
 
-  console.log(id)
 
   useEffect(() => {
-  //  axios.get(`http://localhost:3000/api/v1/contests/${id}`)
    axios.get(`${import.meta.env.VITE_BASE_URL}/contests/${id}`)
    .then(resp => {
       setContest(resp.data)
       setPostUser(resp.data.user)
-      console.log(resp.data)
    }).catch(error => {
     console.log('エラー:', error);
     console.log('エラーコード:', error.code);
     console.log('エラーメッセージ:', error.message);
-    // alert('エラーが発生しました: ' + error.message);
+    alert('エラーが発生しました: ' + error.message);
    })
   }, [])
 
   const start_date = moment(contest.start_date).format('YYYY年MM月D日');
   const end_date = moment(contest.end_date).format('YYYY年MM月D日');
-
-  
 
   return (
     <div css={Styles.ContainerStyle}>
@@ -139,7 +133,6 @@ const ShowContest = () => {
           <Button
             className='mx-32'
             onClick={() => setVoteContestOpened(true)} variant="default"
-            // variant="outline"
             color="rgba(59, 59, 59, 1)"
           >
             投票する
@@ -147,7 +140,6 @@ const ShowContest = () => {
           <Button
             className='mx-32'
             onClick={() => setEntryContestOpened(true)} variant="default"
-            // variant="outline"
             color="rgba(59, 59, 59, 1)"
           >
             応募する

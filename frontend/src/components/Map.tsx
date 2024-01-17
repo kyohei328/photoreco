@@ -13,7 +13,6 @@ const Map = (props) => {
   const [size, setSize] = useState(undefined);
   const [address, setAddress] = useState("");
 
-  console.log(photo)
 
   const markerPosition = useMemo(() => {
     return {
@@ -87,7 +86,6 @@ const Map = (props) => {
               <p>{address}</p>
               <p>
                 <a
-                  // href="https://www.google.com/maps/dir/?api=1&destination=42.793444,142.877983"
                   href={`https://www.google.com/maps/dir/?api=1&destination=${markerPosition.lat},${markerPosition.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"

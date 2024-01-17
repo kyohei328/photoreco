@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { css } from '@emotion/react'
-import { Input, Grid, Button, Select, Checkbox } from '@mantine/core';
+import { Input, Grid, Select, Checkbox } from '@mantine/core';
 import NewArrivalContest from './NewArrivalContest'
 import { Link } from 'react-router-dom';
 import ContestResultList from './ContestResultList'
@@ -56,18 +56,16 @@ const ContestTop = () => {
   });
 
   useEffect(() => {
-    // axios.get('http://localhost:3000/api/v1/contests')
     axios.get(`${import.meta.env.VITE_BASE_URL}/contests`)
       .then(resp => {
         setApplyContest(resp.data.contests);
         setContestResults(resp.data.contests_result);
         setResultCheck(false)
-        console.log(resp.data)
       }).catch(error => {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);
       console.log('エラーメッセージ:', error.message);
-      // alert('エラーが発生しました: ' + error.message);
+      alert('エラーが発生しました: ' + error.message);
     })
   },[]);
 
@@ -93,18 +91,16 @@ const ContestTop = () => {
         }else{
           setResultCheck(false)
         }
-        // const resp = await axios.get("http://localhost:3000/api/v1/contests", { params });
         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/contests`, { params });
         setApplyContest(resp.data.contests);
         setContestCount(resp.data.contest_count);
         setContestResults(resp.data.contests_result);
-        console.log(resp.data)
         setContestSearch(true);
       }catch (error) {
         console.log('エラー:', error);
         console.log('エラーコード:', (error as any).code);
         console.log('エラーメッセージ:', (error as any).message);
-        // alert('エラーが発生しました: ' + error.message);
+        alert('エラーが発生しました: ' + error.message);
       }
   }
   

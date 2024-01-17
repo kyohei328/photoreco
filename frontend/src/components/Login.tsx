@@ -1,5 +1,5 @@
-import { FormEvent, useEffect } from 'react';
-import { useToggle, upperFirst } from '@mantine/hooks';
+import { FormEvent } from 'react';
+import { useToggle} from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
   TextInput,
@@ -10,7 +10,6 @@ import {
   PaperProps,
   Button,
   Divider,
-  Checkbox,
   Anchor,
   Stack,
   Container,
@@ -19,7 +18,6 @@ import { GoogleButton } from './GoogleButton';
 import { auth, provider  } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios'
-// import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import {signInWithPopup} from 'firebase/auth';
@@ -47,24 +45,17 @@ const Login = (props: PaperProps) => {
   const handleGoogleSignIn = async () => {
     try {
       const user = await signInWithPopup(auth, provider);
-      console.log(user.user.displayName)
       const formData = new FormData();
       formData.append('user[name]', user.user.displayName);
       const token = await user.user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
       await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, formData, config);
-      console.log('サインアップ成功！');
       navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate('/');
-  //   }
-  // }, [user]);
 
   const handleSubmit = async (event: FormEvent) => {
   event.preventDefault();
@@ -82,10 +73,8 @@ const Login = (props: PaperProps) => {
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
 
       await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, formData, config);
-      console.log('サインアップ成功！');
     } else {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log('ログイン成功！');
     }
 
     navigate('/');
@@ -101,7 +90,6 @@ const Login = (props: PaperProps) => {
     <Container size={520} my={40}>
     <Paper radius="md" p="xl" withBorder {...props} >
       <Text size="lg" fw={500}>
-        {/* {type} */}
         {type === 'register' ? '新規登録' : 'ログイン'}
       </Text>
 
@@ -111,7 +99,6 @@ const Login = (props: PaperProps) => {
 
       <Divider label="または" labelPosition="center" my="lg" />
 
-      {/* <form onSubmit={form.onSubmit(() => {})}> */}
       <form onSubmit={handleSubmit}>
         <Stack>
           {type === 'register' && (
@@ -145,11 +132,6 @@ const Login = (props: PaperProps) => {
           />
 
           {type === 'register' && (
-            // <Checkbox
-            //   label="利用規約に同意する"
-            //   checked={form.values.terms}
-            //   onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-            // />
             <Text size="xs">サインアップすることで、利用規約とプライバシーポリシーに同意したことになります。</Text>
           )}
         </Stack>
@@ -161,7 +143,6 @@ const Login = (props: PaperProps) => {
               : "アカウントをお持ちでないですか？ 登録する"}
           </Anchor>
           <Button variant="outline" color="gray" type="submit" radius="xl">
-            {/* {upperFirst(type)} */}
             {type === 'register' ? '新規登録' : 'ログイン'}
           </Button>
         </Group>

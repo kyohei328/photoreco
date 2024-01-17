@@ -59,21 +59,11 @@ const AddContestConfirm = () => {
 
   const initialObject = { title:"", description:"", start_date: new Date(), end_date: new Date(), department:"", entry_conditions:"", result_date: new Date()};
 
-  // const [formDataObject, setFormDataObject] = useState({});
   const [formDataObject, setFormDataObject] = useState(initialObject);
 
   useEffect(() => {
     setFormDataObject(state.formData)
   },[location])
-
-    if (formDataObject) {
-      console.log(formDataObject.title);
-      console.log(formDataObject.description);
-      console.log(formDataObject.start_date);
-      console.log(formDataObject.end_date);
-      console.log(formDataObject.department);
-      console.log(formDataObject.entry_conditions);
-    }
 
   const start_date = moment(formDataObject.start_date).format('YYYY年MM月D日');
   const end_date = moment(formDataObject.end_date).format('YYYY年MM月D日');
@@ -82,7 +72,6 @@ const AddContestConfirm = () => {
   const result_date = new Date(endDate);
   result_date.setDate(endDate.getDate() + 3);
 
-  console.log(result_date)
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -93,19 +82,14 @@ const AddContestConfirm = () => {
     formData.append('contest[department]', formDataObject.department);
     formData.append('contest[entry_conditions]', formDataObject.entry_conditions);
     formData.append('contest[result_date]', result_date.toISOString());
-    // const formObject = {};
     const formObject: Record<string, any> = {};
-    // for (var pair of formData.entries()) {
     for (let pair of formData.entries()) {
     formObject[pair[0]] = pair[1];
     }
-    console.log(formObject);
 
     try {
       const token = await user.getIdToken(true);
-      console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      // await axios.post("http://localhost:3000/api/v1/contests", formData, config);
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contests`, formData, config);
       navigate('/')
     } catch (error) {
@@ -115,8 +99,6 @@ const AddContestConfirm = () => {
       alert('エラーが発生しました: ' + error.message);
     }
   };
-
-  console.log(`${import.meta.env.VITE_BASE_URL}/contests`)
 
   return (
     <div css={Styles.ContainerStyle}>

@@ -27,11 +27,9 @@ const VoteContestModal = (props) => {
     ContestFrameStyles: css({
       display: 'flex',
       justifyContent: 'center',
-      // justifyContent: 'space-around',
       padding: '0 1.25rem',
     }),
     ContestItemStyles: css({
-      // padding: '1rem 1rem',
       padding: '10px 10px',
       border: 'solid 1px black'
     }),
@@ -56,18 +54,14 @@ const VoteContestModal = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const { user } =  UserAuth();
-  console.log(user)
 
   useEffect(() => {
     const getPostedPhotos = async () => {
     try {
     const token = await user.getIdToken(true);
-    console.log(token)
     const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {id: props.contestId} };
-    // const resp = await axios.get('http://localhost:3000/api/v1/votes', config)
     const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/votes`, config)
       setImages((prevImages) => [...prevImages, ...resp.data.photos]);
-      console.log(resp.data.photos);
     } catch(error) {
       console.error('Error fetching images:', error);
     }
@@ -78,8 +72,6 @@ const VoteContestModal = (props) => {
   
 
   const handleImageClick = (clickedId) => {
-    // クリックされた画像の ID を取得
-    console.log('Clicked Image ID:', clickedId);
 
       // 選択された画像のデータを取得
     const selectedImageData = images.find(item => item.id === clickedId);
@@ -93,7 +85,6 @@ const VoteContestModal = (props) => {
 
     // 選択された画像の ID を更新
     setSelectedId(clickedId);
-    console.log(clickedId)
   };
 
   const handleSubmit = async () => {
@@ -104,24 +95,20 @@ const VoteContestModal = (props) => {
         contest_id: props.contest.id,
         photo_id: selectedId,
       };
-      // await axios.post("http://localhost:3000/api/v1/contest_entries", data, config);
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', (error as any).code);
       console.log('エラーメッセージ:', (error as any).message);
-      // alert('エラーが発生しました: ' + error.message);
+      alert('エラーが発生しました: ' + error.message);
     }
   };
 
   const imageCards = images.map((image) => (
-    // <div key={image.id}>
       <Card
-        // className="my-1 mx-1 w-13 h-10 max-h-15 max-w-15"
         styles={{
           root: {
-            // flex: '1 0 auto',
             flex: '1 0 15rem',
             margin: '0.5rem',
             boxSizing: 'border-box',
@@ -136,7 +123,6 @@ const VoteContestModal = (props) => {
         shadow="xl"
         padding="sm"
         component="a"
-        // href="#"
         target="_blank"
         onClick={() => handleImageClick(image.id)}
       >
@@ -149,10 +135,6 @@ const VoteContestModal = (props) => {
                 },
               }}
             src={image.image_url}
-            // h='20vw'
-            // w='15rem'
-
-            // h='auto'
             alt="No way!"
           />
         </Card.Section>
@@ -165,10 +147,8 @@ const VoteContestModal = (props) => {
           {`登録日：${image.created_at}`}
         </Text>
       </Card>
-    // </div>
   ))
 
-  console.log(props)
   return (
     <div>
       <h2 css={Styles.TitleStyle}>投票</h2>

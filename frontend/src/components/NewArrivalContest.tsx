@@ -5,8 +5,6 @@ import { css, keyframes } from '@emotion/react'
 
 
 const NewArrivalContest = (props: any) => {
-   console.log(props)
-
    const rotateYAnime = keyframes`
    from {
      transform: perspective(600px) translate3d(0, 0, 0) rotateY(-30deg);

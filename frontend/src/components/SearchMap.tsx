@@ -61,23 +61,19 @@ const SearchMap = () => {
   };
 
   useEffect (() => {
-    // axios.get('http://localhost:3000/api/v1/photos')
     axios.get(`${import.meta.env.VITE_BASE_URL}/search_map`)
     .then(resp => {
       setImages(resp.data.photos);
-      console.log(resp.data)
     }).catch(error => {
     console.log('エラー:', error);
     console.log('エラーコード:', error.code);
     console.log('エラーメッセージ:', error.message);
-    // alert('エラーが発生しました: ' + error.message);
+    alert('エラーが発生しました: ' + error.message);
   })
   },[]);
 
-  console.log(markers)
 
   return (
-    // <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} onLoad={() => {createOffsetSize(), geocoding() }}>
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} onLoad={() => {createOffsetSize() }}>
       <GoogleMap
         mapContainerStyle={containerStyle}

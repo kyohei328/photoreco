@@ -76,30 +76,23 @@ const ContestResult = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // axios.get(`http://localhost:3000//api/v1/contests/${id}/contest_results`)
     axios.get(`${import.meta.env.VITE_BASE_URL}/contests/${id}/contest_results`)
       .then(resp => {
         setContestResults(resp.data.results);
         setContest(resp.data.contest);
         setVote(resp.data.vote);
-        console.log(resp.data)
         setLoading(false);
       }).catch(error => {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);
       console.log('エラーメッセージ:', error.message);
-      // alert('エラーが発生しました: ' + error.message);
+      alert('エラーが発生しました: ' + error.message);
       setLoading(false);
     })
   },[]);
 
   const awards = contestResults.map((result, index) => (
     <Group wrap="nowrap" key={index} className='m-16 py-0'>
-    {/* <Avatar
-      src={result.photo.image_url}
-      size={212}
-      radius="sm"
-    /> */}
       <Image
         radius="sm"
         h={305}
