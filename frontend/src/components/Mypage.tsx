@@ -1,4 +1,4 @@
-import { Avatar, Button, Group, FileInput } from '@mantine/core';
+import { Avatar, Group } from '@mantine/core';
 import { css } from '@emotion/react'
 import { useState, useEffect, useRef } from 'react'
 import MypageContest from './MypageContest';
@@ -8,15 +8,9 @@ import MypageProfile from './MypageProfile';
 import { UserAuth } from '../context/AuthContext';
 import axios from 'axios'
 
-
-
 const Mypage = () => {
 
   const Styles = {
-    AvatarStyle: css ({
-      // Height: '40rem',
-      // width: '5rem',
-    }),
     GroupStyle: css ({
       borderBottom: '1px solid #CCCCCC',
       padding: '0 1rem 1rem 1rem',
@@ -63,14 +57,11 @@ useEffect(() => {
   const userStatus = async () => {
     try {
       const token = await user.getIdToken(true);
-      console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
       const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
       setAvatarUrl(resp.data.avatar_url)
       setUserProfile(resp.data.user)
       setLoading(false);
-      console.log(resp.data)
     } catch (error) {
       setLoading(false);
       console.error('Error fetching like status:', error);
@@ -96,17 +87,14 @@ const handleFileChange = async (event) => {
     
     const token = await user.getIdToken(true);
     const config = { headers: { 'Authorization': `Bearer ${token}` } };
-    // const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
     const resp = await axios.patch(`${import.meta.env.VITE_BASE_URL}/profile`, formData, config);
     setAvatarUrl(resp.data.avatar_url)
     setLoading(false);
     // アップロードが成功したら、適切な処理を行う
-    console.log('File uploaded successfully:', resp.data);
   } catch (error) {
     setLoading(false);
     console.error('Error uploading file:', error);
   }
-  console.log('Selected File:', selectedFile);
 };
 
 
@@ -141,14 +129,6 @@ if (loading) {
             onChange={handleFileChange}
             ref={inputRef}
           />
-          {/* <Button
-            // rightSection={<LoginIcon size={18} />}
-            size="xs"
-            variant="outline"
-            color="rgba(59, 59, 59, 1)"
-          >
-            ログイン
-          </Button> */}
           <h3 className='mt-5'>{userProfile.name}</h3>
         </div>
       </section>

@@ -1,35 +1,3 @@
-// import { useEffect } from 'react';
-// import { createContext, useState, useContext } from 'react';
-// import { onAuthStateChanged } from 'firebase/auth';
-// import { auth } from '../firebase';
-
-
-// const AuthContext = createContext();
-
-// export function useAuthContext() {
-//   return useContext(AuthContext);
-// }
-
-// export function AuthProvider({ children }) {
-//   const [user, setUser] = useState('');
-
-//   const value = {
-//     user,
-//   };
-
-//   useEffect(() => {
-//     const unsubscribed = onAuthStateChanged(auth, (user) => {
-//       console.log(user);
-//       setUser(user);
-//     });
-//     return () => {
-//       unsubscribed();
-//     };
-//   }, []);
-  
-//   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-// };
-
 import { useContext, createContext, useEffect, useState } from 'react';
 import {
   signInWithPopup,
@@ -57,7 +25,6 @@ export const AuthContextProvider = ({ children }) => {
       if (currentUser) {
       setUser(currentUser);
       setSignInCheck(true);
-      console.log('User', currentUser)
     } else {
       setSignInCheck(true);
       setUser(currentUser);
@@ -67,16 +34,6 @@ export const AuthContextProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //     setSignInCheck(true);
-  //     console.log('User', currentUser)
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
 
   if (signInCheck) {
     return (
@@ -85,11 +42,6 @@ export const AuthContextProvider = ({ children }) => {
       </AuthContext.Provider>
     );
   }
-    // return (
-    //   <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
-    //     {children}
-    //   </AuthContext.Provider>
-    // );
 };
 
 export const UserAuth = () => {

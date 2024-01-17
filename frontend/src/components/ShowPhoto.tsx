@@ -1,6 +1,6 @@
 import { UserAuth } from '../context/AuthContext';
 import { Image, Button, Grid, Textarea  } from '@mantine/core';
-import { IconTrash, IconStar,  IconShare3, IconStarFilled  } from '@tabler/icons-react';
+import { IconTrash, IconStar, IconStarFilled  } from '@tabler/icons-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react';
@@ -51,13 +51,10 @@ const ShowPhoto = () => {
       try {
         if (user) {
         const token = await user.getIdToken(true);
-        console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {photo_id: id} };
-        // const resp = await axios.get(`http://localhost:3000/api/v1/photos/likes`, config);
         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/photos/likes`, config);
         setLiked(resp.data.like_stauts);
         setLikedId(resp.data.like_id)
-        console.log(resp.data)
         }
       } catch (error) {
         console.error('Error fetching like status:', error);
@@ -65,7 +62,6 @@ const ShowPhoto = () => {
     }
 
   useEffect (() => {
-    // axios.get(`http://localhost:3000/api/v1/photos/${id}`)
     axios.get(`${import.meta.env.VITE_BASE_URL}/photos/${id}`)
     .then(resp => {
       setPhotoData(resp.data.photo)
@@ -74,7 +70,6 @@ const ShowPhoto = () => {
       { user &&
         setCurrentUid(user.uid)
       }
-      console.log(resp.data);
     }).catch(error => {
       console.error('Error fetching images:', error);
     });
@@ -86,15 +81,11 @@ const ShowPhoto = () => {
     try {
       if (liked) {
         const token = await user.getIdToken(true);
-        console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // await axios.delete(`http://localhost:3000/api/v1/likes/${likedId}`, config);
         await axios.delete(`${import.meta.env.VITE_BASE_URL}/likes/${likedId}`, config);
       } else {
         const token = await user.getIdToken(true);
-        console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // await axios.post(`http://localhost:3000/api/v1/likes`, {photo_id: id} ,config);
         await axios.post(`${import.meta.env.VITE_BASE_URL}/likes`, {photo_id: id} ,config);
       }
       fetchLikeStatus();
@@ -106,9 +97,7 @@ const ShowPhoto = () => {
   const deletePhoto = async (id) => {
     try {
       const token = await user.getIdToken(true);
-      console.log(token)
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
-      // await axios.delete(`http://localhost:3000/api/v1/photos/${id}`, config);
       await axios.delete(`${import.meta.env.VITE_BASE_URL}/photos/${id}`, config);
       navigate('/photos')
     } catch (error) {
@@ -120,7 +109,6 @@ const ShowPhoto = () => {
 
   const Tweet = {
     text: "写真を投稿しました。",
-    // url: `http://localhost:3001/photos/${id}`,
     url: `https://photospace-app.com/photos/${id}`,
     hashtags: ["photo"],
     in_reply_to: "123456789",
@@ -160,7 +148,6 @@ const ShowPhoto = () => {
 
             <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
             <Grid.Col span={2.5}>{postDate}</Grid.Col>
-            {/* <Grid.Col span={1} className='mx-auto'><IconShare3 /></Grid.Col> */}
             <Grid.Col span={1} className='mx-auto'><TwitterIntentTweet {...Tweet}/></Grid.Col>
 
             { !(currentUid === postUser.uid) &&
@@ -231,10 +218,6 @@ const ShowPhoto = () => {
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6} className='font-bold'>撮影地</Grid.Col>
-            {/* <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col> */}
-            {/* {Object.keys(photoData).length > 0 && (
-              <Grid.Col span={12} className=''><Map photo={photoData} /></Grid.Col>
-            )} */}
             {Object.keys(photoData).length > 0 && photoData.gps_latitude && photoData.gps_longitude && (
               <Grid.Col span={12} className=''>
                 <Map photo={photoData} />

@@ -4,9 +4,7 @@ import { css } from '@emotion/react'
 import { TextInput, Grid, Button, Textarea } from '@mantine/core';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
-import { getAuth, sendPasswordResetEmail, sendEmailVerification, updateEmail,EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
-
-
+import { sendPasswordResetEmail, verifyBeforeUpdateEmail } from "firebase/auth";
 
 const MypageProfile = () => {
 
@@ -39,13 +37,10 @@ const MypageProfile = () => {
     const userStatus = async () => {
       try {
         const token = await user.getIdToken(true);
-        console.log(token)
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // const resp = await axios.get('http://localhost:3000/api/v1/profile', config);
         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
         setUserProfile(resp.data.user)
         setLoading(false);
-        console.log(resp.data)
       } catch (error) {
         console.error('Error fetching like status:', error);
         setLoading(false);
@@ -53,7 +48,6 @@ const MypageProfile = () => {
     }
     userStatus();
   },[]);
-
 
   const handleSubmit = async (values: any)=> {
 
@@ -64,16 +58,14 @@ const MypageProfile = () => {
     try {
         const token = await user.getIdToken(true);
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // const resp = await axios.patch("http://localhost:3000/api/v1/profile", formData, config);
         const resp = await axios.patch(`${import.meta.env.VITE_BASE_URL}/profile`, formData, config);
-        console.log(resp.data)
         setUserProfile(resp.data.user)
         formReset()
       }catch (error) {
         console.log('エラー:', error);
         console.log('エラーコード:', (error as any).code);
         console.log('エラーメッセージ:', (error as any).message);
-        // alert('エラーが発生しました: ' + error.message);
+        alert('エラーが発生しました: ' + error.message);
     }
   };
 
@@ -82,34 +74,26 @@ const MypageProfile = () => {
   const submitPasswordResetEmail = async () => {
     const actionCodeSettings = {
       // パスワード再設定後のリダイレクト URL
-      // url: 'http://localhost:3001/login',
       url: 'https://photospace-backend-7008f4941f36.herokuapp.com/login',
       handleCodeInApp: false,
     }
     sendPasswordResetEmail(auth, userProfile.email, actionCodeSettings)
     .then(() => {
-      // Password reset email sent!
-      // ..
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // ..
     });
   }
 
   const submitEmailChange = () => {
     verifyBeforeUpdateEmail(user, email)
     .then(() => {
-      // Email updated!
-      // ...
+
     }).catch((error) => {
-      // An error occurred
-      // ...
+
     });
   }
-
-  console.log(user.email)
 
 
   if (loading) {
@@ -144,7 +128,6 @@ const MypageProfile = () => {
           <Grid.Col span={6}>メールアドレス</Grid.Col>
           <Grid.Col span={3}>
             <TextInput
-              // placeholder={userProfile.email}
               placeholder={user.email}
               onChange={(e) => setEmail(e.target.value)}
             />

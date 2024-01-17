@@ -41,22 +41,17 @@ export function Header(props) {
     setMenuVisible(false);
   };
 
-  console.log(user)
-
 
   useEffect(() => {
     const userStatus = async () => {
       try {
         if (user) {
           const token = await user.getIdToken();
-          console.log(token)
           const config = { headers: { 'Authorization': `Bearer ${token}` } };
           const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/profile`, config);
           setUserProfile(resp.data);
           setLoading(false);
-          console.log(resp.data)
         } else {
-          console.log(user)
           setLoading(false);
         }
       } catch (error) {

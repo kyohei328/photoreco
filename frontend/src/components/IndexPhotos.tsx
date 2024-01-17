@@ -87,7 +87,6 @@ const IndexPhotos = () => {
   ))
 
   const handleScroll = () => {
-    console.log('scroll')
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 10) {
@@ -106,7 +105,6 @@ const IndexPhotos = () => {
           setImages((prevImages) => [...prevImages, ...resp.data.photos]);
           setPhotoCount(resp.data.photo_count)
           setLoading(false);
-          console.log(resp.data);
         } catch (error) {
           setLoading(false);
           console.error('Error fetching images:', error);
@@ -157,8 +155,6 @@ const IndexPhotos = () => {
 
       setSearchParams(params)
     };
-
-  console.log(page)
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);

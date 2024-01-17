@@ -63,30 +63,14 @@ const AddContest = () => {
   });
 
   const handleSubmit = async (values: any) => {
-    // const formData = new FormData();
-    // formData.append('contest[title]',  values.title);
-    // formData.append('contest[description]',  values.description);
-    // formData.append('contest[start_date]', values.start_date);
-    // formData.append('contest[end_date]', values.end_date);
-    // formData.append('contest[department]', values.department);
-    // const formDataObject = {};
-    // for (var pair of formData.entries()) {
-    // formDataObject[pair[0]] = pair[1];
-    // }
-    // console.log(formDataObject);
-
-    // const selectedDepartment = enumOptions.find((option) => option.value === values.department);
-
     const formData = {
       title: values.title,
       description: values.description,
       start_date: values.start_date,
       end_date: values.end_date,
       department: values.department,
-      // departmentLabel: selectedDepartment ? selectedDepartment.label : '',
       entry_conditions: values.entry_conditions,
     };
-    console.log(formData)
     navigate('/contest/new/confirm', { state: { formData: formData } })
   };
 
@@ -114,7 +98,6 @@ const AddContest = () => {
               clearable
               leftSection={icon}
               valueFormat="YYYY年MM月DD日"
-              // valueFormat="YYYY/MM/DD"
               label="開始日"
               {...form.getInputProps('start_date')}
             />
@@ -122,7 +105,6 @@ const AddContest = () => {
             <DateInput
               clearable
               leftSection={icon}
-              // valueFormat="YYYY/MM/DD"
               valueFormat="YYYY年MM月DD日"
               label="終了日"
               {...form.getInputProps('end_date')}
@@ -133,7 +115,6 @@ const AddContest = () => {
             label="開催部門"
             placeholder="部門を選択"
             data={['エンタメ部門', 'キレイ部門']}
-            // data={enumOptions}
             {...form.getInputProps('department')}
           />
           <TextInput

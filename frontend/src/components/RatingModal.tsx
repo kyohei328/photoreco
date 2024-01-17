@@ -1,7 +1,6 @@
 import { Image, Button, Textarea, Rating  } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react'
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
@@ -40,15 +39,13 @@ const RatingModal = (props) => {
     try {
         const token = await user.getIdToken(true);
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
-        // const resp = await axios.post("http://localhost:3000/api/v1/votes", formData, config);
         const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/votes`, formData, config);
-        console.log(resp)
         navigate('/')
       }catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', (error as any).code);
       console.log('エラーメッセージ:', (error as any).message);
-      // alert('エラーが発生しました: ' + error.message);
+      alert('エラーが発生しました: ' + error.message);
     }
   };
 
@@ -68,7 +65,6 @@ const RatingModal = (props) => {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <div className='px-12 pb-8'>
           <p className='py-5'>評価</p>
-          {/* <Rating size="xl" value={value} onChange={setValue} /> */}
           <Rating size="xl" {...form.getInputProps('rate')}/>
         </div>
         <Textarea
@@ -83,7 +79,6 @@ const RatingModal = (props) => {
             type="submit"
             variant="outline"
             color="rgba(59, 59, 59, 1)"
-            // rightSection={<IconUpload size={14} />}
           >
             投票する
           </Button>

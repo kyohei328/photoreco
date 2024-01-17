@@ -1,8 +1,6 @@
-import { Group, Image } from '@mantine/core';
+import { Image } from '@mantine/core';
 import { css } from '@emotion/react'
 import { useState, useEffect } from 'react'
-import moment from 'moment';
-import { Item } from 'semantic-ui-react'
 import axios from 'axios'
 import { UserAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom'
@@ -13,10 +11,6 @@ const MypagePostPhoto = () => {
     ImageSectionStyle: css ({
     }),
     ImageFrameStyle: css({
-      // width: '100%',
-      // padding: '0 44px',
-      // display: 'flex',
-      // flexWrap: 'wrap',
       marginTop: '3rem',
       padding: '0 44px 5rem 44px',
       display: 'grid',
@@ -24,17 +18,8 @@ const MypagePostPhoto = () => {
       gridGap: '10px', /* グリッドアイテム間の隙間を調整 */
     }),
     ImageStyle: css({
-      // height: '15Vw',
-      // width: '25Vw',
-      // minHeight: '150px',
-      // minWidth : '300px',
-      // width: '100%',
-      // objectFit: 'cover',
       maxHeight: '13vh',
-      // objectFit: 'contain',
       objectFit: 'scale-down',
-      
-      // paddingTop: '100%', /* 縦横比を保つためのトリック */
     }),
     LogoStyle: css ({
       fontSize: '18px',
@@ -51,10 +36,6 @@ const MypagePostPhoto = () => {
   const indexImages = images.map((image) =>(
     <div key={image.id} className='' >
       <Link to={`/photos/${image.id}`}>
-        {/* <img
-          css={Styles.ImageStyle}
-          src={image.image_url}
-        /> */}
           <Image
             css={Styles.ImageStyle}
             className='px-0 mb-1'
@@ -79,17 +60,13 @@ const MypagePostPhoto = () => {
         try {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` }, params: {data_type: 'post_photos'} };
-      // const resp = await axios.get(`http://localhost:3000/api/v1/mypage?page=${page}`, config)
       const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/mypage?page=${page}`, config)
         setImages((prevImages) => [...prevImages, ...resp.data.photos]);
-        console.log(resp.data);
       }catch (error) {
         console.error('Error fetching images:', error);
       }}
       userStatus();
     },[page]);
-
-  console.log(page)
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);

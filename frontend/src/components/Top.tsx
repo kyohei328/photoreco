@@ -85,21 +85,16 @@ const Top = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('new_entertainment_contests');
 
   useEffect(() => {
-    // axios.get('http://localhost:3000/api/v1/top')
     axios.get(`${import.meta.env.VITE_BASE_URL}/top`)
       .then(resp => {
         setNewArrivalContes(resp.data);
         setSelectContest(resp.data.new_entertainment_contests)
-        console.log(resp.data)
       }).catch(error => {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);
       console.log('エラーメッセージ:', error.message);
-      // alert('エラーが発生しました: ' + error.message);
     })
   },[]);
-  
-  console.log(newArrivalContest)
 
   const selectDepartment = (department: any) => {
     setSelectContest(newArrivalContest[department]);

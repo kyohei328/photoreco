@@ -41,7 +41,6 @@ const ContestResultList = (props) => {
   }
 
   const { contestResults } = props;
-  console.log(contestResults)
   const [selectedId, setSelectedId] = useState(null);
   const imagePath ='/contestIcon.jpg';
 
