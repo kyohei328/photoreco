@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { Button, Group } from '@mantine/core';
 import moment from 'moment';
+import { toast } from 'react-toastify'
 
 const AddContestConfirm = () => {
 
@@ -91,6 +92,7 @@ const AddContestConfirm = () => {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contests`, formData, config);
+      toast.success('コンテストを開催しました！')
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);
@@ -122,7 +124,6 @@ const AddContestConfirm = () => {
                 </tr>
                 <tr css={Styles.TableDataStyle}>
                   <td className='indent-10'>開催部門</td>
-                  {/* <td className='indent-20'>{formDataObject.departmentLabel}</td> */}
                   <td className='indent-20'>{formDataObject.department}</td>
                 </tr>
                 <tr>

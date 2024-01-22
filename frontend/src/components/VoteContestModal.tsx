@@ -5,6 +5,7 @@ import axios from "axios";
 import { UserAuth } from "../context/AuthContext";
 import '../assets/EntryContestModal.css'
 import RatingModal from "./RatingModal";
+import { toast } from 'react-toastify'
 
 const VoteContestModal = (props) => {
 
@@ -96,6 +97,7 @@ const VoteContestModal = (props) => {
         photo_id: selectedId,
       };
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
+      toast.success('コンテストに応募しました！')
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);

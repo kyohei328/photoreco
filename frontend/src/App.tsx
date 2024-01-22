@@ -8,6 +8,8 @@ import  Router from './router/Router'
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { HelmetProvider } from 'react-helmet-async';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App(): JSX.Element {
@@ -23,6 +25,12 @@ function App(): JSX.Element {
     <HelmetProvider>
       <MantineProvider>
         <I18nextProvider i18n={i18n}>
+        <ToastContainer 
+          closeOnClick
+          theme="light"
+          position="top-center"
+          hideProgressBar
+        />
           <Header/>
           <Router/>
         </I18nextProvider>

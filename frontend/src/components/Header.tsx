@@ -67,7 +67,6 @@ export function Header(props) {
   }
 
   return (
-    // <Box pb={120}>
     <Box pb={30}>
       <header className={`${classes.header} bg-gray-100`}>
         <Group justify="space-between" h="100%" grow>

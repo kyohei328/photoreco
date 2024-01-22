@@ -11,7 +11,7 @@ import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
 import { useInView } from 'react-intersection-observer';
-
+import Alert from '@mui/material/Alert';
 
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
