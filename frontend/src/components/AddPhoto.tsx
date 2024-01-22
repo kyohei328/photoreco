@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { toast } from 'react-toastify'
+
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('作品名は必須です'),
@@ -80,6 +81,7 @@ const AddPhoto = (props: any) => {
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
       const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/photos`, formData, config)
+      toast.success('写真を投稿しました！')
 
       if (props.contest) {
         const data = {
@@ -87,13 +89,14 @@ const AddPhoto = (props: any) => {
           photo_id: resp.data.id,
         };
         await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
+        toast.success('コンテストに応募しました！')
       }
-        navigate('/')
+      navigate('/')
       }catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', (error as any).code);
       console.log('エラーメッセージ:', (error as any).message);
-      // alert('エラーが発生しました: ' + error.message);
+      alert('エラーが発生しました: ' + error.message);
       if (error.response) {
         // サーバーからのレスポンスがある場合
         const errorMessage = error.response.data.errors[0]; // エラーメッセージの取得

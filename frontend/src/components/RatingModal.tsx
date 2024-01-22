@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import axios from 'axios';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
+import { toast } from 'react-toastify'
 
 
 const RatingModal = (props) => {
@@ -40,6 +41,7 @@ const RatingModal = (props) => {
         const token = await user.getIdToken(true);
         const config = { headers: { 'Authorization': `Bearer ${token}` } };
         const resp = await axios.post(`${import.meta.env.VITE_BASE_URL}/votes`, formData, config);
+        toast.success('投票しました！')
         navigate('/')
       }catch (error) {
       console.log('エラー:', error);
