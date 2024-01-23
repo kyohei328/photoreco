@@ -9,8 +9,6 @@ class Contest < ApplicationRecord
   validates :title, presence: true
   validates :entry_conditions, presence: true
 
-  # scope :new_entertainment_contests, -> { where(department: 1 ).order(created_at: :desc).limit(10) }
-  # scope :new_serious_contests, -> { where(department: 0 ).order(created_at: :desc).limit(10) }
   scope :new_entertainment_contests, -> { where(department: 'エンタメ部門' ).order(created_at: :desc).limit(10) }
   scope :new_serious_contests, -> { where(department: 'キレイ部門' ).order(created_at: :desc).limit(10) }
 

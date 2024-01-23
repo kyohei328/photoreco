@@ -2,7 +2,6 @@ class ContestResult < ApplicationRecord
   belongs_to :user
   belongs_to :contest
   belongs_to :photo
-  # has_one :vote, through: :photo
 
   enum award: { NoAward: 0, GrandPrize: 10, SecondPrize: 20, SelectedPrize: 30 }
 
@@ -31,7 +30,6 @@ class ContestResult < ApplicationRecord
   
   def self.process_results(contest, results)
     results.each_with_index do |result, index|
-      # binding.pry
       user_id = result.user_id
       contest_result = ContestResult.create(
         contest_id: contest.id,

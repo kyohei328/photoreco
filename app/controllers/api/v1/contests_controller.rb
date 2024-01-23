@@ -6,7 +6,6 @@ class Api::V1::ContestsController < ApplicationController
   skip_before_action :set_auth, only: %i[index latest show]
 
   def index
-    # binding.pry
     if params[:q]
       @q = Contest.ransack(params[:q])
       @contest = @q.result(distinct: true).order(created_at: :desc)
@@ -62,7 +61,4 @@ class Api::V1::ContestsController < ApplicationController
   def contest_result_update
     ContestResult.calculate_results
   end
-
-  
-
 end

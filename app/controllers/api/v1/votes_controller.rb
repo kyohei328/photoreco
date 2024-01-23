@@ -4,14 +4,12 @@ class Api::V1::VotesController < ApplicationController
   skip_before_action :set_auth, only: %i[index]
 
   def index
-    # binding.pry
     contest = Contest.find(params[:id])
     photos = contest.photos
     render json: { photos: photos.map { |photo| { id: photo.id, title: photo.title, image_url: image_url(photo), created_at: photo.created_at } } }
   end
 
   def create
-    # binding.pry
     vote = Vote.new(vote_params)
     vote.user = @current_user
 
@@ -23,9 +21,7 @@ class Api::V1::VotesController < ApplicationController
   end
 
 
-  def destroy
-
-  end
+  def destroy; end
 
   private
 
