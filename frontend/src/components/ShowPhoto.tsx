@@ -108,10 +108,15 @@ const ShowPhoto = () => {
   const postDate = moment(photoData.created_at).format('YYYY年MM月D日');
 
   const Tweet = {
-    text: "写真を投稿しました。",
+    text: currentUid === postUser.uid ? "写真を投稿しました" : `${photoData.title} | PhotoSpace`,
     url: `https://photospace-app.com/photos/${id}`,
-    hashtags: ["photo"],
-    in_reply_to: "123456789",
+    hashtags: ["photospace"],
+  }
+
+  { !(currentUid === postUser.uid) &&
+    <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
+      { liked ? <IconStarFilled /> : <IconStar /> }
+    </Grid.Col>
   }
 
   return (
