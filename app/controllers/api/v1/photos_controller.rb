@@ -3,14 +3,11 @@ class Api::V1::PhotosController < ApplicationController
   require 'exifr/jpeg'
 
   before_action :authenticate, only: %i[create update destroy likes]
-
   skip_before_action :set_auth, only: %i[index latest]
 
   def index
-    # binding.pry
     page = params[:page] || 1
     per_page = params[:per_page] || 10
-    # @photos = Photo.order(created_at: :desc).page(page).per(per_page)
 
     @q = Photo.ransack(params[:q])
     @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user, :likes)
@@ -49,9 +46,7 @@ class Api::V1::PhotosController < ApplicationController
     render json: { photo: photo.as_json(include: :user), photo_url: image_url(photo) }
   end
 
-  def update
-
-  end
+  def update; end
 
   def destroy
     photo = Photo.find(params[:id])
@@ -63,7 +58,6 @@ class Api::V1::PhotosController < ApplicationController
     photo = Photo.find(params[:photo_id])
     like_stauts = @current_user.like?(photo)
     like = Like.find_by(photo: photo, user: @current_user)
-    # binding.pry
 
     if like
       render json: { like_stauts: like_stauts, like_id: like.id }
@@ -71,7 +65,6 @@ class Api::V1::PhotosController < ApplicationController
       render json: { like_stauts: like_stauts, like_id: nil }
     end
 
-    # render json: { like_stauts: like_stauts, like_id: like.id }
   end
 
   def latest
@@ -85,7 +78,6 @@ class Api::V1::PhotosController < ApplicationController
     params.require(:photo).permit(:title, :description, :photo_img)
   end
 
-  # リファクタリング必要
   def add_Exif_to_photo(photo, uploard_image)
 
     tempfile = Tempfile.new
@@ -108,7 +100,6 @@ class Api::V1::PhotosController < ApplicationController
       longitude = nil
     end
 
-    # binding.pry
     photo.assign_attributes(
       gps_latitude: latitude,
       gps_longitude: longitude,
