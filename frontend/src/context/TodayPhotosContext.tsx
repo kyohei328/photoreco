@@ -18,9 +18,7 @@ export const ImageContextProvider = ({ children }) => {
       if (
         newDate.getFullYear() !== currentDate.getFullYear() ||
         newDate.getMonth() !== currentDate.getMonth() ||
-        // newDate.getDate() !== currentDate.getDate() ||
         newDate.getDate() !== currentDate.getDate() 
-        // newDate.getMinutes() !== currentDate.getMinutes()
       ) {
         setCurrentDate(newDate);
 

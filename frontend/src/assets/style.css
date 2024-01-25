@@ -37,3 +37,18 @@
 .amplify-button[data-variation='primary'] {
   background-color: chocolate;
 }
+
+.sample-slider {
+  width: 100%;
+  height: 24vw;
+}
+.sample-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* vertical-align: bottom; */
+}
+.sample-slider .swiper-slide{   /* 追記 */
+  border-radius: 10px;   
+  width: 600px;     /* 追記 */
+}

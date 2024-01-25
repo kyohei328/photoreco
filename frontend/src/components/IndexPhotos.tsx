@@ -10,6 +10,7 @@ import { MuuriComponent } from "muuri-react";
 import { BiSearchAlt } from "react-icons/bi";
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import Slider from './Swiper';
 
 const IndexPhotos = () => {
 
@@ -53,7 +54,20 @@ const IndexPhotos = () => {
   const [selectedSort, setSelectedSort] = useState('postDesc');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isHover, setIsHover] = useState(false);
-  
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect (() => {
+    const handleSlideChange = () => {
+      if (currentIndex === images.length - 4) {
+        setPage(page + 1);
+      }
+    };
+      handleSlideChange()
+  },[currentIndex])
+
+ const handleSlideChange = (index) => {
+  setCurrentIndex(index);
+};
 
   const form = useForm({
     initialValues: {
@@ -69,31 +83,32 @@ const IndexPhotos = () => {
     },
   };
 
-  const indexImages = images.map((image, index) =>(
-    <div key={index} className={classes.item}>
-      <div css={Styles.ImageContentStyle}>
-        <Link to={`/photos/${image.id}`}>
-          <div css={Styles.ImageBoxStyle}>
-            <Image
-              css={Styles.ImageStyle}
-              className='px-0 mb-1'
-              radius="sm"
-              src={image.image_url}
-            />
-          </div>
-        </Link>
-      </div>
-    </div>
-  ))
+  // const indexImages = images.map((image, index) =>(
+  //   <div key={index} className={classes.item}>
+  //     <div css={Styles.ImageContentStyle}>
+  //       <Link to={`/photos/${image.id}`}>
+  //         <div css={Styles.ImageBoxStyle}>
+  //           <Image
+  //             css={Styles.ImageStyle}
+  //             className='px-0 mb-1'
+  //             radius="sm"
+  //             src={image.image_url}
+  //           />
+  //         </div>
+  //       </Link>
+  //     </div>
+  //   </div>
+  // ))
 
-  const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  // const handleScroll = () => {
+  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-    if (scrollTop + clientHeight >= scrollHeight - 10) {
-      // 画面下部に達したらページ数をプラス
-      setPage(page + 1);
-    }
-  }
+  //   if (scrollTop + clientHeight >= scrollHeight - 10) {
+  //     // 画面下部に達したらページ数をプラス
+  //     setPage(page + 1);
+  //   }
+  // }
+
 
     useEffect(() => {
       // axiosでデータを取得する部分は関数化して、利用する
@@ -156,15 +171,15 @@ const IndexPhotos = () => {
       setSearchParams(params)
     };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      // コンポーネントがアンマウントされるときにイベントリスナーをクリーンアップ
-      window.removeEventListener('scroll', handleScroll);
+  //   return () => {
+  //     // コンポーネントがアンマウントされるときにイベントリスナーをクリーンアップ
+  //     window.removeEventListener('scroll', handleScroll);
 
-    };
-  }, []); // 空の依存配列で初回のみ実行
+  //   };
+  // }, []); // 空の依存配列で初回のみ実行
 
   const ref1 = useSpringRef();
   const ref2 = useSpringRef();
@@ -240,7 +255,9 @@ const IndexPhotos = () => {
       </animated.div>
     </animated.div>
         <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
-            <Grid.Col span={5}></Grid.Col>
+            <Grid.Col span={1}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postDesc'); handleSortByPostDateDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-2/4 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>新着順</p></div></Grid.Col>
+            <Grid.Col span={1}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postAsc');handleSortByPostDateAsc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-2/4 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postAsc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>古い順</p></div></Grid.Col>
+            <Grid.Col span={2}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-3/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'likeDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>お気に入り数順</p></div></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
             <Grid.Col span={1}>
               <button type="submit" className='
@@ -293,17 +310,19 @@ const IndexPhotos = () => {
                 <p className='text-center py-2.5'>検索結果： {photoCount} 件</p>
               }
             </div>
-            <ul className='flex justify-center'>
+            {/* <ul className='flex justify-center'>
               <li className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postDesc'); handleSortByPostDateDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>新着順</p></li>
               <li className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postAsc');handleSortByPostDateAsc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postAsc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>古い順</p></li>
               <li className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'likeDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>お気に入り数順</p></li>
-            </ul>
+            </ul> */}
           </div>
           </section>
-          <section className='h-3/6 my-４ grid' css={Styles.ImageSectionStyle}>
-            <MuuriComponent {...options}>
+          {/* <section className='h-3/6 my-４ grid' css={Styles.ImageSectionStyle}> */}
+          <section className='pt-8 px-4'>
+            {/* <MuuriComponent {...options}>
               {indexImages}
-            </MuuriComponent>
+            </MuuriComponent> */}
+            <Slider images={images} onSlideChange={handleSlideChange}/>
           </section>
     </div>
   )

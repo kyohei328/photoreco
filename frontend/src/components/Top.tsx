@@ -11,7 +11,6 @@ import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
 import { useInView } from 'react-intersection-observer';
-import Alert from '@mui/material/Alert';
 
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
@@ -46,11 +45,9 @@ const Top = () => {
     ContestFrameStyles: css({
       display: 'flex',
       justifyContent: 'center',
-      // justifyContent: 'space-around',
       padding: '0 1.25rem',
     }),
     ContestItemStyles: css({
-      // padding: '1rem 1rem',
       padding: '10px 10px',
       border: 'solid 1px black'
     }),
