@@ -11,6 +11,7 @@ import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
 import { useInView } from 'react-intersection-observer';
+import { ContestSlider } from './Swiper';
 
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
@@ -128,7 +129,8 @@ const Top = () => {
         </FadingElement>
         <FadingElement>
           <div css={Styles.ContestSectionStyle} className='mx-12'>
-            <NewArrivalContest contest={selectContest}/>
+            <ContestSlider contests={selectContest}/>
+            {/* <NewArrivalContest contest={selectContest}/> */}
           </div>
         </FadingElement>
       </section>

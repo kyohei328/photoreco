@@ -87,7 +87,7 @@
   bottom:0;
 }
 
-.contest-slider .swiper-button-prev {
+.vertical-slider .contest-slider .swiper-button-prev {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,7 +95,7 @@
   height: 100%;
 }
 
-.contest-slider .swiper-button-next {
+.vertical-slider .contest-slider .swiper-button-next {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -107,6 +107,17 @@
   /* border: 1px solid gray; */
   height: 50Vh;
 }
+
+.contest-slider  [class^=swiper-button]{
+  color: gray;
+}
+
+.contest-slider  [class^=swiper-button]::after{
+  color: gray;
+  font-size: 2rem;
+}
+
+
 
 .contest-slider .swiper-slide {
   display: flex;
