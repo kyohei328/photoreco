@@ -3,7 +3,7 @@ class Api::V1::ProfilesController < ApplicationController
   before_action :authenticate
 
   def show
-    render json:  { user: @current_user, avatar_url: image_url(@current_user)}
+    render json:  { user: @current_user, avatar_url: avatar_url(@current_user)}
   end
 
   def update
@@ -19,12 +19,5 @@ class Api::V1::ProfilesController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :self_introduction, :avatar_img)
   end
-  
-  def image_url(avatar)
-    if avatar.respond_to?(:avatar_img) && avatar.avatar_img.attached?
-      rails_blob_url(avatar.avatar_img)
-    else
-      nil
-    end
-  end
+
 end

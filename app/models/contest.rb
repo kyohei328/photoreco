@@ -9,8 +9,8 @@ class Contest < ApplicationRecord
   validates :title, presence: true
   validates :entry_conditions, presence: true
 
-  scope :new_entertainment_contests, -> { where(department: 'エンタメ部門' ).order(created_at: :desc).limit(10) }
-  scope :new_serious_contests, -> { where(department: 'キレイ部門' ).order(created_at: :desc).limit(10) }
+  scope :new_entertainment_contests, -> { where(department: 'エンタメ部門' ).includes(:user).order(created_at: :desc).limit(10)}
+  scope :new_serious_contests, -> { where(department: 'キレイ部門' ).includes(:user).order(created_at: :desc).limit(10) }
 
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "department", "description", "end_date", "entry_conditions", "id", "result_date", "start_date", "title", "updated_at", "user_id"]

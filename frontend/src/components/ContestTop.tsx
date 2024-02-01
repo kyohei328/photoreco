@@ -8,6 +8,7 @@ import ContestResultList from './ContestResultList'
 import { useForm } from '@mantine/form';
 import { UserAuth } from '../context/AuthContext';
 import { BiSearchAlt } from "react-icons/bi";
+import { ContestSlider, VerticalSlider } from './Swiper';
 
 const ContestTop = () => {
 
@@ -38,7 +39,7 @@ const ContestTop = () => {
     })
   }
 
-  const [applyContest, setApplyContest] = useState([]);
+  const [applyContests, setApplyContests] = useState([]);
   const [contestResults, setContestResults] = useState([]);
   const [contestSearch, setContestSearch] = useState(false);
   const [contestCount, setContestCount] = useState();
@@ -58,7 +59,7 @@ const ContestTop = () => {
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BASE_URL}/contests`)
       .then(resp => {
-        setApplyContest(resp.data.contests);
+        setApplyContests(resp.data.contests);
         setContestResults(resp.data.contests_result);
         setResultCheck(false)
       }).catch(error => {
@@ -92,7 +93,7 @@ const ContestTop = () => {
           setResultCheck(false)
         }
         const resp = await axios.get(`${import.meta.env.VITE_BASE_URL}/contests`, { params });
-        setApplyContest(resp.data.contests);
+        setApplyContests(resp.data.contests);
         setContestCount(resp.data.contest_count);
         setContestResults(resp.data.contests_result);
         setContestSearch(true);
@@ -103,11 +104,27 @@ const ContestTop = () => {
         alert('エラーが発生しました: ' + error.message);
       }
   }
-  
+
+  const renderedSlides = [
+    <section css={Styles.SectionStyle} className='pt-5'>
+      <h3 css={Styles.LogoStyle} className='fadeUp'>応募受付中のコンテスト</h3>
+      <div css={Styles.TitleStyle} className='fadeUp'></div>
+      <div className='my-5 mx-12 fadeUp'>
+        <ContestSlider contests={applyContests}/>
+      </div>
+    </section>,
+    <section css={Styles.SectionStyle} className='pt-5'>
+      <h3 css={Styles.LogoStyle} className='fadeUp'>コンテスト結果発表</h3>
+      <div css={Styles.TitleStyle} className='fadeUp'></div>
+      <div className='my-5 mx-12'>
+        <ContestSlider contestResults={contestResults} />
+      </div>
+    </section>
+  ];
 
   return (
     <div className='h-full min-h-screen'>
-      <section className='mb-10'>
+      <section>
         <div className=' w-10/12 mx-auto pb-px pt-5'>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
@@ -139,30 +156,27 @@ const ContestTop = () => {
                 {...form.getInputProps('result')}
               />
             </Grid.Col>
-            <Grid.Col span={2}></Grid.Col>
-            <Grid.Col span={5}></Grid.Col>
-            <Grid.Col span={5}></Grid.Col>
-            <Grid.Col span={1} >
-            <button type="submit" className='
+            <Grid.Col span={1} className='pt-7'><button type="submit" className='
               bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-3'/>探す</button>
-            </Grid.Col>
+              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-3'/>探す</button></Grid.Col>
           </Grid>
         </form>
       </div>
       </section>
-        <div className='text-right px-6'>
+        <div className='text-right pr-28'>
         { user &&
           <Link to='/contest/new'>
             <button type="submit" className='
               bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-              ml-4 mr-8 mb-4 py-1 px-4 shadow-sm shadow-gray-400 transition-all duration-100 active:translate-y-1 active:shadow-none '>
+              ml-4 mr-12 mb-8 py-1 px-4 shadow-sm shadow-gray-400 transition-all duration-100 active:translate-y-1 active:shadow-none'>
             コンテストを開催する
             </button>
           </Link>
           }
         </div>
-        {contestSearch &&  (
+        <VerticalSlider sliders={renderedSlides} />
+       
+        {/* {contestSearch &&  (
           <h3 className='text-center my-4'>検索結果 {contestCount} 件</h3>
         ) || <div></div>}
         { !resultCheck &&  (
@@ -170,9 +184,8 @@ const ContestTop = () => {
             <h3 css={Styles.LogoStyle} className='fadeUp'>応募受付中のコンテスト</h3>
             <div css={Styles.TitleStyle} className='fadeUp'></div>
             <div className='my-5 fadeUp'>
-              <NewArrivalContest contest={applyContest}/>
-              {/* <p className='mx-auto'>応募受付中のコンテストはありません
-              </p> */}
+              
+              <ContestSlider contests={applyContests} />
             </div>
           </section>
         )}
@@ -182,10 +195,13 @@ const ContestTop = () => {
           <h3 css={Styles.LogoStyle} className='fadeUp'>コンテスト結果発表</h3>
           <div css={Styles.TitleStyle} className='fadeUp'></div>
           <div className='my-5 mx-5'>
-            <ContestResultList contestResults={contestResults}/>
+            
+            <ContestSlider contestResults={contestResults} />
           </div>
         </section>
-      }
+      } */}
+{/* <NewArrivalContest contest={applyContest}/> */}
+{/* <ContestResultList contestResults={contestResults}/> */}
     </div>
   )
 }

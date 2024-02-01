@@ -12,12 +12,22 @@ class ApplicationController < ActionController::API
     render json: { error: 'Not Authorized' }, status: :unauthorized
   end
 
+  def avatar_url(avatar)
+    if avatar.respond_to?(:avatar_img) && avatar.avatar_img.attached?
+      rails_blob_url(avatar.avatar_img)
+    else
+      nil
+    end
+  end
+
   private
 
   def form_authenticity_token; end
-
+  
   def set_auth
     @auth = authenticate_token_by_firebase
   end
+
+  
 
 end
