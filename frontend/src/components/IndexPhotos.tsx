@@ -10,7 +10,7 @@ import { MuuriComponent } from "muuri-react";
 import { BiSearchAlt } from "react-icons/bi";
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
-import Slider from './Swiper';
+import { PhotoSlider } from './Swiper';
 
 const IndexPhotos = () => {
 
@@ -257,7 +257,7 @@ const IndexPhotos = () => {
         <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
             <Grid.Col span={1}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postDesc'); handleSortByPostDateDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-2/4 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>新着順</p></div></Grid.Col>
             <Grid.Col span={1}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('postAsc');handleSortByPostDateAsc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-2/4 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'postAsc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>古い順</p></div></Grid.Col>
-            <Grid.Col span={2}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2.5 after:w-3/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'likeDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>お気に入り数順</p></div></Grid.Col>
+            <Grid.Col span={2}><div className='mb-1.5 cursor-pointer' onClick={() => {setSelectedSort('likeDesc'); handleSortByLikesDesc()}}><p className={`py-2.5 px-4 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-2 after:w-3/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedSort === 'likeDesc' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}>お気に入り数順</p></div></Grid.Col>
             <Grid.Col span={5}></Grid.Col>
             <Grid.Col span={1}>
               <button type="submit" className='
@@ -322,7 +322,7 @@ const IndexPhotos = () => {
             {/* <MuuriComponent {...options}>
               {indexImages}
             </MuuriComponent> */}
-            <Slider images={images} onSlideChange={handleSlideChange}/>
+            <PhotoSlider images={images} onSlideChange={handleSlideChange}/>
           </section>
     </div>
   )

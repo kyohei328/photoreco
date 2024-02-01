@@ -93,6 +93,7 @@ const Top = () => {
     })
   },[]);
 
+
   const selectDepartment = (department: any) => {
     setSelectContest(newArrivalContest[department]);
     setSelectedDepartment(department);
@@ -126,7 +127,7 @@ const Top = () => {
         </div>
         </FadingElement>
         <FadingElement>
-          <div css={Styles.ContestSectionStyle}>
+          <div css={Styles.ContestSectionStyle} className='mx-12'>
             <NewArrivalContest contest={selectContest}/>
           </div>
         </FadingElement>

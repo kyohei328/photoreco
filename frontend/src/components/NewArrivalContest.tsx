@@ -1,7 +1,19 @@
-import { Item } from 'semantic-ui-react'
+// import { Item } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import moment from 'moment';
 import { css, keyframes } from '@emotion/react'
+import {
+  CardMeta,
+  CardHeader,
+  CardGroup,
+  CardDescription,
+  CardContent,
+  Button,
+  Card,
+  Image,
+} from "semantic-ui-react";
+import { useNavigate } from 'react-router-dom';
+
 
 
 const NewArrivalContest = (props: any) => {
@@ -25,21 +37,44 @@ const NewArrivalContest = (props: any) => {
  }
 
   const imagePath ='/contestIcon.jpg';
+  const navigate  = useNavigate()
+  const MAX_DESCRIPTION_LENGTH = 70;
+
+  console.log(props)
+
+
+  const ContesDescription = ({ contest }) => {
+    const limitedDescription = contest.description.length > MAX_DESCRIPTION_LENGTH
+      ? `${contest.description.slice(0, MAX_DESCRIPTION_LENGTH)}...`
+      : contest.description;
+  
+    return (
+        <strong>{limitedDescription}</strong>
+    );
+  };
+
 
   const newContests = props.contest ? (
     props.contest.map((contest: any, index: number) => (
-      <Item key={index}>
-      <Item.Image size='tiny' src={imagePath}/>
-      <Item.Content>
-        <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest} className='py-2'>{contest.title}</Item.Header>
-        <Item.Meta>開催内容</Item.Meta>
-        <Item.Description>
-          <p className='indent-2'>{contest.description}</p>
-        </Item.Description>
-        <Item.Extra>応募期間</Item.Extra>
-        <p className='indent-2 pt-2'>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
-      </Item.Content>
-      </Item>
+      <Card key={index}>
+      <CardContent>
+        <Image
+          floated="right"
+          size="mini"
+          src={contest.user_avatar}
+        />
+        <CardHeader>{contest.title}</CardHeader>
+        <CardMeta>{contest.user_name}</CardMeta>
+        <CardDescription>
+          <ContesDescription contest={contest}/>
+        </CardDescription>
+      </CardContent>
+      <CardContent extra textAlign="right">
+        <div className="">
+          <Button content='View More' icon='right arrow' labelPosition='right' onClick={() => navigate(`/contest/${contest.id}`)} />
+        </div>
+      </CardContent>
+    </Card>
     ))
   ) : (
     <p>新着のコンテストがありません</p>
@@ -47,9 +82,9 @@ const NewArrivalContest = (props: any) => {
 
   return (
     <div>
-      <Item.Group>
+      <CardGroup>
         {newContests}
-      </Item.Group>
+      </CardGroup>
     </div>
   )
 }

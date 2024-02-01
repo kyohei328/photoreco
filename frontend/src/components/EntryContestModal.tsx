@@ -5,6 +5,10 @@ import '../assets/EntryContestModal.css'
 import { Button, Card, Image, Text } from '@mantine/core';
 import { UserAuth } from "../context/AuthContext";
 import AddPhoto from "./AddPhoto";
+import { useNavigate } from "react-router-dom";
+import { use } from "i18next";
+import { toast } from 'react-toastify'
+import moment from 'moment';
 
 const EntryContestModal = (props: any) => {
 
@@ -27,11 +31,9 @@ const EntryContestModal = (props: any) => {
     ContestFrameStyles: css({
       display: 'flex',
       justifyContent: 'center',
-      // justifyContent: 'space-around',
       padding: '0 1.25rem',
     }),
     ContestItemStyles: css({
-      // padding: '1rem 1rem',
       padding: '10px 10px',
       border: 'solid 1px black'
     }),
@@ -55,6 +57,7 @@ const EntryContestModal = (props: any) => {
   const [images, setImages] = useState([]);
 
   const { user } =  UserAuth();
+  const navigate = useNavigate();
 
   const clickChoice = (choice: any) => {
     setChoice(choice);
@@ -94,6 +97,7 @@ const EntryContestModal = (props: any) => {
         photo_id: selectedId,
       };
       await axios.post(`${import.meta.env.VITE_BASE_URL}/contest_entries`, data, config);
+      toast.success('応募しました！')
       navigate('/')
     } catch (error) {
       console.log('エラー:', error);
@@ -102,7 +106,6 @@ const EntryContestModal = (props: any) => {
       alert('エラーが発生しました: ' + error.message);
     }
   };
-
 
 
   const imageCards = images.map((image) => (
@@ -144,7 +147,7 @@ const EntryContestModal = (props: any) => {
         </Text>
 
         <Text mt="xs" c="dimmed" size="sm">
-          {`登録日：${image.created_at}`}
+          {`登録日：${moment(image.created_at).format('YYYY年MM月D日')}`}
         </Text>
       </Card>
   ))

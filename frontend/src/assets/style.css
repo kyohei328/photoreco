@@ -45,10 +45,98 @@
 .sample-slider img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* vertical-align: bottom; */
 }
 .sample-slider .swiper-slide{   /* 追記 */
-  border-radius: 10px;   
+  border-radius: 10px;
   width: 600px;     /* 追記 */
 }
+
+.vertical-slider {
+  width: 80%;
+  height: 60vh;
+}
+
+.vertical-slider >[class^=swiper-button] {
+	transform: rotate(90deg);
+	top: initial;
+	left: initial;
+	right: 10px;
+	margin: 0;
+  color: gray;
+}
+
+.vertical-slider [class^=swiper-button]{
+  color: gray;
+}
+
+.swiper-pagination-bullet-active{
+  background-color: gray;
+}
+/* .contest-slider[class^=swiper-button] {
+  transform: none;
+} */
+.vertical-slider .swiper-button-prev{
+  top:0;
+}
+
+.vertical-slider [class^=swiper-button]::after {
+  font-size: 2rem;
+}
+
+.vertical-slider .swiper-button-next{
+  bottom:0;
+}
+
+.contest-slider .swiper-button-prev {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.contest-slider .swiper-button-next {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 0%;
+}
+
+.contest-slider {
+  /* border: 1px solid gray; */
+  height: 50Vh;
+}
+
+.contest-slider .swiper-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .vertical-slider [class^=custom-button] {
+	transform: rotate(90deg);
+	top: initial;
+	left: initial;
+	right: 10px;
+	margin: 0;
+  opacity: 0.7;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vertical-slider .custom-button-prev{
+  top:0;
+}
+.vertical-slider [class^=custom-button] >svg{
+  height: 2rem;
+  width: 2rem;
+}
+.vertical-slider .custom-button-next{
+  bottom:0;
+} */
+
