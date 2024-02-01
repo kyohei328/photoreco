@@ -112,12 +112,10 @@
   color: gray;
 }
 
-.contest-slider  [class^=swiper-button]::after{
+.contest-slider  [class^=swiper-button] ::after{
   color: gray;
   font-size: 2rem;
 }
-
-
 
 .contest-slider .swiper-slide {
   display: flex;
