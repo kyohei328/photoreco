@@ -38,6 +38,39 @@
   background-color: chocolate;
 }
 
+.today-photo-slider {
+  width: 70%;
+  height: 51vw;
+}
+
+.today-photo-slider img {
+  width: 100%;
+  height: 100%;
+}
+
+.top-contest-slider{
+  width: 37rem;
+}
+
+.top-contest-slider .swiper-slide{
+  height: 18rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-contest-slider [class^=swiper-button]::after{
+  color: gray;
+  font-size: 2rem;
+}
+
+
+/* .today-photo-slider .swiper-slide{  
+  border-radius: 10px;
+  width: 600px; 
+} */
+
 .sample-slider {
   width: 100%;
   height: 24vw;
@@ -72,9 +105,7 @@
 .swiper-pagination-bullet-active{
   background-color: gray;
 }
-/* .contest-slider[class^=swiper-button] {
-  transform: none;
-} */
+
 .vertical-slider .swiper-button-prev{
   top:0;
 }
@@ -124,28 +155,4 @@
   align-items: center;
 }
 
-/* .vertical-slider [class^=custom-button] {
-	transform: rotate(90deg);
-	top: initial;
-	left: initial;
-	right: 10px;
-	margin: 0;
-  opacity: 0.7;
-  position: absolute;
-  cursor: pointer;
-  z-index: 1;
-    display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.vertical-slider .custom-button-prev{
-  top:0;
-}
-.vertical-slider [class^=custom-button] >svg{
-  height: 2rem;
-  width: 2rem;
-}
-.vertical-slider .custom-button-next{
-  bottom:0;
-} */
 

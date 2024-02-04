@@ -11,16 +11,16 @@ import NewArrivalContest from './NewArrivalContest'
 import { Footer } from './Footer';
 import '../assets/top.css'
 import { useInView } from 'react-intersection-observer';
-import { ContestSlider } from './Swiper';
+import { TopPhotoSlider, TopContestSlider } from './Swiper';
 
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
-    triggerOnce: false, // 一度だけアニメーションを実行する
-    rootMargin: '-150px',
+    triggerOnce: true, 
+    // rootMargin: '-150px',
   });
 
   return (
-    <div ref={ref} className={`fadeUpTrigger ${inView ? 'fadeUp' : ''}`}>
+    <div ref={ref} className={`fadeUpTrigger z-20 ${inView ? 'fadeUp' : ''}`}>
       {children}
     </div>
   );
@@ -41,7 +41,7 @@ const Top = () => {
       fontSize: '24px',
       fontWeight: 'bold',
       textAlign: 'center',
-      minHeight: '40px',
+      textShadow: '1px 1px 2px gray'
     }),
     ContestFrameStyles: css({
       display: 'flex',
@@ -53,7 +53,7 @@ const Top = () => {
       border: 'solid 1px black'
     }),
     SectionStyles: css({
-      marginBottom: '6rem',
+      paddingBottom: '1rem',
     }),
     SelectStyles: css({
       cursor: 'pointer',
@@ -66,8 +66,26 @@ const Top = () => {
       textDecoration: 'underline',
     }),
     ContestSectionStyle: css ({
-      minHeight: '21rem',
-    })
+      // minHeight: '21rem',
+      top: "-2rem",
+      width: "35%",
+      height: '50rem',
+      left: "65rem",
+      position: 'relative',
+      zIndex: '20',
+      padding: '2rem 0',
+
+    }),
+    CoverStyle: css({
+      transform: 'skewX(-10deg)',
+      backgroundColor: 'white',
+      height: '53rem',
+      width: '20rem',
+      position: 'absolute',
+      zIndex: '10',
+      top: '-1rem',
+      left: '60rem',
+    }),
   })
 
   const { user } =  UserAuth() as { user: object };
@@ -100,21 +118,29 @@ const Top = () => {
     setSelectedDepartment(department);
   };
 
+
   return (
-    <div>
-      <div className="scrolldown"><span>Scroll</span></div>
+    <div className='relative'>
+      {/* <div className="scrolldown"><span>Scroll</span></div> */}
         <section css={Styles.SectionStyles}>
           <div>
-            <h1 css={Styles.TitleStyle} className='fontLibre'>ToDay's PickUp Photos</h1>
-            <EmblaCarousel slides={SLIDES} options={OPTIONS} images={images} />
+            <FadingElement>
+              <h1 css={Styles.TitleStyle} className='fontLibre absolute z-10 text-white left-12 top-4 opacity-80'>ToDay's PickUp Photos</h1>
+              {/* <EmblaCarousel slides={SLIDES} options={OPTIONS} images={images} /> */}
+              <TopPhotoSlider imagesUrl={images} />
+            </FadingElement>
           </div>
         </section>
-      <section className='bg-gray-50 py-12'>
+
+        <div css={Styles.CoverStyle}></div>
+
+      <section css={Styles.ContestSectionStyle} >
+        <div>
       <FadingElement>
         <h1 css={Styles.TitleStyle} className='fontLibre'>New Arrival Contests</h1>
       </FadingElement>
       <FadingElement>
-        <div className='flex justify-around mb-12 mt-12'>
+        <div className='flex justify-around mb-12 mt-40'>
           <p className={`py-2.5 px-4 cursor-pointer hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedDepartment === 'new_entertainment_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700 cursor-default' : ''}`}
             onClick={() => selectDepartment('new_entertainment_contests')}
           >
@@ -128,11 +154,12 @@ const Top = () => {
         </div>
         </FadingElement>
         <FadingElement>
-          <div css={Styles.ContestSectionStyle} className='mx-12'>
-            <ContestSlider contests={selectContest}/>
+          <div className='mx-12 pt-12 flex justify-center items-center'>
+            <TopContestSlider contests={selectContest}/>
             {/* <NewArrivalContest contest={selectContest}/> */}
           </div>
         </FadingElement>
+        </div>
       </section>
       <Footer />
     </div>
