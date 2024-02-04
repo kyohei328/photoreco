@@ -1,17 +1,15 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom'
 import 'swiper/css';
-import { Navigation, EffectCards, EffectCreative, EffectCoverflow } from 'swiper/modules';
+import { Navigation, EffectCards, EffectCreative, EffectCoverflow, EffectFade, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-cards'
 import '../assets/style.css'
+import 'swiper/css/effect-fade';
 import NewArrivalContest from './NewArrivalContest';
 import { ContestCard, ContestResultCard } from './Card';
-import { Pagination } from 'swiper/modules';
-import { FaCircleChevronRight } from "react-icons/fa6";
-import { FaChevronCircleLeft } from "react-icons/fa";
-import { useRef } from 'react';
+import { css } from '@emotion/react'
 
 interface SliderProps {
   images: {
@@ -40,7 +38,87 @@ interface SliderProps {
       name: string;
     }
   }[];
+  imagesUrl: string[];
 }
+
+const TopPhotoSlider: React.FC<SliderProps> = ({ imagesUrl }) => {
+
+  const Styles = ({
+    SwiperStyle: css ({
+      marginLeft: '1rem',
+      position: 'absolute',
+      top: '-1rem',
+    }),
+  })
+
+  const slideImages = imagesUrl.map((imageUrl, index) =>(
+    <SwiperSlide key={index}>
+      <img src={imageUrl} />
+    </SwiperSlide>
+  ))
+
+    return (
+        <Swiper
+          className="today-photo-slider"
+          css={Styles.SwiperStyle}
+          modules={[Navigation, EffectFade, Autoplay]}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          slidesPerView={1}
+          slidesPerGroup={1}
+          effect="fade"
+          speed={5000}
+          centeredSlides={true}
+        fadeEffect={{
+          crossFade: true,
+        }}
+          grabCursor={true}
+        >
+          {slideImages}
+        </Swiper>
+    );
+};
+
+const TopContestSlider: React.FC<SliderProps> = ({ contests }) => {
+
+  const Styles = ({
+    SwiperStyle: css ({
+      marginLeft: '2rem',
+      position: 'absolute',
+      top: '0rem',
+    }),
+  })
+
+  const slideContests = Array.isArray(contests) ? contests.map((contest, index) => (
+    <SwiperSlide key={index}>
+      <ContestCard contest={contest}/>
+    </SwiperSlide>
+  )) :
+    <SwiperSlide>
+      <p>NG</p>
+    </SwiperSlide>
+
+    return (
+        <Swiper
+          className="top-contest-slider"
+          modules={[Navigation, EffectCards]}
+          navigation
+          effect="cards"
+          centeredSlides={true}
+          cardsEffect={{
+            perSlideOffset: 7,
+            perSlideRotate: 5,
+            rotate: true,
+            slideShadows: false,
+          }}
+          grabCursor={true}
+        >
+          {slideContests}
+        </Swiper>
+    );
+};
 
 const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
   const slideImages = images.map((image, index) =>(
@@ -56,40 +134,20 @@ const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
     return (
         <Swiper
           className="sample-slider"
-          modules={[Navigation, EffectCards, EffectCreative, EffectCoverflow]}
+          modules={[Navigation, EffectCoverflow]}
           navigation
           effect="coverflow"
-          // loop={true}
           onSlideChange={(swiper) => onSlideChange(swiper.realIndex)}
-          // cardsEffect={{
-          //   perSlideOffset: 15,
-          //   perSlideRotate: 10,
-          //   rotate: true,
-          //   slideShadows: false,
-          // }}
           slidesPerView={3}
           centeredSlides={true}
-        //   creativeEffect={{
-        //     limitProgress: 2,
-        //     prev: {
-        //         translate: ["100%", -200, -1000],
-        //         rotate: [0, 0, 40],
-        //         shadow: true,
-        //     },
-        //     next: {
-        //         translate: ["-100%", 200, -1000],
-        //         rotate: [0, 0, 40],
-        //         shadow: true,
-        //     },
-        // }}
-        coverflowEffect={{          // 追加
-          rotate: 0,              // 追加 (前後のスライドの回転)
-          depth: 100,             // 追加 (前後のスライドの奥行)
-          stretch: 200,            // 追加 (スライド間のスペース)
-          modifier: 1,            // 追加 (rotate・depth・stretchの値を乗算する)
-          scale: 1,               // 追加 (前後のスライドのサイズ比率)
-          slideShadows: true,    // 追加 (前後のスライド表面の影の有無)
-        }}
+          coverflowEffect={{          // 追加
+            rotate: 0,              // 追加 (前後のスライドの回転)
+            depth: 100,             // 追加 (前後のスライドの奥行)
+            stretch: 200,            // 追加 (スライド間のスペース)
+            modifier: 1,            // 追加 (rotate・depth・stretchの値を乗算する)
+            scale: 1,               // 追加 (前後のスライドのサイズ比率)
+            slideShadows: true,    // 追加 (前後のスライド表面の影の有無)
+          }}
           grabCursor={true}
         >
           {slideImages}
@@ -97,7 +155,10 @@ const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
     );
 };
 
-const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => {
+const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults, swiperOptions})  => {
+
+  console.log(swiperOptions)
+
   const slideContests = Array.isArray(contests) ? contests.map((contest, index) => (
     <SwiperSlide key={index}>
       <ContestCard contest={contest}/>
@@ -121,10 +182,6 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => 
           className="contest-slider"
           modules={[Navigation, EffectCreative]}
           navigation
-          // navigation={{
-          //   nextEl: '.custom-button-prev',swiper-button-prev
-          //   prevEl: '.custom-button-next',
-          // }}
           effect="creative"
           slidesPerView={3}
           centeredSlides={true}
@@ -144,12 +201,6 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => 
           grabCursor={true}
         >
           {contests ? slideContests : contestResults ? slideContestsResults : null}
-          {/* <div className="custom-button-prev">
-            <FaChevronCircleLeft />
-          </div>
-          <div className="custom-button-next">
-            <FaCircleChevronRight />
-          </div> */}
         </Swiper>
     );
 };
@@ -164,43 +215,17 @@ const VerticalSlider = ({ sliders })  => {
       <p>NG</p>
     </SwiperSlide>
 
-    // const navigationPrevRef = useRef<HTMLDivElement>(null)
-    // const navigationNextRef = useRef<HTMLDivElement>(null)
-
     return (
         <Swiper
           direction='vertical'
           className="vertical-slider"
           modules={[Navigation, Pagination]}
-          // navigation={{
-          //   nextEl: navigationPrevRef.current,
-          //   prevEl: navigationNextRef.current,
-          // }}
-          // navigation={{
-          //   nextEl: '.custom-button-prev',
-          //   prevEl: '.custom-button-next',
-          // }}
           navigation
-          // slidesPerView={2}
           pagination={true}
-          // centeredSlides={true}
-          // grabCursor={true}
         >
           {slideContent}
-          {/* <div className="custom-button-prev">
-            <FaChevronCircleLeft />
-          </div>
-          <div className="custom-button-next">
-            <FaCircleChevronRight />
-          </div> */}
-          {/* <div ref={navigationPrevRef}>
-            <img src='../../public/contestIcon.ping'/>
-          </div>
-          <div ref={navigationNextRef}>
-            <FaCircleChevronRight />
-          </div> */}
         </Swiper>
     );
 };
 
-export { ContestSlider, PhotoSlider, VerticalSlider };
+export { ContestSlider, PhotoSlider, VerticalSlider, TopPhotoSlider, TopContestSlider };

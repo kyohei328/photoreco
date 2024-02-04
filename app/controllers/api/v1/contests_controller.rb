@@ -5,13 +5,6 @@ class Api::V1::ContestsController < ApplicationController
 
   skip_before_action :set_auth, only: %i[index latest show]
 
-  # new_serious_contests: new_serious_contests.map { |contest| {
-  #   title: contest.title,
-  #   description: contest.description,
-  #   user_name: contest.user.name,
-  #   user_avatar: avatar_url(contest.user),
-  # } },
-
   def index
     if params[:q]
       @q = Contest.ransack(params[:q])
