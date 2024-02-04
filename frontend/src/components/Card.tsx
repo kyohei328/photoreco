@@ -108,8 +108,6 @@ const ContestResultCard = (props: any) => {
     setSelectedId(hoverId);
   };
 
-  console.log(props)
-
   return (
     <Link to={`/contest/${props.contestResult.id}/result`} css={[Styles.LinkStyle, Styles.RotateYStyle]} ref={ref}>
       <MantineCard

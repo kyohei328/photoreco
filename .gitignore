@@ -34,6 +34,9 @@
 
 /.env
 /frontend/.env
+/frontend/.env.development
+/frontend/.env.production
+
 
 /AWSCLIV2.pkg
 
