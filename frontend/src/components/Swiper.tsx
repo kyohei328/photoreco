@@ -155,9 +155,7 @@ const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
     );
 };
 
-const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults, swiperOptions})  => {
-
-  console.log(swiperOptions)
+const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => {
 
   const slideContests = Array.isArray(contests) ? contests.map((contest, index) => (
     <SwiperSlide key={index}>
