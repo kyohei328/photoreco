@@ -141,6 +141,7 @@ const AddPhoto = (props: any) => {
           <Select
             label="カテゴリー"
             size="md"
+            clearable
             data={categories}
             {...form.getInputProps('category')}
           />

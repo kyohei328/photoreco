@@ -237,6 +237,7 @@ const IndexPhotos = () => {
               <Select
                 label="カテゴリー"
                 data={categories}
+                clearable
                 {...form.getInputProps('category')}
               />
             </Grid.Col>
