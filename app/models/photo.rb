@@ -1,5 +1,6 @@
 class Photo < ApplicationRecord
   belongs_to :user
+  belongs_to :category
 
   has_one_attached :photo_img
 
@@ -26,7 +27,6 @@ class Photo < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["contest_entries", "contest_results", "like_photos", "likes", "photo_img_attachment", "photo_img_blob", "user", "votes"]
+    ["contest_entries", "contest_results", "like_photos", "likes", "photo_img_attachment", "photo_img_blob", "user", "votes", "category"]
   end
-
 end

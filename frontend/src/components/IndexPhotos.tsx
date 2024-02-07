@@ -11,6 +11,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { PhotoSlider } from './Swiper';
+import { useCategory } from '../context/Category';
 
 const IndexPhotos = () => {
 
@@ -56,6 +57,8 @@ const IndexPhotos = () => {
   const [isHover, setIsHover] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const { categories } = useCategory();
+
   useEffect (() => {
     const handleSlideChange = () => {
       if (currentIndex === images.length - 4) {
@@ -73,6 +76,7 @@ const IndexPhotos = () => {
     initialValues: {
       freeWord: '',
       postUserName: '',
+      category: '',
     },
   });
 
@@ -165,6 +169,7 @@ const IndexPhotos = () => {
         q: {
           title_or_description_or_camera_cont: values.freeWord,
           user_name_cont: values.postUserName,
+          category_name_cont: values.category,
         },
       };
 
@@ -231,9 +236,8 @@ const IndexPhotos = () => {
             <Grid.Col span={6}>
               <Select
                 label="カテゴリー"
-                data={['風景', '植物', '動物', '人物']}
-                disabled
-                placeholder="本リリースにて実装"
+                data={categories}
+                {...form.getInputProps('category')}
               />
             </Grid.Col>
             <Grid.Col span={6} className='mt-4'>

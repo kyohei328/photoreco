@@ -15,7 +15,7 @@ import { TopPhotoSlider, TopContestSlider } from './Swiper';
 
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
-    triggerOnce: true, 
+    triggerOnce: true,
     // rootMargin: '-150px',
   });
 

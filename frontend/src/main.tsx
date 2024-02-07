@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 // import { AuthProvider } from './context/AuthContext';
 import { AuthContextProvider } from './context/AuthContext';
 import { ImageContextProvider } from './context/TodayPhotosContext';
+import { CategoryContextProvider } from './context/Category.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -15,9 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     {/* <AuthProvider> */}
     <AuthContextProvider>
       <ImageContextProvider>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <CategoryContextProvider>
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
+        </CategoryContextProvider>
       </ImageContextProvider>
     </AuthContextProvider>
       {/* </AuthProvider> */}

@@ -10,8 +10,9 @@ class Api::V1::PhotosController < ApplicationController
     per_page = params[:per_page] || 10
 
     @q = Photo.ransack(params[:q])
-    @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user, :likes)
-    photos = @q.result(distinct: :true).order(created_at: :desc).includes(:user, :likes)
+    @photos = @q.result(distinct: :true).order(created_at: :desc).page(page).per(per_page).includes(:user, :likes, :category)
+    photos = @q.result(distinct: :true).order(created_at: :desc).includes(:user, :likes, :category)
+    categories = Category.all
 
     render json:  {
       photos: @photos.map { |photo|
@@ -26,13 +27,17 @@ class Api::V1::PhotosController < ApplicationController
           likes_count: photo.likes.count,
         }
       },
-      photo_count: photos.count
+      photo_count: photos.count,
+      categories: categories.map { |category|
+        category.name
+      },
     }
   end
 
   def create
     photo = @current_user.photos.build(photo_params)
     add_Exif_to_photo(photo, params[:photo][:photo_img])
+    add_category(photo, params[:photo][:category])
 
     if photo.save
       render json: photo
@@ -43,7 +48,7 @@ class Api::V1::PhotosController < ApplicationController
 
   def show
     photo = Photo.find(params[:id])
-    render json: { photo: photo.as_json(include: :user), photo_url: image_url(photo) }
+    render json: { photo: photo.as_json(include: [:user, :category]), photo_url: image_url(photo) }
   end
 
   def update; end
@@ -76,6 +81,15 @@ class Api::V1::PhotosController < ApplicationController
 
   def photo_params
     params.require(:photo).permit(:title, :description, :photo_img)
+  end
+
+  def add_category(photo, category_params)
+    category = Category.find_by(name: category_params)
+
+    photo.assign_attributes(
+      category_id: category.id
+    )
+
   end
 
   def add_Exif_to_photo(photo, uploard_image)
