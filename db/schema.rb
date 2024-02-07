@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_004222) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_06_150031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_004222) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "contest_entries", force: :cascade do |t|
@@ -110,6 +117,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_004222) do
     t.datetime "updated_at", null: false
     t.string "camera_make"
     t.string "lens_make"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_photos_on_category_id"
     t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
@@ -154,6 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_004222) do
   add_foreign_key "contests", "users"
   add_foreign_key "likes", "photos"
   add_foreign_key "likes", "users"
+  add_foreign_key "photos", "categories"
   add_foreign_key "photos", "users"
   add_foreign_key "votes", "contests"
   add_foreign_key "votes", "photos"

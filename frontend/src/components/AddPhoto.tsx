@@ -1,8 +1,7 @@
-
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { css } from '@emotion/react'
-import { FileInput, TextInput, Textarea, Group, Button } from '@mantine/core';
+import { FileInput, TextInput, Textarea, Group, Button, Select } from '@mantine/core';
 import '../assets/AddPhoto.css'
 import { IconUpload } from '@tabler/icons-react';
 import { Link } from 'react-router-dom'
@@ -10,6 +9,7 @@ import { UserAuth } from '../context/AuthContext';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify'
+import { useCategory } from '../context/Category';
 
 
 const validationSchema = Yup.object().shape({
@@ -61,6 +61,8 @@ const AddPhoto = (props: any) => {
   }
 
   const { user } =  UserAuth() as { user: object };
+  const { categories } = useCategory();
+
   const navigate = useNavigate();
 
   const form = useForm({
@@ -68,6 +70,7 @@ const AddPhoto = (props: any) => {
     initialValues: {
       title: '',
       description: '',
+      category: '',
     },
   });
 
@@ -76,6 +79,7 @@ const AddPhoto = (props: any) => {
     const formData = new FormData();
       formData.append('photo[title]',  values.title);
       formData.append('photo[description]',  values.description);
+      formData.append('photo[category]', values.category);
       formData.append('photo[photo_img]', values.photo_img)
     try {
       const token = await user.getIdToken(true);
@@ -128,11 +132,20 @@ const AddPhoto = (props: any) => {
         <div css={Styles.InputBoxStyle}>
           <TextInput
             withAsterisk
+            size="md"
             label="作品名"
             {...form.getInputProps('title')}
           />
         </div>
         <div>
+          <Select
+            label="カテゴリー"
+            size="md"
+            data={categories}
+            {...form.getInputProps('category')}
+          />
+        </div>
+        <div css={Styles.InputBoxStyle}>
           <Textarea
             size="md"
             label="作品説明"
@@ -147,14 +160,6 @@ const AddPhoto = (props: any) => {
         <div css={Styles.InputBoxStyle}>
           <p>レンズ</p>
           <p css={Styles.CommentStyles} className='indent-3' >この項目は写真選択後に表示されます。</p>
-        </div> */}
-    {/* *********本リリース時に追加************** */}
-        {/* <div css={Styles.InputBoxStyle}>
-        <Select
-          label="カテゴリー"
-          placeholder="カテゴリー"
-          data={['風景', '人物', '動物', '植物']}
-        />
         </div> */}
     {/* *********本リリース時に追加************** */}
         {/* <div css={Styles.InputBoxStyle}>

@@ -42,6 +42,7 @@ const ShowPhoto = () => {
   const [liked, setLiked] = useState(false);
   const [likedId, setLikedId] = useState();
   const [currentUid, setCurrentUid] = useState();
+  const [category, setCategory] = useState({});
 
   const { id } = useParams();
   const { user } = UserAuth() as { user: object };
@@ -67,6 +68,7 @@ const ShowPhoto = () => {
       setPhotoData(resp.data.photo)
       setPhotoUrl(resp.data.photo_url)
       setPostUser(resp.data.photo.user)
+      setCategory(resp.data.photo.category)
       { user &&
         setCurrentUid(user.uid)
       }
@@ -209,9 +211,9 @@ const ShowPhoto = () => {
         <h3 css={Styles.SectionTitleStyle} className='text-center mb-5 pb-2'>作品詳細</h3>
         <Grid gutter="sm" className='px-20'>
             <Grid.Col span={6} className='font-bold'>撮影機材</Grid.Col>
-            <Grid.Col span={6} className='font-bold text-zinc-400'>写真カテゴリー</Grid.Col>
+            <Grid.Col span={6} className='font-bold'>写真カテゴリー</Grid.Col>
             <Grid.Col span={6} className='indent-4'>{photoData.camera_make}</Grid.Col>
-            <Grid.Col span={6} ></Grid.Col>
+            <Grid.Col span={6} className='indent-4'>{category.name}</Grid.Col>
             <Grid.Col span={6} className='indent-6'>{photoData.camera}</Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>
