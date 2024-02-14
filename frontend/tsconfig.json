@@ -22,6 +22,6 @@
 
     "jsxImportSource": "@emotion/react",
   },
-  "include": ["src"],
+  "include": ["src","styled-system"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

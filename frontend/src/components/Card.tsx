@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card as MantineCard, Image as MantineImage, Text as MantineText, Group as MantineGroup } from '@mantine/core';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
+import '../assets/card.css'
 
 const ContestCard = (props: any) => {
   const rotateYAnime = keyframes`
