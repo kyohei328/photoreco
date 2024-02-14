@@ -6,8 +6,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-cards'
 import '../assets/style.css'
+import '../assets/swiper.css'
 import 'swiper/css/effect-fade';
-import NewArrivalContest from './NewArrivalContest';
 import { ContestCard, ContestResultCard } from './Card';
 import { css } from '@emotion/react'
 
@@ -45,7 +45,7 @@ const TopPhotoSlider: React.FC<SliderProps> = ({ imagesUrl }) => {
 
   const Styles = ({
     SwiperStyle: css ({
-      marginLeft: '1rem',
+      padding: '0 1rem',
       position: 'absolute',
       top: '-1rem',
     }),

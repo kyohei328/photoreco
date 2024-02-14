@@ -213,7 +213,7 @@ const ShowPhoto = () => {
             <Grid.Col span={6} className='font-bold'>撮影機材</Grid.Col>
             <Grid.Col span={6} className='font-bold'>写真カテゴリー</Grid.Col>
             <Grid.Col span={6} className='indent-4'>{photoData.camera_make}</Grid.Col>
-            <Grid.Col span={6} className='indent-4'>{category.name}</Grid.Col>
+            <Grid.Col span={6} className='indent-4'>{category?.name}</Grid.Col>
             <Grid.Col span={6} className='indent-6'>{photoData.camera}</Grid.Col>
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6}></Grid.Col>

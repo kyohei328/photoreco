@@ -1,0 +1,81 @@
+/*==================================================
+　5-2-4 MENUがCLOSEに
+===================================*/
+
+/*ボタン外側※レイアウトによってpositionや形状は適宜変更してください*/
+.openbtn4{
+	position: relative;/*ボタン内側の基点となるためrelativeを指定*/
+	background:rgb(139, 139, 139);
+    width: 32px;
+    height: 32px;
+	border-radius: 5px;
+}
+
+/*ボタン内側*/
+.openbtn4 span{
+    display: inline-block;
+    transition: all .4s;/*アニメーションの設定*/
+    position: absolute;
+    left: 9px;
+    height: 2px;
+    border-radius: 5px;
+	background: #fff;
+  	width: 45%;
+  }
+
+
+.openbtn4 span:nth-of-type(1) {
+	/* top:13px;	 */
+	top:5px;
+}
+
+.openbtn4 span:nth-of-type(2) {
+	/* top:19px; */
+	top:11px;
+}
+
+.openbtn4 span:nth-of-type(3) {
+	/* top:25px; */
+	top:17px;
+}
+
+.openbtn4 span:nth-of-type(3)::after {
+	content:"Menu";/*3つ目の要素のafterにMenu表示を指定*/
+	position: absolute;
+	top:4px;
+	left:-3px;
+	color: #fff;
+	font-size: 0.5rem;
+	text-transform: uppercase;
+}
+
+/*activeクラスが付与されると線が回転して×になり、Menu⇒Closeに変更*/
+
+.openbtn4.active span:nth-of-type(1) {
+    /* top: 14px; */
+    top: 5px;
+    /* left: 18px; */
+    left: 11px;
+    transform: translateY(6px) rotate(-45deg);
+    width: 30%;
+}
+
+.openbtn4.active span:nth-of-type(2) {
+	opacity: 0;
+}
+
+.openbtn4.active span:nth-of-type(3){
+    /* top: 26px; */
+    top: 17px;
+    /* left: 18px; */
+    left: 11px;
+    transform: translateY(-6px) rotate(45deg);
+    width: 30%;
+}
+
+.openbtn4.active span:nth-of-type(3)::after {
+	content:"Close";/*3つ目の要素のafterにClose表示を指定*/
+    transform: translateY(0) rotate(-45deg);
+	top:5px;
+	left:4px;
+}

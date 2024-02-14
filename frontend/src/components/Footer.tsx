@@ -20,7 +20,7 @@ export function Footer() {
       key={link.label}
       href={link.link}
       size="sm"
-      className='py-1.5 px-4 text-gray-500 hover:text-black relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-black after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100'
+      className='py-1.5 px-4 text-gray-500 hover:text-black relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-black after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 '
     >
       {link.label}
     </Anchor>
