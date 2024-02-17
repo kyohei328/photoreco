@@ -138,15 +138,24 @@ const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
           navigation
           effect="coverflow"
           onSlideChange={(swiper) => onSlideChange(swiper.realIndex)}
-          slidesPerView={3}
+          slidesPerView={2}
           centeredSlides={true}
           coverflowEffect={{          // 追加
             rotate: 0,              // 追加 (前後のスライドの回転)
             depth: 100,             // 追加 (前後のスライドの奥行)
-            stretch: 200,            // 追加 (スライド間のスペース)
-            modifier: 1,            // 追加 (rotate・depth・stretchの値を乗算する)
+            stretch: 250,            // 追加 (スライド間のスペース)
+            modifier: 0.5,            // 追加 (rotate・depth・stretchの値を乗算する)
             scale: 1,               // 追加 (前後のスライドのサイズ比率)
             slideShadows: true,    // 追加 (前後のスライド表面の影の有無)
+          }}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3,
+              coverflowEffect: {
+                modifier: 1,
+                stretch: 200,
+              },
+            },
           }}
           grabCursor={true}
         >
