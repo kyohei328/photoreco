@@ -15,7 +15,7 @@ import { maxScreen } from '../mediaQueries';
 const FadingElement = ({ children }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
-    // rootMargin: '-150px',
+    // rootMargin: '50px',
   });
 
   return (
@@ -62,30 +62,22 @@ const Top = () => {
         fontSize: '18px',
       },
     }),
-    ContestFrameStyles: css({
+    ContestAreaStyle: css ({
       display: 'flex',
-      justifyContent: 'center',
-      padding: '0 1.25rem',
-    }),
-    ContestItemStyles: css({
-      padding: '10px 10px',
-      border: 'solid 1px black'
+      justifyContent: 'space-around',
+      // marginBottom: '3rem',
+      // marginTop: '7rem',
+      marginTop: '18vh',
+      [maxScreen('lg')]: {
+        marginTop: '3.5rem',
+        marginBottom: '0.125rem',
+      },
     }),
     PhotoSectionStyle: css({
       paddingBottom: '1rem',
       [maxScreen('lg')]: {
         height: '66Vw',
       },
-    }),
-    SelectStyles: css({
-      cursor: 'pointer',
-      '&:hover': {
-        fontWeight: 'bold',
-      }
-    }),
-    SelectedStyles: css({
-      fontWeight: 'bold',
-      textDecoration: 'underline',
     }),
     ContestSectionStyle: css ({
       top: "-2rem",
@@ -168,7 +160,8 @@ const Top = () => {
         <h1 css={Styles.ContestTitleStyle} className='fontLibre'>New Arrival Contests</h1>
       </FadingElement>
       <FadingElement>
-        <div className='flex justify-around mb-12 mt-40 max-lg:mt-14 max-lg:mb-0.5'>
+        {/* <div className='flex justify-around mb-12 mt-28 max-lg:mt-14 max-lg:mb-0.5'> */}
+        <div css={Styles.ContestAreaStyle}>
           <p className={`py-2.5 px-4 cursor-pointer hover:text-sky-700 relative after:absolute after:bottom-0 after:left-10 after:w-4/5 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100${selectedDepartment === 'new_entertainment_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700 cursor-default' : ''}`}
             onClick={() => selectDepartment('new_entertainment_contests')}
           >
