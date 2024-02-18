@@ -161,15 +161,12 @@ const ShowPhoto = () => {
         <div className='text-center'>
           <Grid gutter="sm" className='px-36 max-lg:px-0 max-lg:text-xs'>
             <Grid.Col span={2.5}>ユーザー名</Grid.Col>
-            {/* <Grid.Col span={2.5}>投稿日</Grid.Col> */}
-            <Grid.Col span={4}>投稿日</Grid.Col>
+            <Grid.Col span={windowWidth <= 1024 ? 4 : 2.5} >投稿日</Grid.Col>
             <Grid.Col span={2}></Grid.Col>
-            {/* <Grid.Col span={5}></Grid.Col> */}
-            <Grid.Col span={3}></Grid.Col>
+            <Grid.Col span={windowWidth <= 1024 ? 3 : 5 }></Grid.Col>
 
             <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
-            {/* <Grid.Col span={2.5}>{postDate}</Grid.Col> */}
-            <Grid.Col span={4}>{postDate}</Grid.Col>
+            <Grid.Col span={windowWidth <= 1024 ? 4 : 2.5}>{postDate}</Grid.Col>
             <Grid.Col span={1} className='mx-auto'><TwitterIntentTweet {...Tweet}/></Grid.Col>
 
             { !(currentUid === postUser.uid) &&
@@ -184,9 +181,7 @@ const ShowPhoto = () => {
             }
             </Grid.Col>
 
-            {/* <Grid.Col span={4} className='pl-20 pb-5 pt-0'> */}
-            {/* <Grid.Col span={4} className='pl-20 pb-5 pt-0 max-lg:pl-8'> */}
-            <Grid.Col span={2.5} className='pl-20 pb-5 pt-0 max-lg:pl-0'>
+            <Grid.Col span={windowWidth <= 1024 ? 2.5 : 4} className='pl-20 pb-5 pt-0 max-lg:pl-0'>
               <Link to='/'>
                 <Button
                   disabled
