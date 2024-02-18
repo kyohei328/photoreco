@@ -1,5 +1,6 @@
 import { ComponentProps, forwardRef } from "react";
 import { IconShare3 } from '@tabler/icons-react';
+import useWindowSize from '../useWindowSize';
 
 type TwitterIntentTweetProps = {
   text?: string;
@@ -11,11 +12,14 @@ type TwitterIntentTweetProps = {
 } & Omit<ComponentProps<"a">, "href" | "target" | "rel">;
 
 export const TwitterIntentTweet = forwardRef<HTMLAnchorElement, TwitterIntentTweetProps>(
+
+  
   (
     { text, url, hashtags, via, related, in_reply_to, ...intrinsicProps },
     forwardedRef,
   ) => {
     const _url = new URL("https://twitter.com/intent/tweet");
+    const [ windowWidth, windowHeight ] = useWindowSize()
 
     if (text !== undefined) _url.searchParams.set("text", text);
     if (url !== undefined) _url.searchParams.set("url", url);
@@ -30,7 +34,7 @@ export const TwitterIntentTweet = forwardRef<HTMLAnchorElement, TwitterIntentTwe
         target="_blank"
         rel="noopener noreferrer"
         {...intrinsicProps}
-      ><IconShare3 /></a>
+      ><IconShare3 size={windowWidth <= 1024 ? 20 : undefined}/></a>
     );
   },
 );

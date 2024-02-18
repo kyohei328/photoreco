@@ -9,6 +9,8 @@ import moment from 'moment';
 import Map from './Map'
 import { TwitterIntentTweet } from "./Tweet.tsx";
 import { Helmet } from 'react-helmet-async';
+import { maxScreen } from '../mediaQueries.ts';
+import useWindowSize from '../useWindowSize';
 
 const ShowPhoto = () => {
 
@@ -23,17 +25,27 @@ const ShowPhoto = () => {
       fontWeight: 'bold',
       marginLeft: '3rem',
       marginRight: '3rem',
+      [maxScreen('lg')]: {
+        marginLeft: '0.5rem',
+        marginRight: '0.5rem',
+      },
     }),
     ImageStyle: css ({
-      maxHeight: '50vh',
+      maxHeight: '45vh',
+      padding: '0 3rem',
+      marginBottom: '1.25rem',
       objectFit: 'contain',
+      [maxScreen('lg')]: {
+        padding: '0',
+        maxHeight: '70vw',
+      },
     }),
     LikeStyles: css ({
       cursor: 'pointer',
     }),
     TrashStyle: css ({
       cursor: 'pointer',
-    })
+    }),
   };
 
   const [photoData, setPhotoData] = useState({});
@@ -47,6 +59,7 @@ const ShowPhoto = () => {
   const { id } = useParams();
   const { user } = UserAuth() as { user: object };
   const navigate = useNavigate();
+  const [ windowWidth, windowHeight ] = useWindowSize()
 
     const fetchLikeStatus = async () => {
       try {
@@ -115,11 +128,11 @@ const ShowPhoto = () => {
     hashtags: ["photospace"],
   }
 
-  { !(currentUid === postUser.uid) &&
-    <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
-      { liked ? <IconStarFilled /> : <IconStar /> }
-    </Grid.Col>
-  }
+  // { !(currentUid === postUser.uid) &&
+  //   <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
+  //     { liked ? <IconStarFilled /> : <IconStar /> }
+  //   </Grid.Col>
+  // }
 
   return (
     <div>
@@ -136,45 +149,50 @@ const ShowPhoto = () => {
         <meta name="twitter:description" content="ウェブサイトの説明文"/>
         <meta name="twitter:image" content="https://photospace-app.com/ogp.jpg"/>
       </Helmet>
-      <section css={Styles.SectionStyle} className='mx-12'>
+      <section css={Styles.SectionStyle} className='mx-10 max-lg:mx-5'>
         <div className='mb-10'>
           <Image
             css={Styles.ImageStyle}
-            className='px-12 mb-5'
             radius="sm"
             src={photoUrl}
           />
-          <h3 className='text-center font-bold text-xl'>{photoData.title}</h3>
+          <h3 className='text-center font-bold text-xl max-lg:text-sm'>{photoData.title}</h3>
         </div>
         <div className='text-center'>
-          <Grid gutter="sm" className='px-36'>
+          <Grid gutter="sm" className='px-36 max-lg:px-0 max-lg:text-xs'>
             <Grid.Col span={2.5}>ユーザー名</Grid.Col>
-            <Grid.Col span={2.5}>投稿日</Grid.Col>
+            {/* <Grid.Col span={2.5}>投稿日</Grid.Col> */}
+            <Grid.Col span={4}>投稿日</Grid.Col>
             <Grid.Col span={2}></Grid.Col>
-            <Grid.Col span={5}></Grid.Col>
+            {/* <Grid.Col span={5}></Grid.Col> */}
+            <Grid.Col span={3}></Grid.Col>
 
             <Grid.Col span={2.5}>{postUser.name}</Grid.Col>
-            <Grid.Col span={2.5}>{postDate}</Grid.Col>
+            {/* <Grid.Col span={2.5}>{postDate}</Grid.Col> */}
+            <Grid.Col span={4}>{postDate}</Grid.Col>
             <Grid.Col span={1} className='mx-auto'><TwitterIntentTweet {...Tweet}/></Grid.Col>
 
             { !(currentUid === postUser.uid) &&
               <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
-                { liked ? <IconStarFilled /> : <IconStar /> }
+                { liked ? <IconStarFilled size={windowWidth <= 1024 ? 20 : undefined}/> : <IconStar size={windowWidth <= 1024 ? 20 : undefined}/> }
               </Grid.Col>
             }
 
             <Grid.Col span={1}>
             { currentUid === postUser.uid &&
-              <IconTrash css={Styles.TrashStyle} onClick={() => deletePhoto(photoData.id)}/>
+              <IconTrash css={Styles.TrashStyle} onClick={() => deletePhoto(photoData.id)} size={windowWidth <= 1024 ? 20 : undefined}/>
             }
             </Grid.Col>
 
-            <Grid.Col span={4}  className='pl-20 pb-5 pt-0'>
+            {/* <Grid.Col span={4} className='pl-20 pb-5 pt-0'> */}
+            {/* <Grid.Col span={4} className='pl-20 pb-5 pt-0 max-lg:pl-8'> */}
+            <Grid.Col span={2.5} className='pl-20 pb-5 pt-0 max-lg:pl-0'>
               <Link to='/'>
                 <Button
                   disabled
                   variant="outline"
                   color="rgba(59, 59, 59, 1)"
+                  size={windowWidth <= 1024 ? 'xs' : undefined}
                 >
                 添削依頼
                 </Button>
@@ -184,15 +202,17 @@ const ShowPhoto = () => {
         </div>
       </section>
       <section className='mt-5 mx-5'>
-        <div className='px-12'>
+        <div className='px-12 max-lg:text-sm  max-lg:px-7'>
           {photoData.description}
         </div>
       </section>
-      <section className='mt-10 mx-5'>
+      <section className='mt-10 mx-5 max-lg:mx-0'>
         <Textarea
           className='px-12'
           disabled
-          size="md"
+          autosize
+          minRows={5}
+          size={windowWidth <= 1024 ? 'sm' : 'md'}
           label="コメント"
           placeholder="コメントを入力する"
         />
@@ -202,14 +222,15 @@ const ShowPhoto = () => {
             disabled
             variant="outline"
             color="rgba(59, 59, 59, 1)"
+            size={windowWidth <= 1024 ? 'xs' : undefined}
           >
           コメントを書き込む
           </Button>
         </div>
       </section>
       <section className='mt-10 mx-5 pb-2'>
-        <h3 css={Styles.SectionTitleStyle} className='text-center mb-5 pb-2'>作品詳細</h3>
-        <Grid gutter="sm" className='px-20'>
+        <h3 css={Styles.SectionTitleStyle} className='text-center mb-5 pb-2 max-lg:text-sm'>作品詳細</h3>
+        <Grid gutter="sm" className='px-20 max-lg:px-4 max-lg:text-xs'>
             <Grid.Col span={6} className='font-bold'>撮影機材</Grid.Col>
             <Grid.Col span={6} className='font-bold'>写真カテゴリー</Grid.Col>
             <Grid.Col span={6} className='indent-4'>{photoData.camera_make}</Grid.Col>
@@ -226,15 +247,15 @@ const ShowPhoto = () => {
             <Grid.Col span={6}></Grid.Col>
             <Grid.Col span={6} className='font-bold'>撮影地</Grid.Col>
             {Object.keys(photoData).length > 0 && photoData.gps_latitude && photoData.gps_longitude && (
-              <Grid.Col span={12} className=''>
-                <Map photo={photoData} />
+              <Grid.Col span={12}>
+                <Map photo={photoData} windowWidth={ windowWidth } />
               </Grid.Col>
             )}
         </Grid>
       </section>
       <section className='mt-10 mx-5 pb-20'>
-        <h3 css={Styles.SectionTitleStyle} className='text-center mb-5 pb-2'>作品情報</h3>
-        <Grid gutter="sm" className='px-20'>
+        <h3 css={Styles.SectionTitleStyle} className='text-center mb-5 pb-2 max-lg:text-sm'>作品情報</h3>
+        <Grid gutter="sm" className='px-20 max-lg:px-4 max-lg:text-xs'>
             <Grid.Col span={6} >ISO感度：{photoData.ISO_sensitivity}</Grid.Col>
             <Grid.Col span={6} >シャッタースピード：{photoData.shutter_speed}</Grid.Col>
             <Grid.Col span={6} >露光補正値：{photoData.exposure_compensation}EV</Grid.Col>
