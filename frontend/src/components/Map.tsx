@@ -1,18 +1,23 @@
 import { useState, useEffect, useMemo } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 
-const containerStyle = {
+const MapStyle = {
   height: "400px",
+  width: "100%",
+};
+const moduleMapStyle = {
+  height: "300px",
   width: "100%",
 };
 
 const Map = (props) => {
 
   const { photo } = props;
+  const { windowWidth } = props;
+  
   const [infoWindowOpen, setInfoWindowOpen] = useState(true);
   const [size, setSize] = useState(undefined);
   const [address, setAddress] = useState("");
-
 
   const markerPosition = useMemo(() => {
     return {
@@ -70,7 +75,7 @@ const Map = (props) => {
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} onLoad={() => {createOffsetSize(), geocoding() }}>
       <GoogleMap
-        mapContainerStyle={containerStyle}
+        mapContainerStyle={windowWidth >= 1024 ? MapStyle : moduleMapStyle}
         center={markerPosition}
         zoom={15}
       >
@@ -82,7 +87,7 @@ const Map = (props) => {
             options={infoWindowOptions}
             onCloseClick={() => setInfoWindowOpen(false)}
           >
-            <div>
+            <div className="max-lg:text-xs">
               <p>{address}</p>
               <p>
                 <a
