@@ -37,8 +37,6 @@ const ContestCard = (props: any) => {
   const navigate  = useNavigate()
   const MAX_DESCRIPTION_LENGTH = 70;
 
-
-
   const ContesDescription = ({ contest }) => {
     const limitedDescription = contest.contest.description.length > MAX_DESCRIPTION_LENGTH
       ? `${contest.contest.description.slice(0, MAX_DESCRIPTION_LENGTH)}...`
@@ -72,7 +70,6 @@ const ContestCard = (props: any) => {
   )
 }
 
-
 const ContestResultCard = (props: any) => {
 
   const rotateYAnime = keyframes`
@@ -85,6 +82,8 @@ const ContestResultCard = (props: any) => {
       opacity: 1;
     }
   `;
+
+  const { windowWidth } = props;
 
   const Styles = {
     LinkStyle: css ({
@@ -120,9 +119,8 @@ const ContestResultCard = (props: any) => {
             background: selectedId === props.contestResult.id ? '#D9E5FF' : '#FFFFFF',
             opacity: selectedId === props.contestResult.id ? 0.7 : '',
             cursor: 'pointer',
-            width: '100%',
-            height: '28rem',
-            backgroundColor: '#FFFFFF',
+            width: windowWidth <= 1024 ? '16rem' : '25rem',
+            height: windowWidth <= 1024 ? '22rem' : '31rem',
           },
         }}
         shadow="sm"
@@ -138,18 +136,22 @@ const ContestResultCard = (props: any) => {
           <MantineImage
             src={imagePath}
             height={20}
-            style={{ height: '20rem', width: '100%', objectFit: 'cover' }}
+            style={windowWidth <= 1024 ?
+              { height: '11.5rem', width: '100%', objectFit: 'contain' }
+              :
+              { height: '20rem', width: '100%', objectFit: 'cover' }
+            }
             alt="Norway"
           />
         </MantineCard.Section>
 
         <MantineGroup justify="space-between" mt="md" mb="xs">
-          <MantineText fw={500}>{props.contestResult.department}</MantineText>
+          <MantineText size={ windowWidth <= 1024 ? 'sm' : undefined }  fw={500}>{props.contestResult.department}</MantineText>
         </MantineGroup>
 
-        <MantineText size="sm" c="dimmed">{props.contestResult.description}</MantineText>
+        <MantineText size={ windowWidth <= 1024 ? 'xs' : 'sm' } c="dimmed">{props.contestResult.description}</MantineText>
 
-        <MantineText size="sm" c="dimmed" className='pt-3'>開催者：{props.contestResult.user.name}</MantineText>
+        <MantineText size={ windowWidth <= 1024 ? 'xs' : 'sm' } c="dimmed" className='pt-3'>開催者：{props.contestResult.user.name}</MantineText>
       </MantineCard>
     </Link>
   )

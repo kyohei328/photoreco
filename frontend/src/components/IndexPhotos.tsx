@@ -5,7 +5,6 @@ import { Input, Grid, Select, Image, Text } from '@mantine/core';
 import { Link } from 'react-router-dom'
 import { FaAngleRight } from "react-icons/fa";
 import { useForm } from '@mantine/form';
-import classes from '../assets/parts.module.css'
 import { BiSearchAlt } from "react-icons/bi";
 import { animated, useChain, useSpring, useSpringRef } from '@react-spring/web'
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';

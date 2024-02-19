@@ -12,7 +12,7 @@ class ContestResult < ApplicationRecord
   }
 
   def self.calculate_results
-    contests = Contest.where('result_date IS NOT NULL AND result_date < ?', Date.today)
+    contests = Contest.where('result_date IS NOT NULL AND result_date <= ?', Date.today)
     
     contests.each do |contest|
       next if ContestResult.exists?(contest_id: contest.id)
