@@ -39,6 +39,7 @@ interface SliderProps {
     }
   }[];
   imagesUrl: string[];
+  windowWidth: number;
 }
 
 const TopPhotoSlider: React.FC<SliderProps> = ({ imagesUrl }) => {
@@ -164,7 +165,7 @@ const PhotoSlider: React.FC<SliderProps> = ({ images, onSlideChange }) => {
     );
 };
 
-const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => {
+const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults, windowWidth})  => {
 
   const slideContests = Array.isArray(contests) ? contests.map((contest, index) => (
     <SwiperSlide key={index}>
@@ -177,7 +178,7 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => 
 
   const slideContestsResults = Array.isArray(contestResults) ? contestResults.map((contestResult, index) => (
     <SwiperSlide key={index}>
-      <ContestResultCard contestResult={contestResult}/>
+      <ContestResultCard contestResult={contestResult} windowWidth={windowWidth}/>
     </SwiperSlide>
   )) :
     <SwiperSlide>
@@ -212,7 +213,7 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults })  => 
     );
 };
 
-const VerticalSlider = ({ sliders })  => {
+const VerticalSlider = ({ sliders, windowWidth })  => {
   const slideContent = Array.isArray(sliders) ? sliders.map((slide, index) => (
     <SwiperSlide key={index}>
       {slide}

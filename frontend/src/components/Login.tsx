@@ -73,11 +73,11 @@ const Login = (props: PaperProps) => {
       const config = { headers: { 'Authorization': `Bearer ${token}` } };
 
       await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, formData, config);
+      navigate('/');
     } else {
       await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
     }
-
-    navigate('/');
     } catch (error) {
       console.log('エラー:', error);
       console.log('エラーコード:', error.code);

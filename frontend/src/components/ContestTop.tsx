@@ -9,6 +9,8 @@ import { useForm } from '@mantine/form';
 import { UserAuth } from '../context/AuthContext';
 import { BiSearchAlt } from "react-icons/bi";
 import { ContestSlider, VerticalSlider } from './Swiper';
+import { maxScreen } from '../mediaQueries';
+import useWindowSize from '../useWindowSize';
 
 const ContestTop = () => {
 
@@ -35,7 +37,7 @@ const ContestTop = () => {
       marginRight: '44px',
     }),
     SectionStyle: css ({
-      minHeight: '60vh',
+      height: '65vh',
     })
   }
 
@@ -46,6 +48,7 @@ const ContestTop = () => {
   const [resultCheck, setResultCheck] = useState(false);
   
   const { user } = UserAuth();
+  const [ windowWidth, windowHeight ] = useWindowSize();
 
   const form = useForm({
     initialValues: {
@@ -109,15 +112,15 @@ const ContestTop = () => {
     <section css={Styles.SectionStyle} className='pt-5'>
       <h3 css={Styles.LogoStyle} className='fadeUp'>応募受付中のコンテスト</h3>
       <div css={Styles.TitleStyle} className='fadeUp'></div>
-      <div className='my-5 mx-12 fadeUp'>
+      <div className='my-5 mx-12 fadeUp max-lg:mx-4'>
         <ContestSlider contests={applyContests}/>
       </div>
     </section>,
     <section css={Styles.SectionStyle} className='pt-5'>
       <h3 css={Styles.LogoStyle} className='fadeUp'>コンテスト結果発表</h3>
       <div css={Styles.TitleStyle} className='fadeUp'></div>
-      <div className='my-5 mx-12'>
-        <ContestSlider contestResults={contestResults} />
+      <div className='my-5 mx-12 max-lg:mx-4'>
+        <ContestSlider contestResults={contestResults} windowWidth={windowWidth}/>
       </div>
     </section>
   ];
@@ -125,9 +128,9 @@ const ContestTop = () => {
   return (
     <div className='h-full min-h-screen'>
       <section>
-        <div className=' w-10/12 mx-auto pb-px pt-5'>
+        <div className='w-10/12 mx-auto pb-px pt-5 max-lg:w-full'>
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto'>
+          <Grid grow gutter="xs" className='my-5 w-10/12 mx-auto max-lg:w-11/12'>
             <Grid.Col span={12}>
               <Input.Wrapper label="フリーワード" description="" error="">
                 <Input {...form.getInputProps('freeWord')}/>
@@ -140,25 +143,33 @@ const ContestTop = () => {
                 {...form.getInputProps('department')}
               />
             </Grid.Col>
-            <Grid.Col span={2} className='pt-9'>
+            { windowWidth <= 1024 && (
+              <>
+                <Grid.Col span={3} className='pt-9'></Grid.Col>
+                <Grid.Col span={3} className='pt-9'></Grid.Col>
+              </>
+            )}
+            <Grid.Col span={windowWidth <= 1024 ? 3 : 2} className='pt-9'>
               <Checkbox
-              className='ml-6'
+              className='ml-6 max-lg:ml-0'
                 label="応募受付中"
                 color="gray"
                 {...form.getInputProps('apply')}
               />
             </Grid.Col>
-            <Grid.Col span={2} className='pt-9'>
+            <Grid.Col span={windowWidth <= 1024 ? 3 : 2} className='pt-9'>
               <Checkbox
-                className='ml-4'
+                className='ml-4 max-lg:ml-0'
                 label="コンテスト結果"
                 color="gray"
+                size='sm'
                 {...form.getInputProps('result')}
               />
             </Grid.Col>
+            {/* <Grid.Col span={1}></Grid.Col> モバイル */}
             <Grid.Col span={1} className='pt-7'><button type="submit" className='
               bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex   transition-all duration-100 active:translate-y-1 active:shadow-none '><BiSearchAlt className='mt-1 mr-3'/>探す</button></Grid.Col>
+              ml-4 mb-4 py-1 px-4 shadow-sm shadow-gray-400 w-10/12 flex transition-all duration-100 active:translate-y-1 active:shadow-none max-lg:text-sm max-lg:ml-1 max-lg:px-4 max-lg:mt-1 max-lg:w-24'><BiSearchAlt className='mt-1 mr-3'/>探す</button></Grid.Col>
           </Grid>
         </form>
       </div>
@@ -174,34 +185,7 @@ const ContestTop = () => {
           </Link>
           }
         </div>
-        <VerticalSlider sliders={renderedSlides} />
-       
-        {/* {contestSearch &&  (
-          <h3 className='text-center my-4'>検索結果 {contestCount} 件</h3>
-        ) || <div></div>}
-        { !resultCheck &&  (
-          <section css={Styles.SectionStyle} className='my-5 py-5 bg-gray-50'>
-            <h3 css={Styles.LogoStyle} className='fadeUp'>応募受付中のコンテスト</h3>
-            <div css={Styles.TitleStyle} className='fadeUp'></div>
-            <div className='my-5 fadeUp'>
-              
-              <ContestSlider contests={applyContests} />
-            </div>
-          </section>
-        )}
-
-      {(!contestSearch || resultCheck) &&
-        <section css={Styles.SectionStyle}>
-          <h3 css={Styles.LogoStyle} className='fadeUp'>コンテスト結果発表</h3>
-          <div css={Styles.TitleStyle} className='fadeUp'></div>
-          <div className='my-5 mx-5'>
-            
-            <ContestSlider contestResults={contestResults} />
-          </div>
-        </section>
-      } */}
-{/* <NewArrivalContest contest={applyContest}/> */}
-{/* <ContestResultList contestResults={contestResults}/> */}
+        <VerticalSlider sliders={renderedSlides}/>
     </div>
   )
 }

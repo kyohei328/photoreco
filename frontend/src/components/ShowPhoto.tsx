@@ -128,12 +128,6 @@ const ShowPhoto = () => {
     hashtags: ["photospace"],
   }
 
-  // { !(currentUid === postUser.uid) &&
-  //   <Grid.Col span={1} css={Styles.LikeStyles} onClick={handleLikeToggle}>
-  //     { liked ? <IconStarFilled /> : <IconStar /> }
-  //   </Grid.Col>
-  // }
-
   return (
     <div>
       <Helmet>
@@ -149,7 +143,7 @@ const ShowPhoto = () => {
         <meta name="twitter:description" content="ウェブサイトの説明文"/>
         <meta name="twitter:image" content="https://photospace-app.com/ogp.jpg"/>
       </Helmet>
-      <section css={Styles.SectionStyle} className='mx-10 max-lg:mx-5'>
+      <section css={Styles.SectionStyle} className='mx-14 max-lg:mx-5'>
         <div className='mb-10'>
           <Image
             css={Styles.ImageStyle}

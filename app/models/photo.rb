@@ -17,8 +17,8 @@ class Photo < ApplicationRecord
   scope :random_three, -> { order(Arel.sql('RANDOM()')).limit(3) }
 
   def validate_attachment_size
-    if photo_img.attached? && photo_img.blob.byte_size > 20.megabytes
-      errors.add(:base, 'ファイルのサイズは20MB以下にしてください')
+    if photo_img.attached? && photo_img.blob.byte_size > 40.megabytes
+      errors.add(:base, 'ファイルのサイズは40MB以下にしてください')
     end
   end
 
