@@ -122,7 +122,7 @@
   /* height: 50Vh; */
   height: 55Vh;
   @media (max-width: 1024px) {
-    width: 48rem;
+    width: 172dvw;
     height: 45Vh;
 
   }
@@ -130,13 +130,13 @@
 
 .contest-slider .swiper-button-next{
   @media (max-width: 1024px) {
-    margin-right: 24rem;
-    top: 15rem;
+    margin-right: 85vw;
+    top: 53vw;
   }
 }
 .contest-slider .swiper-button-prev{
   @media (max-width: 1024px) {
-    top: 1.7rem;
+    top: 6vw;
   }
 }
 
@@ -158,6 +158,6 @@
 
 .contest-slider .swiper-wrapper{
   @media (max-width: 1024px) {
-    margin: 0 -12rem;
+    margin: 0 -41vw;
   }
 }

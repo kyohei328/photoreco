@@ -174,12 +174,12 @@ const ContestTop = () => {
         </form>
       </div>
       </section>
-        <div className='text-right pr-28'>
+        <div className='text-right pr-28 max-lg:pr-4'>
         { user &&
           <Link to='/contest/new'>
             <button type="submit" className='
               bg-transparent hover:bg-gray-400 text-gray-600 hover:text-white border border-gray-400 hover:border-transparent rounded
-              ml-4 mr-12 mb-8 py-1 px-4 shadow-sm shadow-gray-400 transition-all duration-100 active:translate-y-1 active:shadow-none'>
+              ml-4 mr-12 mb-8 py-1 px-4 shadow-sm shadow-gray-400 transition-all duration-100 active:translate-y-1 active:shadow-none max-lg:text-sm max-lg:mr-0'>
             コンテストを開催する
             </button>
           </Link>
