@@ -6,6 +6,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
 import '@mantine/dates/styles.css';
 import { IconCalendar } from '@tabler/icons-react';
+import { maxScreen } from '../mediaQueries';
 
 
 const validationSchema = Yup.object().shape({
@@ -44,6 +45,10 @@ const AddContest = () => {
     HeldStyle: css ({
       margin: '20px 0',
       marginLeft: '20px',
+      [maxScreen('lg')]:{
+        marginLeft: '0',
+        justifyContent: 'space-between',
+      },
     }),
   };
 
@@ -95,6 +100,7 @@ const AddContest = () => {
           開催期間
           <Group css={Styles.HeldStyle}>
             <DateInput
+            className='max-lg:w-44'
               clearable
               leftSection={icon}
               valueFormat="YYYY年MM月DD日"
@@ -103,6 +109,7 @@ const AddContest = () => {
             />
             <div className='mt-6 mx-2'> 〜 </div>
             <DateInput
+              className='max-lg:w-44'
               clearable
               leftSection={icon}
               valueFormat="YYYY年MM月DD日"
