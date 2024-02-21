@@ -85,28 +85,28 @@ const ShowContest = () => {
         <table className='min-w-full'>
           <tbody>
             <tr css={Styles.TableDataStyle}>
-              <td className='indent-10'>主催者</td>
-              <td className='indent-20'>{postUser.name}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>主催者</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{postUser.name}</td>
             </tr>
             <tr css={Styles.TableDataStyle}>
-              <td className='indent-10'>開催期間</td>
-              <td className='indent-20'>{start_date} 〜 {end_date}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>開催期間</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{start_date} 〜 {end_date}</td>
             </tr>
             <tr css={Styles.TableDataStyle}>
-              <td className='indent-10'>結果発表日</td>
-              <td className='indent-20'>{contest.result_date}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>結果発表日</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{contest.result_date}</td>
             </tr>
             <tr css={Styles.TableDataStyle}>
-              <td className='indent-10'>開催部門</td>
-              <td className='indent-20'>{contest.department}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>開催部門</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{contest.department}</td>
             </tr>
             <tr css={Styles.TableDataStyle}>
-              <td className='indent-10'>開催内容</td>
-              <td className='indent-20'>{contest.description}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>開催内容</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{contest.description}</td>
             </tr>
             <tr>
-              <td className='indent-10'>応募条件</td>
-              <td className='indent-20'>{contest.entry_conditions}</td>
+              <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>応募条件</td>
+              <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{contest.entry_conditions}</td>
             </tr>
           </tbody>
         </table>
@@ -131,14 +131,14 @@ const ShowContest = () => {
       { user && 
         <>
           <Button
-            className='mx-32'
+            className='mx-32 max-lg:mx-10'
             onClick={() => setVoteContestOpened(true)} variant="default"
             color="rgba(59, 59, 59, 1)"
           >
             投票する
           </Button>
           <Button
-            className='mx-32'
+            className='mx-32 max-lg:mx-10'
             onClick={() => setEntryContestOpened(true)} variant="default"
             color="rgba(59, 59, 59, 1)"
           >
