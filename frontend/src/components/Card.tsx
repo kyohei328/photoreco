@@ -10,10 +10,19 @@ import {
   Image as SemanticImage,
 } from 'semantic-ui-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Card as MantineCard, Image as MantineImage, Text as MantineText, Group as MantineGroup } from '@mantine/core';
+import { Card as MantineCard, Image as MantineImage, Text as MantineText, Group as MantineGroup, BackgroundImage } from '@mantine/core';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
 import '../assets/card.css'
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Typography from "@mui/material/Typography";
+import { useTranslation } from 'react-i18next';
+
+
 
 const ContestCard = (props: any) => {
   const rotateYAnime = keyframes`
@@ -94,6 +103,16 @@ const ContestResultCard = (props: any) => {
       animationDuration: '0.5s',
       animationFillMode: 'forwards',
     }),
+    CoverImageStyle: css ({
+      backgroundImage: 'url("/frame-10.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      zIndex: '99999',
+      position: 'absolute',
+      top: '-1rem',
+      // /* background-attachment: fixed; */
+    }),
   }
 
   const [selectedId, setSelectedId] = useState(null);
@@ -157,5 +176,73 @@ const ContestResultCard = (props: any) => {
   )
 }
 
+const ContestAwardCard = (props: any) => {
+  const { result } = props;
+  const { vote } = props;
+  const { t } = useTranslation();
 
-export {ContestCard, ContestResultCard}
+  console.log(props)
+
+  const AwardStyle = (award) => {
+    let styles = ''; // スタイルを格納する変数
+  
+    switch (award) {
+      case 'GrandPrize':
+        styles = css`
+          background: linear-gradient(to bottom, #e6b422, #ffffff);
+        `;
+        break;
+      case 'SecondPrize':
+        styles = css`
+          background: linear-gradient(to bottom, #9E9E9E, #ffffff); /* セカンドプライズの背景色 */
+        `;
+        break;
+      case 'SelectedPrize':
+        styles = css`
+          background: linear-gradient(to bottom, #a57e65, #ffffff); /* セレクトプライズの背景色 */
+        `;
+        break;
+    }
+  
+    return styles;
+  };
+
+  return(
+    <Link to={`/photos/${result.photo.id}`}>
+      <Card sx={{ maxWidth: 345 }} className='mr-auto ml-auto mt-8'>
+        <CardHeader
+          title={t(`${result.result.award}`)}
+          css={AwardStyle(result.result.award)}
+        />
+        <CardMedia
+          component="img"
+          height="194"
+          image={result.photo.image_url}
+          alt="Paella dish"
+        />
+        <CardContent>
+          <Typography>
+            {result.photo.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" className='indent-2'>
+            撮影書：{result.user.name}
+          </Typography>
+          <Typography className='pt-4'>
+            投稿者コメント
+          </Typography>
+          <Typography variant="body2" color="text.secondary" className='indent-2'>
+          {vote[result.result.award] && vote[result.result.award].comment != 'undefined' && (
+            <>
+              {vote[result.result.award].comment}
+            </>
+          )}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+        </CardActions>
+      </Card>
+    </Link>
+  )
+}
+
+export {ContestCard, ContestResultCard, ContestAwardCard}
