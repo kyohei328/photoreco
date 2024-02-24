@@ -6,6 +6,7 @@ import { UserAuth } from '../context/AuthContext';
 import { Button, Group } from '@mantine/core';
 import moment from 'moment';
 import { toast } from 'react-toastify'
+import { maxScreen } from '../mediaQueries.ts';
 
 const AddContestConfirm = () => {
 
@@ -42,6 +43,9 @@ const AddContestConfirm = () => {
       border: '1px solid',
       borderRadius: '5px',
       borderColor: '#ADB5BD',
+      [maxScreen('lg')]:{
+        padding: '30px 20px',
+      }
 
     }),
     TableDataStyle: css ({
@@ -111,24 +115,24 @@ const AddContestConfirm = () => {
             <table className='min-w-full'>
               <tbody>
                 <tr css={Styles.TableDataStyle}>
-                  <td className='indent-10'>タイトル</td>
-                  <td className='indent-20'>{formDataObject.title}</td>
+                  <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>タイトル</td>
+                  <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{formDataObject.title}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td className='indent-10'>開催内容</td>
-                  <td className='indent-20'>{formDataObject.description}</td>
+                  <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>開催内容</td>
+                  <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{formDataObject.description}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td className='indent-10'>応募期間</td>
-                  <td className='indent-20'>{`${start_date} 〜 ${end_date}`}</td>
+                  <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>応募期間</td>
+                  <td className='indent-20 max-lg:indent-4 max-lg:text-sm'>{`${start_date} 〜 ${end_date}`}</td>
                 </tr>
                 <tr css={Styles.TableDataStyle}>
-                  <td className='indent-10'>開催部門</td>
-                  <td className='indent-20'>{formDataObject.department}</td>
+                  <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>開催部門</td>
+                  <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{formDataObject.department}</td>
                 </tr>
                 <tr>
-                  <td className='indent-10'>応募条件</td>
-                  <td className='indent-20'>{formDataObject.entry_conditions}</td>
+                  <td className='indent-10 max-lg:indent-2 max-lg:text-sm'>応募条件</td>
+                  <td className='indent-20 max-lg:indent-8 max-lg:text-sm'>{formDataObject.entry_conditions}</td>
                 </tr>
               </tbody>
             </table>
@@ -136,14 +140,14 @@ const AddContestConfirm = () => {
           <Group css={Styles.ButtonStyles}>
             <Link to='/contest/new'>
             <Button
-                className='mx-20'
+                className='mx-20 max-lg:mx-10'
                 variant="outline"
                 color="rgba(59, 59, 59, 1)"
               >
                 修正する
               </Button>
             </Link>
-            <Button className='mx-20'
+            <Button className='mx-20 max-lg:mx-10'
               onClick={handleSubmit}
               variant="outline"
               color="rgba(59, 59, 59, 1)"
