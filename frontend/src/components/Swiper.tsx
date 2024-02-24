@@ -173,7 +173,6 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults, window
     </SwiperSlide>
   )) :
     <SwiperSlide>
-      <p>NG</p>
     </SwiperSlide>
 
   const slideContestsResults = Array.isArray(contestResults) ? contestResults.map((contestResult, index) => (
@@ -182,7 +181,6 @@ const ContestSlider: React.FC<SliderProps> = ({ contests, contestResults, window
     </SwiperSlide>
   )) :
     <SwiperSlide>
-      <p>NG</p>
     </SwiperSlide>
 
     return (

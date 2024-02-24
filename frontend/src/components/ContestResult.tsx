@@ -10,6 +10,9 @@ import { Avatar, Text, Group, Button, Image } from '@mantine/core';
 import { IconPhoneCall, IconAt, IconChevronsRight } from '@tabler/icons-react';
 import classes from '../assets/UserInfoIcons.module.css';
 import { useTranslation } from 'react-i18next';
+import { ContestAwardCard } from './Card';
+import useWindowSize from '../useWindowSize';
+import { dividerClasses } from '@mui/material';
 
 
 const ContestResult = () => {
@@ -33,12 +36,10 @@ const ContestResult = () => {
       borderTop: 'solid 1px #ADB5BD',
       paddingTop: '1rem',
     }),
-    
     DetailedCommentStyle: css ({
       margin: '0.25rem 0.5rem 0 0.5rem',
       paddingTop: '1rem',
     }),
-    
   }
   
   const AwardStyle = (award) => {
@@ -48,19 +49,16 @@ const ContestResult = () => {
       case 'GrandPrize':
         styles = css`
           background: linear-gradient(to bottom, #e6b422, #ffffff);
-          /* その他のスタイルプロパティを追加 */
         `;
         break;
       case 'SecondPrize':
         styles = css`
           background: linear-gradient(to bottom, #9E9E9E, #ffffff); /* セカンドプライズの背景色 */
-          /* その他のスタイルプロパティを追加 */
         `;
         break;
       case 'SelectedPrize':
         styles = css`
           background: linear-gradient(to bottom, #a57e65, #ffffff); /* セレクトプライズの背景色 */
-          /* その他のスタイルプロパティを追加 */
         `;
         break;
     }
@@ -74,6 +72,8 @@ const ContestResult = () => {
   const [contest, setContest] = useState();
   const [vote, setVote] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [ windowWidth, windowHeight] = useWindowSize();
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BASE_URL}/contests/${id}/contest_results`)
@@ -92,60 +92,61 @@ const ContestResult = () => {
   },[]);
 
   const awards = contestResults.map((result, index) => (
+    ( windowWidth <= 1024 ? (
+      <ContestAwardCard result={result} vote={vote} key={index}/>
+    ) : (
     <Group wrap="nowrap" key={index} className='m-16 py-0'>
-      <Image
-        radius="sm"
-        h={305}
-        // w="auto"
-        w={400}
-        fit="cover"
-        src={result.photo.image_url}
-      />
+    <Image
+      radius="sm"
+      h={305}
+      w={400}
+      fit="cover"
+      src={result.photo.image_url}
+    />
 
-    <div css={Styles.DetailedStatementStyle}>
-      <div css={AwardStyle(result.result.award)}>
-        <Text fz="md" tt="uppercase" fw={700} c="black" css={Styles.AwardStyle}>
-          {t(`${result.result.award}`)}
-
-        </Text>
-      </div>
-
-      <Text fz="xl" fw={700} className={classes.name} css={Styles.DetailedTileStyle}>
-        {result.photo.title}
+  <div css={Styles.DetailedStatementStyle}>
+    <div css={AwardStyle(result.result.award)}>
+      <Text fz="md" tt="uppercase" fw={700} c="black" css={Styles.AwardStyle}>
+        {t(`${result.result.award}`)}
       </Text>
-
-      <Group wrap="nowrap" gap={10} mt={3} >
-        <Text fz="sm" c="dimmed" css={Styles.DetailedDescriptionStyle}>
-          撮影者：{result.user.name}
-        </Text>
-      </Group>
-      <div className='text-right'>
-        <Link to={`/photos/${result.photo.id}`}>
-          <Button
-            size="xs"
-            variant="outline"
-            color="rgba(59, 59, 59, 1)"
-            rightSection={<IconChevronsRight size={14} />}
-          >
-          写真の詳細へ
-          </Button>
-        </Link>
-      </div>
-
-      <Group wrap="nowrap" gap={10} mt={30} css={Styles.DetailedCommentAreaStyle}>
-        <Text fz="md" c="black">
-          投票者コメント
-        </Text>
-      </Group>
-      <Group wrap="nowrap" gap={10} mt={0} css={Styles.DetailedCommentStyle}>
-      {vote[result.result.award] && vote[result.result.award].comment != 'undefined' && (
-        <Text fz="sm" c="dimmed">
-          {vote[result.result.award].comment}
-        </Text>
-      )}
-      </Group>
     </div>
+
+    <Text fz="xl" fw={700} className={classes.name} css={Styles.DetailedTileStyle}>
+      {result.photo.title}
+    </Text>
+
+    <Group wrap="nowrap" gap={10} mt={3} >
+      <Text fz="sm" c="dimmed" css={Styles.DetailedDescriptionStyle}>
+        撮影者：{result.user.name}
+      </Text>
     </Group>
+    <div className='text-right'>
+      <Link to={`/photos/${result.photo.id}`}>
+        <Button
+          size="xs"
+          variant="outline"
+          color="rgba(59, 59, 59, 1)"
+          rightSection={<IconChevronsRight size={14} />}
+        >
+        写真の詳細へ
+        </Button>
+      </Link>
+    </div>
+
+    <Group wrap="nowrap" gap={10} mt={30} css={Styles.DetailedCommentAreaStyle}>
+      <Text fz="md" c="black">
+        投票者コメント
+      </Text>
+    </Group>
+    <Group wrap="nowrap" gap={10} mt={0} css={Styles.DetailedCommentStyle}>
+    {vote[result.result.award] && vote[result.result.award].comment != 'undefined' && (
+      <Text fz="sm" c="dimmed">
+        {vote[result.result.award].comment}
+      </Text>
+    )}
+    </Group>
+  </div>
+  </Group>))
   ))
 
   if (loading) {
@@ -159,7 +160,9 @@ const ContestResult = () => {
         <h3 className='font-bold mb-2 text-lg'>{contest.title}</h3>
         <h3 className='font-bold mb-2 text-lg'>受賞作品一覧</h3>
       </section>
-      {awards}
+      <div>
+        {awards}
+      </div>
     </div>
   )
 }
