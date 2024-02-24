@@ -100,7 +100,7 @@ const AddContest = () => {
           開催期間
           <Group css={Styles.HeldStyle}>
             <DateInput
-            className='max-lg:w-44'
+            className='max-lg:w-40'
               clearable
               leftSection={icon}
               valueFormat="YYYY年MM月DD日"
@@ -109,7 +109,7 @@ const AddContest = () => {
             />
             <div className='mt-6 mx-2'> 〜 </div>
             <DateInput
-              className='max-lg:w-44'
+              className='max-lg:w-40'
               clearable
               leftSection={icon}
               valueFormat="YYYY年MM月DD日"

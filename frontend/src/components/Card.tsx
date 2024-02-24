@@ -181,8 +181,6 @@ const ContestAwardCard = (props: any) => {
   const { vote } = props;
   const { t } = useTranslation();
 
-  console.log(props)
-
   const AwardStyle = (award) => {
     let styles = ''; // スタイルを格納する変数
   
