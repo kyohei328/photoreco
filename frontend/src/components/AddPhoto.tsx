@@ -10,6 +10,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify'
 import { useCategory } from '../context/Category';
+import { maxScreen } from '../mediaQueries';
 
 
 const validationSchema = Yup.object().shape({
@@ -53,6 +54,9 @@ const AddPhoto = (props: any) => {
     }),
     ButtonStyles: css({
       margin: '30px 100px',
+      [maxScreen('lg')]: {
+      margin: '30px 20px',
+      }
     }),
     ImageFrameStyle: css ({
       height: '32rem',
