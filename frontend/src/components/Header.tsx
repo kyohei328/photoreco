@@ -120,6 +120,10 @@ export function Header(props) {
                 <Menu.Divider/>
                   {user ? (
                     <>
+                      <Menu.Item  component='a' href='/mypage' css={Styles.LinkStyle} leftSection={<IconUpload style={{ width: rem(14), height: rem(14) }} />}>
+                        アップロード
+                      </Menu.Item>
+                      <Menu.Divider/>
                       <Menu.Item  component='a' href='/mypage' css={Styles.LinkStyle} leftSection={<IconSettings style={{ width: rem(14), height: rem(14) }} />}>
                         マイページ
                       </Menu.Item>
