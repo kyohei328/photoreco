@@ -27,7 +27,4 @@ class ApplicationController < ActionController::API
   def set_auth
     @auth = authenticate_token_by_firebase
   end
-
-  
-
 end

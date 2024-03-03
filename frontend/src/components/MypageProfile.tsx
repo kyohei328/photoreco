@@ -5,6 +5,8 @@ import { TextInput, Grid, Button, Textarea } from '@mantine/core';
 import { UserAuth } from '../context/AuthContext';
 import { useForm } from '@mantine/form';
 import { sendPasswordResetEmail, verifyBeforeUpdateEmail } from "firebase/auth";
+import { maxScreen } from '../mediaQueries';
+import useWindowSize from '../useWindowSize';
 
 const MypageProfile = () => {
 
@@ -14,6 +16,10 @@ const MypageProfile = () => {
       borderColor: '#ADB5BD',
       padding: '2rem 5rem',
       margin: '0 6rem',
+      [maxScreen('lg')]:{
+        padding: '2rem 0',
+        margin: '0 1rem',
+      }
     }),
   };
 
@@ -21,6 +27,7 @@ const MypageProfile = () => {
   const [userProfile, setUserProfile] = useState({});
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
+  const [ windowWidth, windowHeight ] = useWindowSize();
 
   const form = useForm({
     initialValues: {
@@ -105,8 +112,8 @@ const MypageProfile = () => {
       <h3 className='text-center pt-4 pb-12'>{userProfile.name}さんのプロフィール</h3>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid gutter="sm" css={Styles.TableStyle}>
-          <Grid.Col span={6}>ユーザー名</Grid.Col>
-          <Grid.Col span={6} >
+          <Grid.Col span={windowWidth <= 1024 ? 4 : 6}>ユーザー名</Grid.Col>
+          <Grid.Col span={windowWidth <= 1024 ? 8 : 6}>
             <TextInput
               placeholder={userProfile.name}
               {...form.getInputProps('name')}
@@ -115,8 +122,8 @@ const MypageProfile = () => {
         </Grid>
 
         <Grid gutter="sm" css={Styles.TableStyle}>
-          <Grid.Col span={6}>自己紹介</Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={windowWidth <= 1024 ? 4 : 6}>自己紹介</Grid.Col>
+          <Grid.Col span={windowWidth <= 1024 ? 8 : 6}>
             <Textarea
               placeholder={userProfile.self_introduction ? userProfile.self_introduction : '自己紹介文'}
               {...form.getInputProps('self_introduction')}
@@ -125,17 +132,19 @@ const MypageProfile = () => {
         </Grid>
 
         <Grid gutter="sm" css={Styles.TableStyle}>
-          <Grid.Col span={6}>メールアドレス</Grid.Col>
-          <Grid.Col span={3}>
+          <Grid.Col span={windowWidth <= 1024 ? 4 : 6}>メールアドレス</Grid.Col>
+          <Grid.Col span={windowWidth <= 1024 ? 8 : 3}>
             <TextInput
               placeholder={user.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Grid.Col>
+          { windowWidth <= 1024 && <Grid.Col span={7.7}></Grid.Col>}
           <Grid.Col span={3} className='text-right'>
             <Button
               variant="outline"
               color="rgba(59, 59, 59, 1)"
+              size={windowWidth <= 1024 ? 'xs' : ''}
               onClick={submitEmailChange}
             >
               変更用メールを送信
@@ -144,12 +153,14 @@ const MypageProfile = () => {
         </Grid>
 
         <Grid gutter="sm" css={Styles.TableStyle}>
-          <Grid.Col span={6}>パスワード</Grid.Col>
-          <Grid.Col span={3}>＊＊＊＊＊＊</Grid.Col>
+          <Grid.Col span={windowWidth <= 1024 ? 4 : 6}>パスワード</Grid.Col>
+          <Grid.Col span={windowWidth <= 1024 ? 8 : 3}>＊＊＊＊＊＊</Grid.Col>
+          { windowWidth <= 1024 && <Grid.Col span={7.7}></Grid.Col>}
           <Grid.Col span={3} className='text-right'>
               <Button
                 variant="outline"
                 color="rgba(59, 59, 59, 1)"
+                size={windowWidth <= 1024 ? 'xs' : ''}
                 onClick={submitPasswordResetEmail}
               >
               変更用メールを送信
