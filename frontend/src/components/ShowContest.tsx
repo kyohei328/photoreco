@@ -7,6 +7,7 @@ import moment from 'moment';
 import EntryContestModal from './EntryContestModal';
 import VoteContestModal from './VoteContestModal';
 import { UserAuth } from '../context/AuthContext';
+import { maxScreen } from '../mediaQueries';
 
 const ShowContest = () => {
 
@@ -43,7 +44,9 @@ const ShowContest = () => {
       border: '1px solid',
       borderRadius: '5px',
       borderColor: '#ADB5BD',
-
+      [maxScreen('lg')]: {
+        padding: '30px 10px 30px 10px',
+      },
     }),
     TableDataStyle: css ({
       borderBottom: '1px solid',

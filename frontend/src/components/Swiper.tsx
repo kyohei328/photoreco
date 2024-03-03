@@ -40,6 +40,8 @@ interface SliderProps {
   }[];
   imagesUrl: string[];
   windowWidth: number;
+  selectedItem: string;
+  contestDelete: (id: number) => void;
 }
 
 const TopPhotoSlider: React.FC<SliderProps> = ({ imagesUrl }) => {
@@ -82,7 +84,7 @@ const TopPhotoSlider: React.FC<SliderProps> = ({ imagesUrl }) => {
     );
 };
 
-const TopContestSlider: React.FC<SliderProps> = ({ contests }) => {
+const TopContestSlider: React.FC<SliderProps> = ({ contests, selectedItem, contestDelete }) => {
 
   const Styles = ({
     SwiperStyle: css ({
@@ -94,11 +96,10 @@ const TopContestSlider: React.FC<SliderProps> = ({ contests }) => {
 
   const slideContests = Array.isArray(contests) ? contests.map((contest, index) => (
     <SwiperSlide key={index}>
-      <ContestCard contest={contest}/>
+      <ContestCard contest={contest} contestDelete={contestDelete} selectedItem={selectedItem}/>
     </SwiperSlide>
   )) :
     <SwiperSlide>
-      <p>NG</p>
     </SwiperSlide>
 
     return (

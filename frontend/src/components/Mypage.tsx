@@ -7,6 +7,8 @@ import MypagePostPhoto from './MypagePostPhoto';
 import MypageProfile from './MypageProfile';
 import { UserAuth } from '../context/AuthContext';
 import axios from 'axios'
+import { maxScreen } from '../mediaQueries';
+import useWindowSize from '../useWindowSize';
 
 const Mypage = () => {
 
@@ -16,6 +18,10 @@ const Mypage = () => {
       padding: '0 1rem 1rem 1rem',
       margin: '0 10rem',
       textAlign: 'center',
+      [maxScreen('lg')] : {
+        margin: '0',
+        padding: '0 0.5rem 1rem 0.5rem',
+      },
     }),
     LinkStyle: css ({
       cursor: 'pointer',
@@ -27,6 +33,8 @@ const Mypage = () => {
   }
 
   const [selectedItem, setSelectedItem] = useState('contest');
+
+  const [ windowWidth, windowHeight ] = useWindowSize();
 
   const selectItem = (item: any) => {
     setSelectedItem(item);
@@ -117,7 +125,7 @@ if (loading) {
             src={avatarUrl}  // 画像のURLを指定
             alt="Image Alt Text"  // 画像の代替テキスト
             radius="50%"  // 円形にするための半径
-            size={120}
+            size={windowWidth <=1024 ? 80 : 120 }
             variant="light"
             style={{ cursor: 'pointer' }}
             onClick={handleClick}
@@ -133,16 +141,28 @@ if (loading) {
         </div>
       </section>
       <section className='mt-20'>
-        <Group justify="center" gap={120} css={Styles.GroupStyle}>
-          <p css={[Styles.LinkStyle, selectedItem === 'contest' && Styles.SelectedStyles]}
-          onClick={() => selectItem('contest')}>コンテスト</p>
-          <p css={[Styles.LinkStyle, selectedItem === 'post_photo' && Styles.SelectedStyles]}
-          onClick={() => selectItem('post_photo')}>投稿</p>
-          <p css={[Styles.LinkStyle, selectedItem === 'like_photo' && Styles.SelectedStyles]}
-          onClick={() => selectItem('like_photo')}>お気に入り</p>
+        <Group justify="center" gap={windowWidth <=1024 ? 12 : 120} css={Styles.GroupStyle}>
+          <p onClick={() => selectItem('contest')}
+            className={`py-1.5 px-0.5 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-0.5 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'contest' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
+          >
+            コンテスト
+          </p>
+          <p onClick={() => selectItem('post_photo')}
+            className={`py-1.5 px-0.5 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-0.5 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'post_photo' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
+          >
+            投稿
+          </p>
+          <p onClick={() => selectItem('like_photo')}
+            className={`py-1.5 px-0.5 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-0.5 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'like_photo' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
+          >
+            お気に入り
+          </p>
           <p className='text-gray-400 cursor-not-allowed'>添削依頼</p>
-          <p css={[Styles.LinkStyle, selectedItem === 'profile' && Styles.SelectedStyles]}
-          onClick={() => selectItem('profile')}>プロフィール</p>
+          <p onClick={() => selectItem('profile')}
+            className={`py-1.5 px-0.5 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-1 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'profile' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
+          >
+            プロフィール
+          </p>
         </Group>
       </section>
       <section>
