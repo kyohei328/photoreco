@@ -31,7 +31,7 @@ class Api::V1::MypagesController < ApplicationController
 
   def render_post_photos
     page = params[:page] || 1
-    per_page = params[:per_page] || 20
+    per_page = params[:per_page] || 10
     photos = @current_user.photos.order(created_at: :desc).page(page).per(per_page)
 
     render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}

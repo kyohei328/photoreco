@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { UserAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom'
+import { PhotoSlider } from './Swiper';
 
 const MypageLikePhoto = () => {
 
@@ -30,30 +31,47 @@ const MypageLikePhoto = () => {
 
   const [images, setImages] = useState<any[]>([]);
   const [page, setPage] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const { user } = UserAuth();
 
-  const indexImages = images.map((image) =>(
-    <div key={image.id} className='' >
-      <Link to={`/photos/${image.id}`}>
-          <Image
-            css={Styles.ImageStyle}
-            className='px-0 mb-1'
-            radius="sm"
-            src={image.image_url}
-          />
-      </Link>
-    </div>
-  ))
 
-  const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-    if (scrollTop + clientHeight >= scrollHeight - 10) {
-      // 画面下部に達したらページ数をプラス
-      setPage(page + 1);
-    }
+  useEffect (() => {
+    const handleSlideChange = () => {
+      if (currentIndex === images.length - 4) {
+        setPage(page + 1);
+      }
+    };
+      handleSlideChange()
+  },[currentIndex])
+
+  const handleSlideChange = (index) => {
+    setCurrentIndex(index);
   };
+
+
+  // const indexImages = images.map((image) =>(
+  //   <div key={image.id} className='' >
+  //     <Link to={`/photos/${image.id}`}>
+  //         <Image
+  //           css={Styles.ImageStyle}
+  //           className='px-0 mb-1'
+  //           radius="sm"
+  //           src={image.image_url}
+  //         />
+  //     </Link>
+  //   </div>
+  // ))
+
+  // const handleScroll = () => {
+  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+  //   if (scrollTop + clientHeight >= scrollHeight - 10) {
+  //     // 画面下部に達したらページ数をプラス
+  //     setPage(page + 1);
+  //   }
+  // };
   
     useEffect(() => {
       const userStatus = async () => {
@@ -68,21 +86,22 @@ const MypageLikePhoto = () => {
       userStatus();
     },[page]);
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      // コンポーネントがアンマウントされるときにイベントリスナーをクリーンアップ
-      window.removeEventListener('scroll', handleScroll);
+  //   return () => {
+  //     // コンポーネントがアンマウントされるときにイベントリスナーをクリーンアップ
+  //     window.removeEventListener('scroll', handleScroll);
 
-    };
-  }, []); // 空の依存配列で初回のみ実行
+  //   };
+  // }, []); // 空の依存配列で初回のみ実行
 
   
   return (
     <div>
       <div css={Styles.ImageFrameStyle}>
-        {indexImages}
+        {/* {indexImages} */}
+        <PhotoSlider images={images} onSlideChange={handleSlideChange}/>
       </div>
     </div>
   )
