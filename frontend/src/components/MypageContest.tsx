@@ -6,6 +6,9 @@ import { Icon, Item } from 'semantic-ui-react'
 import axios from 'axios'
 import { UserAuth } from '../context/AuthContext';
 import { IconTrash } from '@tabler/icons-react';
+import { maxScreen } from '../mediaQueries';
+import useWindowSize from '../useWindowSize';
+import { TopContestSlider } from './Swiper';
 
 const MypageContest = (props) => {
 
@@ -15,6 +18,9 @@ const MypageContest = (props) => {
       padding: '0 1rem 1rem 1rem',
       margin: '5rem 10rem 1rem 10rem',
       textAlign: 'center',
+      [maxScreen('lg')] : {
+        margin: '5rem 1rem 1rem 1rem',
+      },
     }),
     LinkStyle: css ({
       cursor: 'pointer',
@@ -35,6 +41,7 @@ const MypageContest = (props) => {
   const [contests, setContests] = useState({ post_contests: [], entry_contests: [] });
   const imagePath ='/contestIcon.jpg';
 
+  const [ windowWidth, windowHeight ] = useWindowSize();
 
   const selectItem = (item: 'post_contests' | 'entry_contests') => {
     setSelectContest(contests[item]);
@@ -59,27 +66,26 @@ const MypageContest = (props) => {
     userStatus();
   },[]);
 
-  const contestsItem = selectContest.map((contest, index) => (
-    <Item key={index}>
-      <Item.Image size='tiny' src={imagePath}/>
-      <Item.Content>
-        <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest}>{contest.title}</Item.Header>
-        <Item.Meta>開催内容</Item.Meta>
-        <Item.Description className='indent-2'>
-          <p>{contest.description}</p>
-        </Item.Description>
-        <Item.Extra>応募期間</Item.Extra>
-        <p className='indent-2'>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
-        {selectedItem === 'post_contests' &&
-          <div><IconTrash className='ml-auto' css={Styles.LinkStyle} onClick={() => contestDelete(contest.id)}/></div>
-        }
-      </Item.Content>
-    </Item>
-  ));
+  // const contestsItem = selectContest.map((contest, index) => (
+  //   <Item key={index}>
+  //     <Item.Image size='tiny' src={imagePath}/>
+  //     <Item.Content>
+  //       <Item.Header as={`a`} href={`/contest/${contest.id}`} contest={contest}>{contest.title}</Item.Header>
+  //       <Item.Meta>開催内容</Item.Meta>
+  //       <Item.Description className='indent-2'>
+  //         <p>{contest.description}</p>
+  //       </Item.Description>
+  //       <Item.Extra>応募期間</Item.Extra>
+  //       <p className='indent-2'>{moment(contest.start_date).format('YYYY年MM月D日')} 〜 {moment(contest.end_date).format('YYYY年MM月D日')}</p>
+  //       {selectedItem === 'post_contests' &&
+  //         <div><IconTrash className='ml-auto' css={Styles.LinkStyle} onClick={() => contestDelete(contest.id)}/></div>
+  //       }
+  //     </Item.Content>
+  //   </Item>
+  // ));
 
   const contestDelete = async(id) => {
     try {
-
       const token = await user.getIdToken(true);
       const config = { headers: { 'Authorization': `Bearer ${token}` }};
       const resp = await axios.delete(`${import.meta.env.VITE_BASE_URL}/contests/${id}`, config);
@@ -92,13 +98,15 @@ const MypageContest = (props) => {
 
   return (
     <div>
-      <Group justify="center" gap={120} css={Styles.GroupStyle}>
-        <p css={[Styles.LinkStyle, selectedItem === 'post_contests' && Styles.SelectedStyles]}
+      <Group justify="center" gap={windowWidth <=1024 ? 40 : 120} css={Styles.GroupStyle}>
+        <p
+          className={`py-1.5 px-2 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-1.5 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'post_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
           onClick={() => selectItem('post_contests')}
         >
           開催したコンテスト
         </p>
-        <p css={[Styles.LinkStyle, selectedItem === 'entry_contests' && Styles.SelectedStyles]}
+        <p
+          className={`py-1.5 px-2 hover:text-sky-700 relative after:absolute after:bottom-0 after:left-1.5 after:w-11/12 after:h-0.5 after:bg-sky-600 after:transition-all after:duration-300 after:scale-y-100 after:scale-x-0 after:origin-top-left hover:after:scale-y-100 hover:after:scale-x-100 ${selectedItem === 'entry_contests' ? 'after:scale-y-100 after:scale-x-100 text-sky-700' : ''}`}
           onClick={() => selectItem('entry_contests')}
         >
           参加中のコンテスト
@@ -109,9 +117,7 @@ const MypageContest = (props) => {
         ：
         <p className='font-bold'>締切日↑</p>
       </div>
-        <Item.Group className='px-20'>
-          {contestsItem}
-        </Item.Group>
+        <TopContestSlider contests={selectContest} contestDelete={contestDelete} selectedItem={selectedItem}/>
     </div>
   )
 }

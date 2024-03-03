@@ -36,11 +36,26 @@ class Api::V1::MypagesController < ApplicationController
 
     render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
   end
-  
+
   def render_contest
     post_contests = @current_user.contests
     entry_contests = @current_user.contest_entries.includes(:contest).map(&:contest)
-    render json: { post_contests: post_contests, entry_contests: entry_contests}
+    render json: {
+      post_contests: post_contests.map { |post_contest| {
+        id: post_contest.id,
+        title: post_contest.title,
+        description: post_contest.description,
+        user_name: post_contest.user.name,
+        user_avatar: avatar_url(post_contest.user),
+      }},
+    entry_contests: entry_contests.map { |entry_contest| {
+      id: entry_contest.id,
+      title: entry_contest.title,
+      description: entry_contest.description,
+      user_name: entry_contest.user.name,
+      user_avatar: avatar_url(entry_contest.user),
+    }},
+  }
   end
   
   def render_like_photos

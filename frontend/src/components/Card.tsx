@@ -21,7 +21,7 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from 'react-i18next';
-
+import { IconTrash } from '@tabler/icons-react';
 
 
 const ContestCard = (props: any) => {
@@ -71,7 +71,10 @@ const ContestCard = (props: any) => {
         </SemanticCardDescription>
       </SemanticCardContent>
       <SemanticCardContent extra textAlign="right">
-        <div className="">
+        <div className={`${props.selectedItem === 'post_contests' ? 'ui two buttons' : ''}`}>
+        {props.selectedItem === 'post_contests' &&
+          <div className='mr-12'><IconTrash className='ml-auto' onClick={() => props.contestDelete(props.contest.id)}/></div>
+        }
           <SemanticButton content='View More' icon='right arrow' labelPosition='right' onClick={() => navigate(`/contest/${props.contest.id}`)} />
         </div>
       </SemanticCardContent>
