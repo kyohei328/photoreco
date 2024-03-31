@@ -13,9 +13,7 @@ class Api::V1::ContestEntriesController < ApplicationController
     @current_user.entry_contest(photo, contest)
   end
 
-  def destroy
-
-  end
+  def destroy; end
 
   private
 
@@ -26,6 +24,5 @@ class Api::V1::ContestEntriesController < ApplicationController
       nil
     end
   end
-
 end
 

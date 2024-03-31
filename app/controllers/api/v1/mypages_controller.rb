@@ -33,7 +33,6 @@ class Api::V1::MypagesController < ApplicationController
     page = params[:page] || 1
     per_page = params[:per_page] || 10
     photos = @current_user.photos.order(created_at: :desc).page(page).per(per_page)
-
     render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
   end
 
@@ -62,7 +61,6 @@ class Api::V1::MypagesController < ApplicationController
     page = params[:page] || 1
     per_page = params[:per_page] || 20
     photos = @current_user.likes.includes(:photo).order(created_at: :desc).page(page).per(per_page).map(&:photo)
-
     render json:  { photos: photos.map { |photo| {id: photo.id, image_url: image_url(photo) }}}
   end
 end
