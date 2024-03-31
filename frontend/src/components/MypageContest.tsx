@@ -112,7 +112,7 @@ const MypageContest = (props) => {
           参加中のコンテスト
         </p>
       </Group>
-      <div className='flex justify-center '>
+      <div className='flex justify-center mb-8'>
         <p>並び替え</p>
         ：
         <p className='font-bold'>締切日↑</p>

@@ -42,8 +42,12 @@ gem 'kaminari'
 
 group :development, :test do
   gem 'pg'
+  gem "rspec-rails"
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 end
-
 
 group :production do
   gem 'pg'

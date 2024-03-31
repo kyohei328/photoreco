@@ -128,6 +128,8 @@ const ShowPhoto = () => {
     hashtags: ["photospace"],
   }
 
+  const CorrectionURL= `/correctionRequest/new?user_id=${postUser.id}`
+  
   return (
     <div>
       <Helmet>
@@ -176,9 +178,9 @@ const ShowPhoto = () => {
             </Grid.Col>
 
             <Grid.Col span={windowWidth <= 1024 ? 2.5 : 4} className='pl-20 pb-5 pt-0 max-lg:pl-0'>
-              <Link to='/'>
+              {/* <Link to='/correctionRequest/new?user_id=${postUser.id}'> */}
+              <Link to={CorrectionURL}>
                 <Button
-                  disabled
                   variant="outline"
                   color="rgba(59, 59, 59, 1)"
                   size={windowWidth <= 1024 ? 'xs' : undefined}
